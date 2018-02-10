@@ -17,14 +17,10 @@ export default class List_View_Screen extends React.Component {
         super(props);
 
         this.state = {
-
-
-
             //location props
             latitude: null,
             longitude: null,
             error: null,
-
         }
 
     }
@@ -57,24 +53,14 @@ export default class List_View_Screen extends React.Component {
 
 
 
-
   render() {
     return (
-
-
-
-
-
-
-                    <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>List view screen</Text>
-                        <Text>Latitude: {this.state.latitude}</Text>
-                        <Text>Longitude: {this.state.longitude}</Text>
-                        {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-                    </View>
-
-
-
+        <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>List view screen</Text>
+                <Text>Latitude: {this.state.latitude}</Text>
+                <Text>Longitude: {this.state.longitude}</Text>
+                {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+        </View>
 
     );
   }
