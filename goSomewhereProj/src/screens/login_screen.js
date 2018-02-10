@@ -109,6 +109,12 @@ export default class Login_Screen extends React.Component {
                       <Text>shorcut to mapview</Text>
                   </TouchableOpacity>
 
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.toListView}>
+                      <Text>shorcut to list view</Text>
+                  </TouchableOpacity>
+
 
               </View>
 
@@ -124,6 +130,10 @@ export default class Login_Screen extends React.Component {
 
     toMapView = () => {
         this.props.navigation.navigate('Map');
+    }
+
+    toListView = () => {
+        this.props.navigation.navigate('ListView');
     }
 
     toEventDetails = () => {

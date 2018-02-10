@@ -8,6 +8,7 @@ import Login from './src/screens/login_screen';
 import Map from './src/screens/map_view_screen';
 import Event from './src/screens/event_details_screen';
 import SignUp from './src/screens/sign_up_screen';
+import ListView from './src/screens/List_View_Screen';
 
 
 
@@ -29,6 +30,12 @@ const Application = StackNavigator({
     Map: {screen: Map,
         navigationOptions: {
             title: 'Map'
+        }
+    },
+
+    ListView: {screen: ListView,
+        navigationOptions: {
+            title: 'Event List'
         }
     },
 
