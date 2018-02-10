@@ -59,30 +59,37 @@ export default class Login_Screen extends React.Component {
                       style={styles.textInput} placeholder='Password'
                       onChangeText={(password) => this.setState({password})}
                   />
+
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.login}>
+                      <Text>Log in</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.toMapView}>
+                      <Text>shorcut to mapview</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.toEventDetails}>
+                      <Text>to event details</Text>
+                  </TouchableOpacity>
               </View>
 
 
-              <TouchableOpacity
-                  style={styles.btn}
-                  onPress = {this.login}>
-                  <Text>Log in</Text>
-              </TouchableOpacity>
 
 
-              <TouchableOpacity
-                  style={styles.btn}
-                  onPress = {this.toMapView}>
-                  <Text>shorcut to mapview</Text>
-              </TouchableOpacity>
 
-              <TouchableOpacity
-                  style={styles.btn}
-                  onPress = {this.toEventDetails}>
-                  <Text>to event details</Text>
-              </TouchableOpacity>
+
+
+
+
+
 
           </KeyboardAvoidingView>
-
 
         //</View>
       );
@@ -196,5 +203,6 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       backgroundColor: '#01c853',
       alignItems: 'center',
+      justifyContent: 'center',
   },
 });
