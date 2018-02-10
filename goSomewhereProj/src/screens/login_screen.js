@@ -68,7 +68,7 @@ export default class Login_Screen extends React.Component {
                       style={styles.textInput} placeholder='Username'
                       onChangeText={(username) => this.setState({username})}
                   />
-              
+
 
                   <TextInput
                       secureTextEntry={true}
@@ -83,7 +83,13 @@ export default class Login_Screen extends React.Component {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                      style={styles.btn}
+                      style={styles.clearBtn}
+                      onPress = {this.login}>
+                      <Text>forgot password?</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                      style={styles.signupBtn}
                       onPress = {this.toSignUp}>
                       <Text>Create Account</Text>
                   </TouchableOpacity>
@@ -234,5 +240,23 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       width: getWidth/2.5,
 
+  },
+  clearBtn:{
+      alignSelf: 'center',
+      padding: 20,
+      marginBottom: 20,
+      backgroundColor: 'green',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: getWidth/2.5,
+  },
+  clearBtn:{
+      alignSelf: 'center',
+      padding: 20,
+      marginBottom: 20,
+      backgroundColor: 'red',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: getWidth/1.1,
   },
 });
