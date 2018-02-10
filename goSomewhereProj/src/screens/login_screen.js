@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,TouchableOpacity,
+import {
+    StyleSheet,
+    Text,
+    View,
+    Navigator,
+    TextInput,
+    KeyboardAvoidingView,
+    TouchableOpacity,
+    Dimensions,
 AsyncStorage,
  } from 'react-native';
 
@@ -11,7 +19,9 @@ import {
   StackNavigator,
 } from 'react-navigation';
 
-
+const dimensions = Dimensions.get('window');
+//const imageHeight = Math.round(dimensions.width * 16 / 9);
+const getWidth = dimensions.width;
 
 export default class Login_Screen extends React.Component {
 
@@ -56,6 +66,7 @@ export default class Login_Screen extends React.Component {
                       onChangeText={(username) => this.setState({username})}
                   />
                   <TextInput
+                      secureTextEntry={true}
                       style={styles.textInput} placeholder='Password'
                       onChangeText={(password) => this.setState({password})}
                   />
@@ -198,11 +209,13 @@ const styles = StyleSheet.create({
   },
 
   btn: {
-      alignSelf: 'stretch',
+      alignSelf: 'center',
       padding: 20,
       marginBottom: 20,
       backgroundColor: '#01c853',
       alignItems: 'center',
       justifyContent: 'center',
+      width: getWidth/2.5,
+
   },
 });
