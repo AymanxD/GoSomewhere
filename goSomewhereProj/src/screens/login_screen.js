@@ -8,7 +8,7 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     Dimensions,
-AsyncStorage,
+    AsyncStorage,
  } from 'react-native';
 
  import globalContainerStyle  from '../styles/Global_Container_Style'
@@ -60,11 +60,16 @@ export default class Login_Screen extends React.Component {
 
           <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
               <View style = {globalContainerStyle.globalContainerStyle}>
-                  <Text style={styles.header}> - LOGIN- </Text>
+                  <Text style={styles.header}> --- GoSomewhere --- </Text>
+                  <Text style={styles.header}> login </Text>
+
+
                   <TextInput
                       style={styles.textInput} placeholder='Username'
                       onChangeText={(username) => this.setState({username})}
                   />
+              
+
                   <TextInput
                       secureTextEntry={true}
                       style={styles.textInput} placeholder='Password'
@@ -75,6 +80,12 @@ export default class Login_Screen extends React.Component {
                       style={styles.btn}
                       onPress = {this.login}>
                       <Text>Log in</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.toSignUp}>
+                      <Text>Create Account</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -112,6 +123,10 @@ export default class Login_Screen extends React.Component {
 
     toEventDetails = () => {
         this.props.navigation.navigate('Event');
+    }
+
+    toSignUp = () => {
+        this.props.navigation.navigate('SignUp');
     }
 
 
@@ -206,6 +221,8 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     marginBottom: 20,
     backgroundColor: '#fff',
+    height: 50,
+
   },
 
   btn: {

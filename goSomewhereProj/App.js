@@ -7,6 +7,7 @@ import {StackNavigator} from 'react-navigation';
 import Login from './src/screens/login_screen';
 import Map from './src/screens/map_view_screen';
 import Event from './src/screens/event_details_screen';
+import SignUp from './src/screens/sign_up_screen';
 
 
 
@@ -16,6 +17,12 @@ const Application = StackNavigator({
     Home: {screen: Login,
         navigationOptions: {
             title: 'Login'
+        }
+    },
+
+    SignUp: {screen: SignUp,
+        navigationOptions: {
+            title: 'Sign up'
         }
     },
 
