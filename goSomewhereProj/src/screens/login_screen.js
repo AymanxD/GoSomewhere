@@ -6,14 +6,11 @@ AsyncStorage,
  import globalContainerStyle  from '../styles/Global_Container_Style'
 
 
-//import Banana from './Banana';
 
-//var mongoose = require('mongoose');    I cant use mongoose because the front end doesn't have Node.js
-//import api from '../utilities/server_connect';
 import {
   StackNavigator,
 } from 'react-navigation';
-//I don't believe I need StackNavigator here
+
 
 
 export default class Login_Screen extends React.Component {
@@ -38,14 +35,10 @@ export default class Login_Screen extends React.Component {
         var value = await  AsyncStorage.getItem('user');
 
         if(value != null){   //if the user is already logged in
-            //this.props.navigation.navigate('Profile');      //**profile page that we will create later
+            this.props.navigation.navigate('Profile');      //**profile page that we will create later
         }
     }
 
-
-
-    //cwm is a lifecycle method
-    //its a method that fires right before render happens
     componentWillMount(){
 
     }
@@ -57,7 +50,7 @@ export default class Login_Screen extends React.Component {
 
           <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
               <View style = {globalContainerStyle.globalContainerStyle}>
-                  <Text style={styles.header}> - LOGIN 33333- </Text>
+                  <Text style={styles.header}> - LOGIN- </Text>
                   <TextInput
                       style={styles.textInput} placeholder='Username'
                       onChangeText={(username) => this.setState({username})}
@@ -129,11 +122,10 @@ export default class Login_Screen extends React.Component {
             console.log(res);
 
               //if user and pass exists, then log them in
-              // res: result
               if(res.success === true){
                   console.log('user exists in DB');
                   //AysncStorage.setItem('user',res.user);   may need this later
-                  //this.props.navigation.navigate('Profile'); //navigate user to profile page
+                  this.props.navigation.navigate('Profile'); //navigate user to profile page
               }
               //else, tell the user they dont exist in the database
               else{
