@@ -3,6 +3,9 @@ import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,Toucha
 AsyncStorage,
  } from 'react-native';
 
+ import globalContainerStyle  from '../styles/Global_Container_Style'
+
+
 //import Banana from './Banana';
 
 //var mongoose = require('mongoose');    I cant use mongoose because the front end doesn't have Node.js
@@ -50,10 +53,10 @@ export default class Login_Screen extends React.Component {
     render() {
 
       return (
-        //<View style={styles.container}>
+        //<View>
 
-          <KeyboardAvoidingView behavior = 'padding' style = {styles.wrapper}>
-              <View style = {styles.container}>
+          <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
+              <View style = {globalContainerStyle.globalContainerStyle}>
                   <Text style={styles.header}> - LOGIN 33333- </Text>
                   <TextInput
                       style={styles.textInput} placeholder='Username'
@@ -88,7 +91,7 @@ export default class Login_Screen extends React.Component {
           </KeyboardAvoidingView>
 
 
-       // </View>
+        //</View>
       );
     }
 
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
 
     wrapper: {
       flex: 1,
+      backgroundColor: 'green',
     },
 
   container: {
