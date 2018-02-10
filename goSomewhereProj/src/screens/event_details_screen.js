@@ -11,7 +11,7 @@ export default class Event_Details_Screen extends React.Component {
     render() {
 
       return (
-          <Text> event screen </Text>
+          <Text> event screen andrey_branch</Text>
 
       )
   }
