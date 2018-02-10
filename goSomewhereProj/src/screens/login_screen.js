@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Dimensions,
     AsyncStorage,
+    ScrollView,
  } from 'react-native';
 
  import globalContainerStyle  from '../styles/Global_Container_Style'
@@ -59,6 +60,8 @@ export default class Login_Screen extends React.Component {
         //<View>
 
           <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
+
+              <ScrollView>
               <View style = {globalContainerStyle.globalContainerStyle}>
                   <Text style={styles.header}> --- GoSomewhere --- </Text>
                   <Text style={styles.header}> login </Text>
@@ -110,16 +113,10 @@ export default class Login_Screen extends React.Component {
               </View>
 
 
-
-
-
-
-
-
-
-
-
+            </ScrollView>
           </KeyboardAvoidingView>
+
+
 
         //</View>
       );
