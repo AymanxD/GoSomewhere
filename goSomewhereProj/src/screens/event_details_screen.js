@@ -39,13 +39,15 @@ export default class Event_Details_Screen extends React.Component {
 
              <Button style={{width:100}}
               onPress={() => {
-              Alert.alert('ShiftKey Labs. Goldberg Computer Science Building 6050 University Avenue, Room 426 Halifax, NS');
+              Alert.alert(
+              'ShiftKeyLabs',
+              'Goldberg Computer Science Building 6050 University Avenue, Room 426 Halifax, NS',);
               }}
               title="Call"
               />
              <Button style={{width:100}}
               onPress={() => {
-              Alert.alert('You tapped the button!');
+              Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru");
               }}
               title="Direction"
               />
