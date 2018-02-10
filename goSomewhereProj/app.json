@@ -1,4 +1,5 @@
 {
-  "name": "goSomewhereProj",
-  "displayName": "goSomewhereProj"
+  "expo": {
+    "sdkVersion": "25.0.0"
+  }
 }
