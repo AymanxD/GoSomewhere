@@ -82,7 +82,7 @@ export default class Login_Screen extends React.Component {
               <TouchableOpacity
                   style={styles.btn}
                   onPress = {this.toEventDetails}>
-                  <Text>Log in</Text>
+                  <Text>to event details</Text>
               </TouchableOpacity>
 
           </KeyboardAvoidingView>
