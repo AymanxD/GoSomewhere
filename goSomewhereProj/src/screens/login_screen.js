@@ -78,6 +78,12 @@ export default class Login_Screen extends React.Component {
 
                   <TouchableOpacity
                       style={styles.btn}
+                      onPress = {this.toEventDetails}>
+                      <Text>to event details</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                      style={styles.btn}
                       onPress = {this.login}>
                       <Text>Log in</Text>
                   </TouchableOpacity>
@@ -100,11 +106,7 @@ export default class Login_Screen extends React.Component {
                       <Text>shorcut to mapview</Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity
-                      style={styles.btn}
-                      onPress = {this.toEventDetails}>
-                      <Text>to event details</Text>
-                  </TouchableOpacity>
+
               </View>
 
 
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       width: getWidth/2.5,
   },
-  clearBtn:{
+  signupBtn:{
       alignSelf: 'center',
       padding: 20,
       marginBottom: 20,
