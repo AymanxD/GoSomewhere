@@ -4,9 +4,9 @@ import { StyleSheet, Text, View,Navigator } from 'react-native';
 
 import {StackNavigator} from 'react-navigation';
 
-import Login from './src/screens/Login_Screen';
-import Map from './src/screens/Map_View_Screen';
-import Event from './src/screens/Event_Details_Screen';
+import Login from './src/screens/login_screen';
+import Map from './src/screens/map_view_screen';
+import Event from './src/screens/event_details_screen';
 
 
 
