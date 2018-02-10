@@ -1,23 +1,52 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Navigator } from 'react-native';
+
+
+import {StackNavigator} from 'react-navigation';
+
+import Login from './src/screens/Login_Screen';
+import Map from './src/screens/Map_View_Screen';
+import Event from './src/screens/Event_Details_Screen';
+
+
+
+
+const Application = StackNavigator({
+
+    Home: {screen: Login,
+        navigationOptions: {
+            title: 'Login'
+        }
+    },
+
+    Map: {screen: Map,
+        navigationOptions: {
+            title: 'Map'
+        }
+    },
+
+    Event: {screen: Event,
+        navigationOptions: {
+            title: 'something like this...{this.props.eventName}'
+        }
+    },
+
+
+});
 
 export default class App extends React.Component {
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+
+                <Application
+                    ref= "appNavigator"
+                    //some people have renderScene function
+                />
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
+}
