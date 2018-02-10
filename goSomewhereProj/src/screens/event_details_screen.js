@@ -39,7 +39,7 @@ export default class Event_Details_Screen extends React.Component {
 
              <Button style={{width:100}}
               onPress={() => {
-              Alert.alert('You tapped the button!');
+              Alert.alert('ShiftKey Labs. Goldberg Computer Science Building 6050 University Avenue, Room 426 Halifax, NS');
               }}
               title="Call"
               />
