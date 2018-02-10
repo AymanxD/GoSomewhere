@@ -79,11 +79,7 @@ export default class Login_Screen extends React.Component {
                       onChangeText={(password) => this.setState({password})}
                   />
 
-                  <TouchableOpacity
-                      style={styles.btn}
-                      onPress = {this.toEventDetails}>
-                      <Text>to event details</Text>
-                  </TouchableOpacity>
+
 
                   <TouchableOpacity
                       style={styles.btn}
@@ -103,17 +99,26 @@ export default class Login_Screen extends React.Component {
                       <Text>Create Account</Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity
-                      style={styles.btn}
-                      onPress = {this.toMapView}>
-                      <Text>shorcut to mapview</Text>
-                  </TouchableOpacity>
+                  <View style={styles.shortcutBtn}>
+                      <TouchableOpacity
+                          style={styles.btn}
+                          onPress = {this.toMapView}>
+                          <Text>shorcut to mapview</Text>
+                      </TouchableOpacity>
 
-                  <TouchableOpacity
-                      style={styles.btn}
-                      onPress = {this.toListView}>
-                      <Text>shorcut to list view</Text>
-                  </TouchableOpacity>
+                      <TouchableOpacity
+                          style={styles.btn}
+                          onPress = {this.toListView}>
+                          <Text>shorcut to list view</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                          style={styles.btn}
+                          onPress = {this.toEventDetails}>
+                          <Text>to event details</Text>
+                      </TouchableOpacity>
+                  </View>
+
 
 
               </View>
@@ -264,6 +269,16 @@ const styles = StyleSheet.create({
       padding: 20,
       marginBottom: 20,
       backgroundColor: 'red',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: getWidth/1.1,
+  },
+
+  shortcutBtn:{
+      alignSelf: 'center',
+      padding: 20,
+      marginBottom: 20,
+      backgroundColor: 'blue',
       alignItems: 'center',
       justifyContent: 'center',
       width: getWidth/1.1,
