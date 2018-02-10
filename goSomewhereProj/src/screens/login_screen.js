@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Dimensions,
     AsyncStorage,
+    ScrollView,
  } from 'react-native';
 
  import globalContainerStyle  from '../styles/Global_Container_Style'
@@ -59,6 +60,8 @@ export default class Login_Screen extends React.Component {
         //<View>
 
           <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
+
+              <ScrollView>
               <View style = {globalContainerStyle.globalContainerStyle}>
                   <Text style={styles.header}> --- GoSomewhere --- </Text>
                   <Text style={styles.header}> login </Text>
@@ -106,20 +109,20 @@ export default class Login_Screen extends React.Component {
                       <Text>shorcut to mapview</Text>
                   </TouchableOpacity>
 
+                  <TouchableOpacity
+                      style={styles.btn}
+                      onPress = {this.toListView}>
+                      <Text>shorcut to list view</Text>
+                  </TouchableOpacity>
+
 
               </View>
 
 
-
-
-
-
-
-
-
-
-
+            </ScrollView>
           </KeyboardAvoidingView>
+
+
 
         //</View>
       );
@@ -127,6 +130,10 @@ export default class Login_Screen extends React.Component {
 
     toMapView = () => {
         this.props.navigation.navigate('Map');
+    }
+
+    toListView = () => {
+        this.props.navigation.navigate('ListView');
     }
 
     toEventDetails = () => {
