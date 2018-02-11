@@ -12,7 +12,7 @@ import {
     ScrollView,
  } from 'react-native';
 
- import globalContainerStyle  from '../styles/Global_Container_Style'
+ import globalStyle  from '../styles/Global_Container_Style'
 
 
 
@@ -59,26 +59,28 @@ export default class Login_Screen extends React.Component {
       return (
         //<View>
 
-          <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
+          <KeyboardAvoidingView behavior = 'padding' style = {globalStyle.globalContainerStyle}>
 
               <ScrollView>
-              <View style = {globalContainerStyle.globalContainerStyle}>
+              <View style = {globalStyle.globalContainerStyle}>
                   <Text style={styles.header}> --- GoSomewhere --- </Text>
                   <Text style={styles.header}> login </Text>
 
-
+                  <View style={globalStyle.textInputContainer}>
                   <TextInput
-                      style={styles.textInput} placeholder='Username'
+                      style={{height: 50,backgroundColor: 'white',}}
+                       placeholder='Username'
                       onChangeText={(username) => this.setState({username})}
                   />
 
 
                   <TextInput
+                      style={{height: 50,backgroundColor: 'white',}}
                       secureTextEntry={true}
-                      style={styles.textInput} placeholder='Password'
+                       placeholder='Password'
                       onChangeText={(password) => this.setState({password})}
                   />
-
+                  </View>
 
 
                   <TouchableOpacity
@@ -236,6 +238,7 @@ const styles = StyleSheet.create({
     paddingRight: 40,
   },
 
+  /*
   textInput: {
     alignSelf: 'stretch',
     paddingLeft: 16,
@@ -244,7 +247,7 @@ const styles = StyleSheet.create({
     height: 50,
 
   },
-
+  */
   btn: {
       alignSelf: 'center',
       padding: 20,

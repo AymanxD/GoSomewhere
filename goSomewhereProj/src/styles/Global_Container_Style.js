@@ -11,6 +11,15 @@ export default StyleSheet.create({
 
   },
 
-  
+  textInputContainer: {
+    alignSelf: 'stretch',
+    paddingLeft: 16,
+    marginBottom: 20,
+    backgroundColor: '#fff',
+    height: 120,
+    backgroundColor: 'green',
+    justifyContent: 'space-between'
+
+}
 
 });
