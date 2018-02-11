@@ -1,15 +1,16 @@
 import React from 'react';
 import {
-   StyleSheet,
-   Text,
-   View,
-   Navigator,
-   TextInput,
-   KeyboardAvoidingView,
-   TouchableOpacity,
-   Dimensions,
-   AsyncStorage,
-   ScrollView
+  StyleSheet,
+  Text,
+  View,
+  Navigator,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Dimensions,
+  AsyncStorage,
+  ScrollView,
+  Image
 } from 'react-native';
 
 import globalStyle from '../styles/Global_Container_Style'
@@ -49,68 +50,49 @@ export default class Login_Screen extends React.Component {
 
    render() {
 
-      return (<KeyboardAvoidingView behavior='padding' style={globalStyle.globalContainerStyle}>
+     return (
 
          <ScrollView >
-             <View style={globalStyle.globalContainerStyle}>
+            <View style={globalStyle.globalContainerStyle}>
 
-            <View>
-               <Text style={styles.header}>
-                  --- GoSomewhere ---
-               </Text>
-               <Text style={styles.header}>
-                  login
-               </Text>
+              <View>
+                 <Image
+                   style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
+                   source={require('../assets/logo.png')}
+                 />
+                 <View style={globalStyle.textInputContainer}>
+                    <TextInput style={{
+                      height: 50,
+                      marginLeft: -20
+                       }} placeholder='Username' onChangeText={(username) => this.setState({username})}/>
 
-               <View style={globalStyle.textInputContainer}>
-                  <TextInput style={{
-                        height: 50,
-                        backgroundColor: 'white'
-                     }} placeholder='Username' onChangeText={(username) => this.setState({username})}/>
+                    <TextInput style={{
+                      height: 50,
+                      marginLeft: -20
+                       }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
+                 </View>
 
-                  <TextInput style={{
-                        height: 50,
-                        backgroundColor: 'white'
-                     }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-               </View>
+                 <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
+                    <Text style={{color: '#fff'}}>Log in</Text>
+                 </TouchableOpacity>
 
-               <TouchableOpacity style={styles.btn} onPress={this.login}>
-                  <Text>Log in</Text>
-               </TouchableOpacity>
+                 <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
+                    <Text>forgot password?</Text>
+                 </TouchableOpacity>
 
-               <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
-                  <Text>forgot password?</Text>
-               </TouchableOpacity>
-
-            </View>
+              </View>
 
             
 
-            <View>
-
-               <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-                  <Text>Create Account</Text>
-               </TouchableOpacity>
-
-               <View style={styles.shortcutBtn}>
-                  <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
-                     <Text>shorcut to mapview</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.btn} onPress={this.toListView}>
-                     <Text>shorcut to list view</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.btn} onPress={this.toEventDetails}>
-                     <Text>to event details</Text>
-                  </TouchableOpacity>
-               </View>
+              <View>
+                <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
+                  <Text style={{color: '#fff'}}>Create Account</Text>
+                </TouchableOpacity>
+              </View>
 
             </View>
-
-        </View>
          </ScrollView>
-      </KeyboardAvoidingView>);
+      );
    }
 
    toMapView = () => {
@@ -168,76 +150,72 @@ export default class Login_Screen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
 
-   wrapper: {
-      flex: 1,
-      backgroundColor: 'green'
-   },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 40,
+    paddingRight: 40,
+    width: getWidth
+  },
 
-   container: {
-      flex: 1,
-      backgroundColor: 'green',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingLeft: 40,
-      paddingRight: 40
-   },
+  header: {
+    fontSize: 24,
+    marginTop: 20,
+    marginBottom: 60,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    paddingLeft: 40,
+    paddingRight: 40
+  },
 
-   header: {
-      fontSize: 24,
-      marginBottom: 60,
-      color: '#fff',
-      justifyContent: 'center',
-      alignSelf: 'center',
-      paddingLeft: 40,
-      paddingRight: 40
-   },
-
-   /*
+  /*
   textInput: {
-    alignSelf: 'stretch',
-    paddingLeft: 16,
-    marginBottom: 20,
-    backgroundColor: '#fff',
-    height: 50,
+  alignSelf: 'stretch',
+  paddingLeft: 16,
+  marginBottom: 20,
+  backgroundColor: '#fff',
+  height: 50,
 
   },
   */
-   btn: {
-      alignSelf: 'center',
-      padding: 20,
-      marginBottom: 20,
-      backgroundColor: '#01c853',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: getWidth / 2.5
-   },
-   clearBtn: {
-      alignSelf: 'center',
-      padding: 20,
-      marginBottom: 20,
-      backgroundColor: 'green',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: getWidth / 2.5
-   },
-   signupBtn: {
-      alignSelf: 'center',
-      padding: 20,
-      marginBottom: 20,
-      backgroundColor: 'red',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: getWidth / 1.1
-   },
-
-   shortcutBtn: {
-      alignSelf: 'center',
-      padding: 20,
-      marginBottom: 20,
-      backgroundColor: 'blue',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: getWidth / 1.1
-   }
+  btn: {
+    alignSelf: 'center',
+    padding: 20,
+    marginBottom: 20,
+    backgroundColor: '#e67e22',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: getWidth / 1.2
+  },
+  clearBtn: {
+    alignSelf: 'center',
+    padding: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: getWidth / 1.2
+  },
+  signupBtn: {
+    alignSelf: 'center',
+    padding: 20,
+    marginBottom: 80,
+    backgroundColor: '#2BB2D5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: getWidth / 1.2
+  },
+  shortcutBtn: {
+    alignSelf: 'center',
+    padding: 20,
+    marginBottom: 20,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: getWidth / 1.2
+  }
 });
