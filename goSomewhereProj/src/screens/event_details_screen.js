@@ -21,23 +21,32 @@ export default class Event_Details_Screen extends React.Component {
       style={{flex:1, height:100}} />
 
      <Text>Event name: Hackathon</Text>
-     <View style={{
-       height:50,
+     <View
+     style={{
+//       height:50,
         flexDirection: 'row',
         justifyContent: 'space-around'
+      }}
+      >
+
+      <TouchableHighlight onPress={() => {
+      Alert.alert(
+      'ShiftKeyLabs',
+      'Goldberg Computer Science Building 6050 University Avenue, Room 426 Halifax, NS',);
       }}>
+        <Image
+          style={{width: 50, height: 50}}
+          source={require('../components/event_details_comps/ic_favorite_border_black_24dp.png')}
+        />
+      </TouchableHighlight>
 
-      <Button style={{width:100}}
-      onPress={() =>   {}  }
 
-       title="Interested"
-       />
        <Button style={{width:100}}
        onPress={() => {}}
         title="Going"
         />
-      <Button style={{width:100}}
-       onPress={() => {
+
+       <TouchableHighlight onPress={() => {
          Share.share({
             message: 'ShiftKey Labs hackaton',
             url: 'shiftkeylabs.ca/calendar/android-hackathon/',
@@ -46,10 +55,12 @@ export default class Event_Details_Screen extends React.Component {
 
             dialogTitle: 'Share info',
           })
-        }}
-       title="Share"
-       />
-
+        }}>
+         <Image
+           style={{width: 50, height: 50}}
+           source={require('../components/event_details_comps/ic_share_black_24dp.png')}
+         />
+       </TouchableHighlight>
      </View>
 
 
@@ -95,9 +106,6 @@ export default class Event_Details_Screen extends React.Component {
                  source={require('../components/event_details_comps/ic_http_black_24dp.png')}
                />
              </TouchableHighlight>
-
-
-
 
             </View>
      </View>
