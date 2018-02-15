@@ -51,7 +51,6 @@ export default class List_View_Screen extends React.Component {
     }
 
   componentDidMount() {
-
       //location services
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
