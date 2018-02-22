@@ -29,7 +29,7 @@ const Application = StackNavigator({
 
     Map: {screen: Map,
         navigationOptions: {
-            title: 'Map'
+            title: 'Events List'
         }
     },
 
@@ -41,7 +41,7 @@ const Application = StackNavigator({
 
     Event: {screen: Event,
         navigationOptions: {
-            title: 'something like this...{this.props.eventName}'
+            title: 'Android Hackathon'
         }
     },
 

@@ -1,16 +1,16 @@
-
-
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   globalContainerStyle: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center',
-
+    
   },
 
-  
+  textInputContainer: {
+    paddingLeft: 16,
+    marginBottom: 20
+  }
 
 });
