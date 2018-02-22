@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,TouchableOpacity,
- AsyncStorage,ScrollView,List, ListView, StatusBar, TouchableHighlight
+ AsyncStorage,ScrollView,List, ListView, StatusBar, TouchableHighlight, Alert
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -52,6 +52,7 @@ export default class List_View_Screen extends React.Component {
               "address" : 'H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2'
               }
           ]),
+          interested: 'star-o'
         }
     }
 
@@ -85,9 +86,9 @@ export default class List_View_Screen extends React.Component {
          <Text style={styles.description}>{rowData.description}</Text>
          <View style={styles.interest}>
           <Text style={styles.description}>Are you interested?</Text>
-          <TouchableHighlight onPress={this._interested}>
+          <TouchableHighlight onPress={this._interested.bind(this)}>
             <Text>
-              <Icon name='star-o' size={25} color="#64b5f6" />
+              <Icon name={this.state.interested} size={25} color="#64b5f6" />
             </Text>
           </TouchableHighlight>
          </View>
@@ -96,19 +97,18 @@ export default class List_View_Screen extends React.Component {
     );
   }
 
-// {this.state.interested}
-  // _interested(){
-  //   if(this.state.interested === 'star-o'){
-  //     this.setState({
-  //       interested: 'star-o'
-  //     });
-  //   }
-  //   else {
-  //     this.setState({
-  //       interested: 'star'
-  //     });
-  //   }
-  // }
+  _interested(){
+    if(this.state.interested === 'star'){
+      this.setState({
+        interested: 'star-o'
+      });
+    }
+    else {
+      this.setState({
+        interested: 'star'
+      });
+    }
+  }
 
   render() {
     return (
@@ -116,7 +116,7 @@ export default class List_View_Screen extends React.Component {
         <StatusBar hidden={true} />
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
+          renderRow={this._renderRow.bind(this)}
         />
       </View>
     );
