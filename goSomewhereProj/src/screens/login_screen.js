@@ -12,7 +12,7 @@ import {
   ScrollView,
   Image
 } from 'react-native';
-
+import { Button } from 'react-native-material-ui';
 import globalStyle from '../styles/Global_Container_Style'
 
 import {StackNavigator} from 'react-navigation';
@@ -72,22 +72,13 @@ export default class Login_Screen extends React.Component {
                        }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
                  </View>
 
-                 <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
-                    <Text style={{color: '#fff'}}>Log in</Text>
-                 </TouchableOpacity>
-
-                 <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
-                    <Text>forgot password?</Text>
-                 </TouchableOpacity>
+                 <Button primary raised text="Log in" onPress={this.toMapView} />
+                 <Button text="Forgot password?" onPress={this.toLogin} />
 
               </View>
 
-            
-
               <View>
-                <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-                  <Text style={{color: '#fff'}}>Create Account</Text>
-                </TouchableOpacity>
+                <Button primary raised text="Create Account" onPress={this.toSignUp} />
               </View>
 
             </View>
