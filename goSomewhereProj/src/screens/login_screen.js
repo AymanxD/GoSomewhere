@@ -12,10 +12,19 @@ import {
   ScrollView,
   Image
 } from 'react-native';
-
-import globalStyle from '../styles/Global_Container_Style'
-
 import {StackNavigator} from 'react-navigation';
+
+
+
+//importing components
+import ButtonContainerComp from '../components/login_screen_comps/ButtonContainerComp';
+import LogoContainer from '../components/login_screen_comps/LogoContainer';
+import LoginSignupContainer from '../components/login_screen_comps/LoginSignupContainer';
+import TextFieldContainer from '../components/login_screen_comps/TextFieldContainer';
+
+
+import globalStyle from '../styles/Global_Container_Style';
+
 
 const dimensions = Dimensions.get('window');
 //const imageHeight = Math.round(dimensions.width * 16 / 9);
@@ -53,44 +62,54 @@ export default class Login_Screen extends React.Component {
      return (
 
          <ScrollView >
-            <View style={globalStyle.globalContainerStyle}>
+            <LoginSignupContainer>
 
               <View>
-                 <Image
-                   style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
-                   source={require('../assets/logo.png')}
-                 />
-                 <View style={globalStyle.textInputContainer}>
+
+                  <LogoContainer>
+                      <Image
+                          style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
+                          source={require('../assets/logo.png')}
+                      />
+                  </LogoContainer>
+                 <TextFieldContainer>
                     <TextInput style={{
                       height: 50,
-                      marginLeft: -20
+                      marginLeft: 0
                        }} placeholder='Username' onChangeText={(username) => this.setState({username})}/>
 
                     <TextInput style={{
                       height: 50,
-                      marginLeft: -20
+                      marginLeft: 0
                        }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-                 </View>
+                 </TextFieldContainer>
 
-                 <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
-                    <Text style={{color: '#fff'}}>Log in</Text>
-                 </TouchableOpacity>
 
-                 <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
-                    <Text>forgot password?</Text>
-                 </TouchableOpacity>
+                 <ButtonContainerComp>
+                     <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
+                        <Text style={{color: '#fff'}}>Log in</Text>
+                     </TouchableOpacity>
+
+                     <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
+                        <Text>forgot password?</Text>
+                     </TouchableOpacity>
+
+                 </ButtonContainerComp>
+
 
               </View>
 
-            
 
-              <View>
-                <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-                  <Text style={{color: '#fff'}}>Create Account</Text>
-                </TouchableOpacity>
-              </View>
 
-            </View>
+              <ButtonContainerComp>
+                  <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
+                    <Text style={{color: '#fff'}}>Create Account</Text>
+                  </TouchableOpacity>
+              </ButtonContainerComp>
+
+
+
+          </LoginSignupContainer>
          </ScrollView>
       );
    }
