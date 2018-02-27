@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,Navigator } from 'react-native';
 
 
-import {StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 
 import Login from './src/screens/login_screen';
 import Map from './src/screens/map_view_screen';
