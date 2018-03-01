@@ -90,6 +90,11 @@ export default class Login_Screen extends React.Component {
                         <Text style={{color: '#fff'}}>Log in</Text>
                      </TouchableOpacity>
 
+                     <TouchableOpacity style={styles.btn} onPress={this.toListView}>
+                        <Text style={{color: '#fff'}}>List View Shortcut</Text>
+                     </TouchableOpacity>
+
+
                      <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
                         <Text>forgot password?</Text>
                      </TouchableOpacity>
