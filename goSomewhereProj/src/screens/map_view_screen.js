@@ -21,7 +21,18 @@ export default class Map_View_Screen extends React.Component {
           coordinate={{latitude: events[1]['latitude'], longitude: events[1]['longitude']}}
           title={events[1]['title']}
           description={events[1]['description']}
+          onCalloutPress={()=>{
+            this.props.navigation.navigate('Event', { id:1 });
+         }}
         />
+        <MapView.Marker
+          coordinate={{latitude: events[0]['latitude'], longitude: events[0]['longitude']}}
+          title={events[0]['title']}
+          description={events[0]['description']}
+          onCalloutPress={()=>{
+            this.props.navigation.navigate('Event', {id:0});
+          }}
+  />
       </MapView>
     )
   }
