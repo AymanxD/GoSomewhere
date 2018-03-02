@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View,Navigator } from 'react-native';
-
-
+import { ThemeProvider } from 'react-native-material-ui';
 import {StackNavigator} from 'react-navigation';
 
 import Login from './src/screens/login_screen';
@@ -10,8 +9,13 @@ import Event from './src/screens/event_details_screen';
 import SignUp from './src/screens/sign_up_screen';
 import ListView from './src/screens/list_view_screen';
 
-
-
+const uiTheme = {
+  toolbar: {
+    container: {
+      height: 50,
+    },
+  },
+};
 
 const Application = StackNavigator({
 
@@ -43,24 +47,18 @@ const Application = StackNavigator({
         navigationOptions: {
             title: 'Android Hackathon'
         }
-    },
-
-
+    }
 });
 
 export default class App extends React.Component {
-
   render() {
     return (
-
-                <Application
-                    ref= "appNavigator"
-                    //some people have renderScene function
-                />
+      <ThemeProvider uiTheme={uiTheme}>
+        <Application
+            ref= "appNavigator"
+            //some people have renderScene function
+        />
+      </ThemeProvider>
     );
   }
-
-
-
-
 }
