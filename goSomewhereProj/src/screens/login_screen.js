@@ -14,19 +14,14 @@ import {
 } from 'react-native';
 
 import { Button } from 'react-native-material-ui';
-import globalStyle from '../styles/Global_Container_Style'
-
+import globalStyle from '../styles/Global_Container_Style';
 import {StackNavigator} from 'react-navigation';
-
 
 //importing components
 import ButtonContainerComp from '../components/login_screen_comps/ButtonContainerComp';
 import LogoContainer from '../components/login_screen_comps/LogoContainer';
 import LoginSignupContainer from '../components/login_screen_comps/LoginSignupContainer';
 import TextFieldContainer from '../components/login_screen_comps/TextFieldContainer';
-
-
-import globalStyle from '../styles/Global_Container_Style';
 
 
 const dimensions = Dimensions.get('window');
