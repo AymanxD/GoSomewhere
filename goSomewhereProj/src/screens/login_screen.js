@@ -92,7 +92,8 @@ export default class Login_Screen extends React.Component {
                     <Button text="List View Shortcut" onPress={this.toListView} />
                     <Button text="Forgot password?" onPress={this.toLogin} />
                  </ButtonContainerComp>
-
+              </View>
+                       
               <View>
                 <Button primary raised text="Create Account" onPress={this.toSignUp} />
               </View>
