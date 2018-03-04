@@ -8,6 +8,7 @@ import Map from './src/screens/map_view_screen';
 import Event from './src/screens/event_details_screen';
 import SignUp from './src/screens/sign_up_screen';
 import ListView from './src/screens/list_view_screen';
+import Comments from './src/screens/comment_screen';
 
 const uiTheme = {
   toolbar: {
@@ -19,6 +20,13 @@ const uiTheme = {
 
 const Application = StackNavigator({
 
+
+    Comments: {screen: Comments,
+        navigationOptions: {
+            title: 'Comments'
+        }
+    },
+    
     Home: {screen: Login,
         navigationOptions: {
             title: 'Login'
@@ -37,17 +45,19 @@ const Application = StackNavigator({
         }
     },
 
-    ListView: {screen: ListView,
-        navigationOptions: {
-            title: 'Event List'
-        }
-    },
-
     Event: {screen: Event,
         navigationOptions: {
             title: 'Android Hackathon'
         }
+    },
+
+    ListView: {screen: ListView,
+        navigationOptions: {
+            title: 'Event List'
+        }
     }
+    
+
 });
 
 export default class App extends React.Component {

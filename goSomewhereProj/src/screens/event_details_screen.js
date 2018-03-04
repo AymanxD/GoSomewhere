@@ -23,15 +23,11 @@ constructor(props) {
   this.state = {colorLike:'black', colorGoing:'black'};
   id=this.props.navigation.state.params.id;
   category=events[id]['category'];
-
-
-}
-
+  }
 
     render() {
 
       return (
-
 
     <View style={{
        flex:3,
@@ -87,6 +83,10 @@ constructor(props) {
        <Text></Text>
        <Text>{events[id]['description']}</Text>
        </View>
+       <TouchableHighlight onPress={() => this.props.navigation.navigate('Comments')}>    
+        <Text style={{fontSize:15}}>Add a comment!</Text>
+       </TouchableHighlight>
+       
      </ScrollView>
             <View style={{
               height:50,
@@ -114,4 +114,9 @@ constructor(props) {
      </View>
       );
   };
+  // toComments = () => {
+  //   this.props.navigation.navigate('Event');
+  // }
 };
+
+
