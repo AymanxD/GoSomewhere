@@ -12,18 +12,16 @@ import {
   ScrollView,
   Image
 } from 'react-native';
+
+import { Button } from 'react-native-material-ui';
+import globalStyle from '../styles/Global_Container_Style';
 import {StackNavigator} from 'react-navigation';
-
-
 
 //importing components
 import ButtonContainerComp from '../components/login_screen_comps/ButtonContainerComp';
 import LogoContainer from '../components/login_screen_comps/LogoContainer';
 import LoginSignupContainer from '../components/login_screen_comps/LoginSignupContainer';
 import TextFieldContainer from '../components/login_screen_comps/TextFieldContainer';
-
-
-import globalStyle from '../styles/Global_Container_Style';
 
 
 const dimensions = Dimensions.get('window');
@@ -84,35 +82,22 @@ export default class Login_Screen extends React.Component {
                        }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
                  </TextFieldContainer>
 
-
                  <ButtonContainerComp>
-                     <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
-                        <Text style={{color: '#fff'}}>Log in</Text>
-                     </TouchableOpacity>
-
-                     <TouchableOpacity style={styles.btn} onPress={this.toListView}>
-                        <Text style={{color: '#fff'}}>List View Shortcut</Text>
-                     </TouchableOpacity>
-
-
-                     <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
-                        <Text>forgot password?</Text>
-                     </TouchableOpacity>
-
+                    <Button primary raised text="Log in" onPress={this.toMapView} />
+                    <Button text="List View Shortcut" onPress={this.toListView} />
+                    <Button text="Forgot password?" onPress={this.toLogin} />
                  </ButtonContainerComp>
-
-
               </View>
-
-
+                       
+              <View>
+                <Button primary raised text="Create Account" onPress={this.toSignUp} />
+              </View>
 
               <ButtonContainerComp>
                   <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
                     <Text style={{color: '#fff'}}>Create Account</Text>
                   </TouchableOpacity>
               </ButtonContainerComp>
-
-
 
           </LoginSignupContainer>
          </ScrollView>
