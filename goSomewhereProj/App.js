@@ -24,10 +24,7 @@ const Application = StackNavigator({
   },
 
   Login: {
-    screen: Login,
-    navigationOptions: {
-      title: 'Login'
-    }
+    screen: Login
   },
   
 

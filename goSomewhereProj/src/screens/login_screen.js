@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Navigator,
-  TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
   Dimensions,
@@ -15,22 +14,14 @@ import {
 } from 'react-native';
 
 import { Button } from 'react-native-material-ui';
-import globalStyle from '../styles/Global_Container_Style';
-import {StackNavigator} from 'react-navigation';
-
-//importing components
-import ButtonContainerComp from '../components/login_screen_comps/ButtonContainerComp';
-import LogoContainer from '../components/login_screen_comps/LogoContainer';
-import LoginSignupContainer from '../components/login_screen_comps/LoginSignupContainer';
-import TextFieldContainer from '../components/login_screen_comps/TextFieldContainer';
-
-
-const dimensions = Dimensions.get('window');
-//const imageHeight = Math.round(dimensions.width * 16 / 9);
-const getWidth = dimensions.width;
+import { StackNavigator, NavigationActions } from 'react-navigation';
+import { TextField } from 'react-native-material-textfield';
 
 export default class Login_Screen extends React.Component {
-
+  static navigationOptions = {
+    header: null
+  }
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -56,46 +47,39 @@ export default class Login_Screen extends React.Component {
 
   render() {
     return (
-      <ScrollView >
-        <LoginSignupContainer>
+      <ScrollView contentContainerStyle={{flex:1}}>
+        <View style={styles.container}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/logo.png')}
+          />
+          
+          <TextField
+            label='Email'
+            value={this.state.email}
+            onChangeText={(email) => this.setState({email})}
+          />
 
-          <View>
-            <LogoContainer>
-              <Image
-              style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
-              source={require('../assets/logo.png')}
-              />
-            </LogoContainer>
-            <TextFieldContainer>
-              <TextInput style={{
-                height: 50,
-                marginLeft: 0
-              }} placeholder='email' onChangeText={(email) => this.setState({email})}/>
+          <TextField
+            label='Password'
+            secureTextEntry={true}
+            containerStyle={{ marginBottom: 30 }}
+            onChangeText={(password) => this.setState({password})}
+          />
 
-              <TextInput style={{
-                height: 50,
-                marginLeft: 0
-              }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-            </TextFieldContainer>
+          <Button primary raised text="Log in" onPress={this.login} />
 
-            <ButtonContainerComp>
-              <Button primary raised text="Log in" onPress={this.login} />
-              <Button text="List View Shortcut" onPress={this.toListView} />
-              <Button text="Forgot password?" onPress={this.toLogin} />
-            </ButtonContainerComp>
-          </View>
-                       
-          <View>
-            <Button primary raised text="Create Account" onPress={this.toSignUp} />
+          <View style={styles.forgotBtnContainer}>
+            <Button text="Forgot password?" containerStyle={{backgroundColor: 'red', marginTop: 20}} upperCase={false} onPress={this.toLogin} />
           </View>
 
-          <ButtonContainerComp>
-            <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-              <Text style={{color: '#fff'}}>Create Account</Text>
-            </TouchableOpacity>
-          </ButtonContainerComp>
-
-        </LoginSignupContainer>
+          <View style={styles.signupBtnContainer}>
+            <Text>Dont have an account?</Text>
+            <Button text="Sign up" upperCase={false} primary onPress={this.toSignUp} />
+          </View>
+          
+          
+        </View>
       </ScrollView>
     );
   }
@@ -135,14 +119,24 @@ export default class Login_Screen extends React.Component {
     .then((response) => response.json())
     .then(async (res) => {
       // if email and pass combination is valid, then log the user in
-      try {
-        await AsyncStorage.setItem('user', JSON.stringify(res));
-      } catch (error) {
-        Alert.alert("catching exception")
-        // Error saving data
-      }      
+      if(res.auth_token) {
+        try {
+          await AsyncStorage.setItem('user', JSON.stringify(res), () => {
+            const actionToDispatch = NavigationActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Map' })]
+            })
+            this.props.navigation.dispatch(actionToDispatch)        
+          });
+        } catch (error) {
+          Alert.alert("catching exception");
+        }
+      } else if (res.errors) {
+        Alert.alert(res.errors);
+      }
+            
     }).catch((err) => {
-      console.log(err);
+      Alert.alert("catching exception12")
     }).done();
 
     //
@@ -151,72 +145,26 @@ export default class Login_Screen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 40,
     paddingRight: 40,
-    width: getWidth
   },
-
-  header: {
-    fontSize: 24,
-    marginTop: 20,
-    marginBottom: 60,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    paddingLeft: 40,
-    paddingRight: 40
+  logo: {
+    width: 200,
+    height: 42,
+    marginTop: 30,
+    marginBottom: 40,
+    alignSelf: 'center'
   },
-
-  /*
-  textInput: {
-  alignSelf: 'stretch',
-  paddingLeft: 16,
-  marginBottom: 20,
-  backgroundColor: '#fff',
-  height: 50,
-
+  forgotBtnContainer: {
+    marginTop: 30
   },
-  */
-  btn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    backgroundColor: '#e67e22',
+  signupBtnContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  clearBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  signupBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 80,
-    backgroundColor: '#2BB2D5',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  shortcutBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
+    justifyContent: 'center'
   }
 });
