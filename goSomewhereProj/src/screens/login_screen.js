@@ -10,7 +10,8 @@ import {
   Dimensions,
   AsyncStorage,
   ScrollView,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 
 import { Button } from 'react-native-material-ui';
@@ -30,132 +31,123 @@ const getWidth = dimensions.width;
 
 export default class Login_Screen extends React.Component {
 
-   constructor(props) {
-      super(props);
-      this.state = {
-         username: '',
-         password: '',
-         list: [], //starting with empty array so its allocated before the fetch method works
-      }
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      list: [], //starting with empty array so its allocated before the fetch method works
+    }
+  }
 
-   //check to see if user has logged in already
-   componentDidMount() {
-      this._loadInitialState().done();
-   }
+  //check to see if user has logged in already
+  componentDidMount() {
+    this._loadInitialState().done();
+  }
 
-   //get info from async storage
-   _loadInitialState = async () => {
-      var value = await AsyncStorage.getItem('user');
+  //get info from async storage
+  _loadInitialState = async () => {
+    var value = await AsyncStorage.getItem('user');
 
-      if (value != null) { //if the user is already logged in
-         this.props.navigation.navigate('Profile'); //**profile page that we will create later
-      }
-   }
+    if (value != null) { //if the user is already logged in
+      this.props.navigation.navigate('Profile'); //**profile page that we will create later
+    }
+  }
 
-   componentWillMount() {}
+  render() {
+    return (
+      <ScrollView >
+        <LoginSignupContainer>
 
-   render() {
+          <View>
+            <LogoContainer>
+              <Image
+              style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
+              source={require('../assets/logo.png')}
+              />
+            </LogoContainer>
+            <TextFieldContainer>
+              <TextInput style={{
+                height: 50,
+                marginLeft: 0
+              }} placeholder='email' onChangeText={(email) => this.setState({email})}/>
 
-     return (
+              <TextInput style={{
+                height: 50,
+                marginLeft: 0
+              }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
+            </TextFieldContainer>
 
-         <ScrollView >
-            <LoginSignupContainer>
-
-              <View>
-
-                  <LogoContainer>
-                      <Image
-                          style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
-                          source={require('../assets/logo.png')}
-                      />
-                  </LogoContainer>
-                 <TextFieldContainer>
-                    <TextInput style={{
-                      height: 50,
-                      marginLeft: 0
-                       }} placeholder='Username' onChangeText={(username) => this.setState({username})}/>
-
-                    <TextInput style={{
-                      height: 50,
-                      marginLeft: 0
-                       }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-                 </TextFieldContainer>
-
-                 <ButtonContainerComp>
-                    <Button primary raised text="Log in" onPress={this.toMapView} />
-                    <Button text="List View Shortcut" onPress={this.toListView} />
-                    <Button text="Forgot password?" onPress={this.toLogin} />
-                 </ButtonContainerComp>
-              </View>
+            <ButtonContainerComp>
+              <Button primary raised text="Log in" onPress={this.login} />
+              <Button text="List View Shortcut" onPress={this.toListView} />
+              <Button text="Forgot password?" onPress={this.toLogin} />
+            </ButtonContainerComp>
+          </View>
                        
-              <View>
-                <Button primary raised text="Create Account" onPress={this.toSignUp} />
-              </View>
+          <View>
+            <Button primary raised text="Create Account" onPress={this.toSignUp} />
+          </View>
 
-              <ButtonContainerComp>
-                  <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-                    <Text style={{color: '#fff'}}>Create Account</Text>
-                  </TouchableOpacity>
-              </ButtonContainerComp>
+          <ButtonContainerComp>
+            <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
+              <Text style={{color: '#fff'}}>Create Account</Text>
+            </TouchableOpacity>
+          </ButtonContainerComp>
 
-          </LoginSignupContainer>
-         </ScrollView>
-      );
-   }
+        </LoginSignupContainer>
+      </ScrollView>
+    );
+  }
 
-   toMapView = () => {
-      this.props.navigation.navigate('Map');
-   }
+  toMapView = () => {
+    this.props.navigation.navigate('Map');
+  }
 
-   toListView = () => {
-      this.props.navigation.navigate('ListView');
-   }
+  toListView = () => {
+    this.props.navigation.navigate('ListView');
+  }
 
-   toEventDetails = () => {
-      this.props.navigation.navigate('Event');
-   }
+  toEventDetails = () => {
+    this.props.navigation.navigate('Event');
+  }
 
-   toSignUp = () => {
-      this.props.navigation.navigate('SignUp');
-   }
+  toSignUp = () => {
+    this.props.navigation.navigate('SignUp');
+  }
 
-   login = () => {
+  login = () => {
 
-      //send to server
-      fetch('http://127.0.0.1:3000/v1/users.json', {
-         method: 'POST',
-         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({username: this.state.username, password: this.state.password})
+    //send to server
+    fetch('https://gosomewhere-backend.herokuapp.com/signin', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
       })
+    })
 
-      //handle response
-         .then((response) => response.json()).then((res) => {
-         //alert('hello');
-         console.log('response happened1');
-         console.log(res);
+    //handle response
+    .then((response) => response.json())
+    .then(async (res) => {
+      // if email and pass combination is valid, then log the user in
+      try {
+        await AsyncStorage.setItem('user', JSON.stringify(res));
+      } catch (error) {
+        Alert.alert("catching exception")
+        // Error saving data
+      }      
+    }).catch((err) => {
+      console.log(err);
+    }).done();
 
-         //if user and pass exists, then log them in
-         if (res.success === true) {
-            console.log('user exists in DB');
-            //AysncStorage.setItem('user',res.user);   may need this later
-            this.props.navigation.navigate('Profile') //else, tell the user they dont exist in the database; navigate user to profile page
-         } else {
-            console.log('user was not in the database' + res.message);
-         }
-      }).catch((err) => {
-         console.log(err);
-      }).done();
+    //
 
-      //
-
-   }
-
-   componentWillMount() {}
-
+  }
 }
 
 const styles = StyleSheet.create({
