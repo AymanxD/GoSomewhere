@@ -48,7 +48,6 @@ constructor(props) {
 
       <TouchableHighlight onPress={() => {
       this.setState(previousState => {return {colorLike: this.state.colorLike=='black' ? 'red':'black'};});
-
       }}>
       <Text style={{fontSize:30, color:this.state.colorLike}}>Like</Text>
       </TouchableHighlight>
@@ -74,7 +73,6 @@ constructor(props) {
        </TouchableHighlight>
      </View>
 
-
      <View style={{ padding: 10 }}>
        <Text>Event name: {events[id]['title']}</Text>
        <Text>Date: {events[id]['start_at']}</Text>
@@ -83,8 +81,9 @@ constructor(props) {
        <Text></Text>
        <Text>{events[id]['description']}</Text>
        </View>
-       <TouchableHighlight onPress={() => this.props.navigation.navigate('Comments')}>    
+       <TouchableHighlight onPress={() => this.props.navigation.navigate('Comments', {id:0})}>    
         <Text style={{fontSize:15}}>Add a comment!</Text>
+        
        </TouchableHighlight>
        
      </ScrollView>

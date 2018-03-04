@@ -21,12 +21,6 @@ const uiTheme = {
 const Application = StackNavigator({
 
 
-    Comments: {screen: Comments,
-        navigationOptions: {
-            title: 'Comments'
-        }
-    },
-    
     Home: {screen: Login,
         navigationOptions: {
             title: 'Login'
@@ -48,6 +42,12 @@ const Application = StackNavigator({
     Event: {screen: Event,
         navigationOptions: {
             title: 'Android Hackathon'
+        }
+    },
+    
+    Comments: {screen: Comments,
+        navigationOptions: {
+            title: 'Rate and review'
         }
     },
 
