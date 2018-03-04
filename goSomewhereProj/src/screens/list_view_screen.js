@@ -124,12 +124,10 @@ const styles = StyleSheet.create({
   },
   title:{
     fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
+    fontWeight: 'bold'
   },
   description:{
-    fontSize: 14,
-    fontFamily: 'Roboto',
+    fontSize: 14
   },
   interest:{
     flexDirection: 'row',
