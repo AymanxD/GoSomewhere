@@ -4,6 +4,7 @@ import { ThemeProvider } from 'react-native-material-ui';
 import {StackNavigator} from 'react-navigation';
 
 import Login from './src/screens/login_screen';
+import Splash from './src/screens/splash_screen';
 import Map from './src/screens/map_view_screen';
 import Event from './src/screens/event_details_screen';
 import SignUp from './src/screens/sign_up_screen';
@@ -19,26 +20,39 @@ const uiTheme = {
 };
 
 const Application = StackNavigator({
+  Splash: {
+    screen: Splash
+  },
 
+<<<<<<< HEAD
 
     Home: {screen: Login,
         navigationOptions: {
             title: 'Login'
         }
     },
+=======
+  Login: {
+    screen: Login
+  },
+  
+>>>>>>> develop
 
-    SignUp: {screen: SignUp,
-        navigationOptions: {
-            title: 'Sign up'
-        }
-    },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+        title: 'Sign up'
+    }
+  },
 
-    Map: {screen: Map,
-        navigationOptions: {
-            title: 'Events List'
-        }
-    },
+  Map: {
+    screen: Map,
+    navigationOptions: {
+      title: 'Events List'
+    }
+  },
 
+<<<<<<< HEAD
     Event: {screen: Event,
         navigationOptions: {
             title: 'Android Hackathon'
@@ -58,6 +72,21 @@ const Application = StackNavigator({
     }
     
 
+=======
+  ListView: {
+    screen: ListView,
+    navigationOptions: {
+      title: 'Event List'
+    }
+  },
+
+  Event: {
+    screen: Event,
+    navigationOptions: {
+      title: 'Android Hackathon'
+    }
+  }
+>>>>>>> develop
 });
 
 export default class App extends React.Component {
