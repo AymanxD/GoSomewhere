@@ -3,6 +3,7 @@ import {Text} from 'react-native';
 import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 //import globalContainerStyle  from '../styles/Global_Container_Style';
 import { Button } from 'react-native-material-ui';
+//import { TextField } from 'react-native-material-textfield';
 
 //onst events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 
@@ -35,7 +36,12 @@ constructor(props) {
             <Text>YOU DID IT!</Text>
             <Text>fUCK YEAH MOTHER FUCKER!</Text>
             </View>
-
+{/* 
+            <TextField
+        label='Phone number'
+        value={phone}
+        onChangeText={ (phone) => this.setState({ phone }) }
+      /> */}
         <Button raised primary text="Post" onPress={() => this.props.navigation.navigate('Event', {id:0})} />    
 </View>
       );
