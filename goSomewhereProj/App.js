@@ -24,19 +24,15 @@ const Application = StackNavigator({
     screen: Splash
   },
 
-<<<<<<< HEAD
-
     Home: {screen: Login,
         navigationOptions: {
             title: 'Login'
         }
     },
-=======
+
   Login: {
     screen: Login
   },
-  
->>>>>>> develop
 
   SignUp: {
     screen: SignUp,
@@ -52,27 +48,7 @@ const Application = StackNavigator({
     }
   },
 
-<<<<<<< HEAD
-    Event: {screen: Event,
-        navigationOptions: {
-            title: 'Android Hackathon'
-        }
-    },
-    
-    Comments: {screen: Comments,
-        navigationOptions: {
-            title: 'Rate and review'
-        }
-    },
 
-    ListView: {screen: ListView,
-        navigationOptions: {
-            title: 'Event List'
-        }
-    }
-    
-
-=======
   ListView: {
     screen: ListView,
     navigationOptions: {
@@ -85,8 +61,14 @@ const Application = StackNavigator({
     navigationOptions: {
       title: 'Android Hackathon'
     }
-  }
->>>>>>> develop
+  },
+
+  Comments: {screen: Comments,
+    navigationOptions: {
+        title: 'Rate and review'
+    }
+}
+
 });
 
 export default class App extends React.Component {
