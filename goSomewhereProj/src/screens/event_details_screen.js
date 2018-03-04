@@ -1,7 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
-import {Button} from 'react-native';
+import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
+// import {Button} from 'react-native';
+import { Button, Icon } from 'react-native-material-ui';
 import globalContainerStyle  from '../styles/Global_Container_Style'
 
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
@@ -20,9 +21,14 @@ images = [{"party":require("../components/event_details_comps/party_category_ima
 export default class Event_Details_Screen extends React.Component {
 constructor(props) {
   super(props);
-  this.state = {colorLike:'black', colorGoing:'black'};
+  this.state = {
+    colorLike:'black', 
+    colorGoing:'black',
+  //  dataSource: ['row 1', 'row 2']
+};
   id=this.props.navigation.state.params.id;
   category=events[id]['category'];
+ //const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
   }
 
     render() {
@@ -73,6 +79,10 @@ constructor(props) {
        </TouchableHighlight>
      </View>
 
+     {/* <ListView
+        dataSource={this.state.dataSource}
+        renderRow={() => <Text>Hello</Text>}
+      /> */}
      <View style={{ padding: 10 }}>
        <Text>Event name: {events[id]['title']}</Text>
        <Text>Date: {events[id]['start_at']}</Text>
@@ -81,10 +91,20 @@ constructor(props) {
        <Text></Text>
        <Text>{events[id]['description']}</Text>
        </View>
-       <TouchableHighlight onPress={() => this.props.navigation.navigate('Comments', {id:0})}>    
-        <Text style={{fontSize:15}}>Add a comment!</Text>
+       <View style={styles.container}>
+     <SectionList
+          sections={[
+            {title: 'Mittens 25-Jan-2017', data: ['There was a lot of heavy petting']},
+            {title: 'Demon 16-Feb-2016', data: ['I\'ve never worked so hard in my life!']},
+          ]}          
+          renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item, index) => index}
+        />
+        </View>
+       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:0})} />
         
-       </TouchableHighlight>
+     
        
      </ScrollView>
             <View style={{
@@ -113,9 +133,26 @@ constructor(props) {
      </View>
       );
   };
-  // toComments = () => {
-  //   this.props.navigation.navigate('Event');
-  // }
 };
+const styles = StyleSheet.create({
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(247,247,247,1.0)',
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
 
 

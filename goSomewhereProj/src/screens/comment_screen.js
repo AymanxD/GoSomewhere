@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {View, ListView, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 //import globalContainerStyle  from '../styles/Global_Container_Style';
 import { Button } from 'react-native-material-ui';
 import { TextField } from 'react-native-material-textfield';
@@ -41,8 +41,7 @@ state = {
             <TextField
         label='Leave a comment...'
         multiline = {true}
-        onChangeText={ (message) => this.setState({message}) }
-                />
+        onChangeText={ (message) => this.setState({message}) }/>
         <Button raised primary text="Post" onPress={() => this.props.navigation.navigate('Event', {id:0})} />    
         </View>
       );
