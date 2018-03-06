@@ -26,7 +26,7 @@ const Application = StackNavigator({
   Login: {
     screen: Login
   },
-  
+
 
   SignUp: {
     screen: SignUp,
