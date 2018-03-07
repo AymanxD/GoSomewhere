@@ -2,12 +2,18 @@ import React from 'react';
 import {Text} from 'react-native';
 import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 // import {Button} from 'react-native';
-import { Button } from 'react-native-material-ui';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button, Icon } from 'react-native-material-ui';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Foundation from 'react-native-vector-icons/Foundation';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
+//const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 
 pressedLike='black';
 pressedGoing='black';
@@ -56,14 +62,15 @@ constructor(props) {
       <TouchableHighlight onPress={() => {
       this.setState(previousState => {return {colorLike: this.state.colorLike=='black' ? 'red':'black'};});
       }}>
-      <Text style={{fontSize:30, color:this.state.colorLike}}>Like</Text>
+      <Icon theme={{ iconFamily: 'EvilIcons' }} name='star' size = {40} />
       </TouchableHighlight>
 
 
       <TouchableHighlight onPress={() => {
       this.setState(previousState => {return {colorGoing: this.state.colorGoing=='black' ? 'green':'black'};});
       }}>
-      <Text style={{fontSize:30, color:this.state.colorGoing}}>Going</Text>
+      <Icon theme={{ iconFamily: 'EvilIcons' }} name='check' size = {40} />
+  
       </TouchableHighlight>
 
 
@@ -76,7 +83,7 @@ constructor(props) {
             dialogTitle: 'Share info',
           })
         }}>
-        <Text style={{fontSize:30}}>Share</Text>
+     <Icon theme={{ iconFamily: 'Entypo' }} name='share' size = {30} />
        </TouchableHighlight>
      </View>
 
@@ -91,9 +98,10 @@ constructor(props) {
        <Text>Address: {events[id]['address']}</Text>
        <Text></Text>
        <Text>{events[id]['description']}</Text>
-       {/* <i class="fas fa-phone"></i> */}
        </View>
+
        <View style={styles.container}>
+
      <SectionList
           sections={[
           {title: <Text>{user[0]['name'] + ': ' + user[0]['date']}</Text>, data: [<Text>{user[0]['message']}</Text>]},
@@ -117,19 +125,20 @@ constructor(props) {
              <TouchableHighlight onPress={() => {
               Linking.openURL('tel:1234567890');
              }}>
-               <Text style={{fontSize:30}}>Call</Text>
+         <Icon theme={{ iconFamily: 'Entypo' }} name='phone' size = {40} />
+              {/* //  <Icon> <Icon name="phone" size={40}/> </Icon> */}
              </TouchableHighlight>
 
              <TouchableHighlight onPress={() => {
              Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru");
              }}>
-               <Text style={{fontSize:30}}>Route</Text>
+              <Icon theme={{ iconFamily: 'Feather' }} name='navigation' size = {40} />
              </TouchableHighlight>
 
              <TouchableHighlight onPress={() => {
               Linking.openURL("https://shiftkeylabs.ca/calendar/android-hackathon/");
              }}>
-            <Text style={{fontSize:30}}>WWW</Text>
+              <Icon theme={{ iconFamily: 'MaterialCommunityIcons' }} name='web' size = {40} />
              </TouchableHighlight>
             </View>
      </View>
