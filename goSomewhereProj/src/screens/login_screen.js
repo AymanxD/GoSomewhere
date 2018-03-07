@@ -26,23 +26,56 @@ export default class Login_Screen extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: '',
-      list: [], //starting with empty array so its allocated before the fetch method works
+      password: ''
     }
   }
 
   //check to see if user has logged in already
   componentDidMount() {
-    this._loadInitialState().done();
+    const user = this.getCurrentUser();
+  }
+  
+  async getCurrentUser() {
+    try {
+      // for logout : await AsyncStorage.removeItem('user'); 
+      await AsyncStorage.getItem('user', (err, result) => {
+        const user = JSON.parse(result);
+        if (user && user.auth_token) {
+          this.checkAuthTokenValidity(user.auth_token);
+        }
+      });
+    } catch (error) {
+      Alert.alert("caught exception", JSON.stringify(error));
+    }
   }
 
-  //get info from async storage
-  _loadInitialState = async () => {
-    var value = await AsyncStorage.getItem('user');
-
-    if (value != null) { //if the user is already logged in
-      this.props.navigation.navigate('Profile'); //**profile page that we will create later
-    }
+  // Check if the saved auth_token is still valid and stored in backend
+  checkAuthTokenValidity(authToken) {
+    fetch('https://gosomewhere-backend.herokuapp.com/users/current', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Go-Auth': authToken
+      }
+    })
+    .then((response) => response.json())
+    .then(async (res) => {
+      if (res.errors === 'Unauthorized') {
+        await AsyncStorage.removeItem('user');
+      } else if (res.email) {
+        // User already logged in
+        this._navigateTo('Map');
+      }
+    }).done();
+  }
+  
+  _navigateTo(routeName) {
+    const actionToDispatch = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName })]
+    })
+    this.props.navigation.dispatch(actionToDispatch)
   }
 
   render() {
@@ -67,18 +100,16 @@ export default class Login_Screen extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
 
-          <Button primary raised text="Log in" onPress={this.login} />
+          <Button primary raised text="Sign in" onPress={this.signin} />
 
           <View style={styles.forgotBtnContainer}>
-            <Button text="Forgot password?" containerStyle={{backgroundColor: 'red', marginTop: 20}} upperCase={false} onPress={this.toLogin} />
+            <Button text="Forgot password?" containerStyle={{backgroundColor: 'red', marginTop: 20}} upperCase={false} onPress={this.toSignin} />
           </View>
 
           <View style={styles.signupBtnContainer}>
             <Text>Dont have an account?</Text>
             <Button text="Sign up" upperCase={false} primary onPress={this.toSignUp} />
           </View>
-          
-          
         </View>
       </ScrollView>
     );
@@ -88,20 +119,11 @@ export default class Login_Screen extends React.Component {
     this.props.navigation.navigate('Map');
   }
 
-  toListView = () => {
-    this.props.navigation.navigate('ListView');
-  }
-
-  toEventDetails = () => {
-    this.props.navigation.navigate('Event');
-  }
-
   toSignUp = () => {
     this.props.navigation.navigate('SignUp');
   }
 
-  login = () => {
-
+  signin = () => {
     //send to server
     fetch('https://gosomewhere-backend.herokuapp.com/signin', {
       method: 'POST',
@@ -134,13 +156,9 @@ export default class Login_Screen extends React.Component {
       } else if (res.errors) {
         Alert.alert(res.errors);
       }
-            
     }).catch((err) => {
-      Alert.alert("catching exception12")
+      Alert.alert("catching exception")
     }).done();
-
-    //
-
   }
 }
 
