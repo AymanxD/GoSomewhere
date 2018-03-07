@@ -2,11 +2,11 @@ import React from 'react';
 import {Text} from 'react-native';
 import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 // import {Button} from 'react-native';
-import { Button, Icon } from 'react-native-material-ui';
-import globalContainerStyle  from '../styles/Global_Container_Style'
+import { Button } from 'react-native-material-ui';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
-
+const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
 
 pressedLike='black';
@@ -24,6 +24,7 @@ constructor(props) {
   this.state = {
     colorLike:'black', 
     colorGoing:'black',
+    message:'No one was petting me',
   //  dataSource: ['row 1', 'row 2']
 };
   id=this.props.navigation.state.params.id;
@@ -90,13 +91,14 @@ constructor(props) {
        <Text>Address: {events[id]['address']}</Text>
        <Text></Text>
        <Text>{events[id]['description']}</Text>
+       {/* <i class="fas fa-phone"></i> */}
        </View>
        <View style={styles.container}>
      <SectionList
           sections={[
-            {title: 'Mittens 25-Jan-2017', data: ['There was a lot of heavy petting']},
-            {title: 'Demon 16-Feb-2016', data: ['I\'ve never worked so hard in my life!']},
-          ]}          
+          {title: <Text>{user[0]['name'] + ': ' + user[0]['date']}</Text>, data: [<Text>{user[0]['message']}</Text>]},
+          {title: <Text>{user[1]['name'] + ': ' + user[1]['date']}</Text>, data: [<Text>{user[1]['message']}</Text>]},
+          {title: <Text>{user[2]['name'] + ': ' + user[2]['date']}</Text>, data: [<Text>{user[2]['message']}</Text>]},]}          
           renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
