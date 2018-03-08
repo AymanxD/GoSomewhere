@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,Navigator } from 'react-native';
 import { ThemeProvider } from 'react-native-material-ui';
 import {StackNavigator} from 'react-navigation';
 
-import Login from './src/screens/login_screen';
+import Signin from './src/screens/login_screen';
 import Splash from './src/screens/splash_screen';
 import Map from './src/screens/map_view_screen';
 import Event from './src/screens/event_details_screen';
@@ -24,15 +24,10 @@ const Application = StackNavigator({
     screen: Splash
   },
 
-    Home: {screen: Login,
-        navigationOptions: {
-            title: 'Login'
-        }
-    },
-
-  Login: {
-    screen: Login
+  Signin: {
+    screen: Signin
   },
+
 
   SignUp: {
     screen: SignUp,
