@@ -31,14 +31,32 @@ constructor(props) {
     colorLike:'black', 
     colorGoing:'black',
     message:'No one was petting me',
+    checkIcon:"star-outlined",
   //  dataSource: ['row 1', 'row 2']
-};
-  id=this.props.navigation.state.params.id;
-  category=events[id]['category'];
+  };
+  const id=this.props.navigation.state.params.id;
+  const category= events[id]['category'];
  //const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-  }
 
+  this.changeIconName = this.changeIconName.bind(this);
+
+
+  }
+  changeIconName() {
+    if (this.state.checkIcon === "star-outlined") {
+      this.setState({
+        checkIcon: "star"
+      })
+      } else {
+        this.setState({
+          checkIcon: "star-outlined"
+        })      
+      }
+
+  }
     render() {
+      const id=this.props.navigation.state.params.id;
+      const category= events[id]['category'];
 
       return (
 
@@ -59,38 +77,23 @@ constructor(props) {
       }}
       >
 
-      <TouchableHighlight onPress={() => {
-      this.setState(previousState => {return {colorLike: this.state.colorLike=='black' ? 'red':'black'};});
-      }}>
-      <Icon theme={{ iconFamily: 'EvilIcons' }} name='star' size = {40} />
-      </TouchableHighlight>
+        
+<Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color = 'black' size = {40} 
+       onPress={() => {this.changeIconName()}} />
 
+<Entypo.Button name='check' backgroundColor='transparent' color = 'black' size = {40} />
 
-      <TouchableHighlight onPress={() => {
-      this.setState(previousState => {return {colorGoing: this.state.colorGoing=='black' ? 'green':'black'};});
-      }}>
-      <Icon theme={{ iconFamily: 'EvilIcons' }} name='check' size = {40} />
-  
-      </TouchableHighlight>
+<Entypo.Button name='share' backgroundColor='transparent' color = 'black' size = {40} 
+       onPress={() => Share.share({
+        message: 'ShiftKey Labs hackaton',
+        url: 'shiftkeylabs.ca/calendar/android-hackathon/',
+        title: 'Wow, did you see that?'
+      }, {
+        dialogTitle: 'Share info',
+      }) } />
 
-
-       <TouchableHighlight onPress={() => {
-         Share.share({
-            message: 'ShiftKey Labs hackaton',
-            url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-            title: 'Wow, did you see that?'
-          }, {
-            dialogTitle: 'Share info',
-          })
-        }}>
-     <Icon theme={{ iconFamily: 'Entypo' }} name='share' size = {30} />
-       </TouchableHighlight>
      </View>
 
-     {/* <ListView
-        dataSource={this.state.dataSource}
-        renderRow={() => <Text>Hello</Text>}
-      /> */}
      <View style={{ padding: 10 }}>
        <Text>Event name: {events[id]['title']}</Text>
        <Text>Date: {events[id]['start_at']}</Text>
@@ -126,7 +129,6 @@ constructor(props) {
               Linking.openURL('tel:1234567890');
              }}>
          <Icon theme={{ iconFamily: 'Entypo' }} name='phone' size = {40} />
-              {/* //  <Icon> <Icon name="phone" size={40}/> </Icon> */}
              </TouchableHighlight>
 
              <TouchableHighlight onPress={() => {
