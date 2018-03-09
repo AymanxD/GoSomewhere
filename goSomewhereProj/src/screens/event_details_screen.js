@@ -9,8 +9,10 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
+
+const events = [{"id":1,"title":"Android Hackathon","category":"study","description":"Mittens was dancing on the tables","start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
@@ -71,7 +73,6 @@ constructor(props) {
 
      <View
      style={{
-//       height:50,
         flexDirection: 'row',
         justifyContent: 'space-around'
       }}
@@ -93,18 +94,42 @@ constructor(props) {
       }) } />
 
      </View>
+     <View style={styles.padding}>
+     <Text style ={styles.details}>Event name: {events[id]['title']}</Text> 
+     <Text style ={styles.details}>Description: {events[id]['description']} </Text>
 
-     <View style={{ padding: 10 }}>
-       <Text>Event name: {events[id]['title']}</Text>
-       <Text>Date: {events[id]['start_at']}</Text>
-       <Text>Category: {category}</Text>
-       <Text>Address: {events[id]['address']}</Text>
-       <Text></Text>
-       <Text>{events[id]['description']}</Text>
+      </View>
+     <View style={{ padding: 10}}>
+     <View style = {styles.lineStyle}></View>
+
+      <View style={{flexDirection: 'row'}}> 
+      <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = 'blue' size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Date: {events[id]['start_at']}</Text>  
+      </View>
+       <View style = {styles.lineStyle}></View>
+
+      <View style={{flexDirection: 'row'}}> 
+      <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = 'blue' size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Category: {category}</Text>  
+      </View>
+       <View style = {styles.lineStyle}></View>
+
+      <View style={{flexDirection: 'row'}}> 
+      <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = 'blue' size = {24} paddingRight={15}/>
+      <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {events[id]['address']}</Text>  
+      </View>
+       <View style = {styles.lineStyle}></View>
+
+      <View style={{flexDirection: 'row'}}> 
+      <MaterialIcons.Button name='phone' backgroundColor='transparent' color = 'blue' size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Phone no: (902) CAT-CATS</Text>  
+      </View>
+       <View style = {styles.lineStyle}></View>       
+
        </View>
 
-       <View style={styles.container}>
-
+       <View style={[styles.padding, {flex:1}]}>
+       <Text style={{paddingLeft: 10, fontSize:13, fontWeight:'bold'}}>REVIEWS</Text>
      <SectionList
           sections={[
           {title: <Text>{user[0]['name'] + ': ' + user[0]['date']}</Text>, data: [<Text>{user[0]['message']}</Text>]},
@@ -116,9 +141,6 @@ constructor(props) {
         />
         </View>
        <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:0})} />
-        
-     
-       
      </ScrollView>
             <View style={{
               height:50,
@@ -157,15 +179,35 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
+  //  backgroundColor: 'rgba(247,247,247,1.0)',
+  },
+  lineStyle:{
+    borderWidth: 0.5,
+    borderColor:'grey',
   },
   item: {
     padding: 10,
-    fontSize: 18,
+    fontSize: 13,
     height: 44,
   },
-})
+  details: {
+    paddingBottom: 10,   
+    paddingTop: 10,
+    paddingRight: 10,
+    fontSize: 13,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  padding: {
+    paddingBottom: 10,   
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingLeft:15,
+  }
+});
 
-
+    
