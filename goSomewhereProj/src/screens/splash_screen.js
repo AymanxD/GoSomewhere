@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
-export default class Login_Screen extends React.Component {
+export default class Splash_Screen extends React.Component {
 
   constructor(props) {
     super(props);
   }
   
-  //check to see if user has logged in already
+  // check to see if user has logged in already
   componentDidMount() {
     const user = this.getCurrentUser();
   }
@@ -21,7 +21,7 @@ export default class Login_Screen extends React.Component {
         if (user && user.auth_token) {
           this._navigateTo('Map');
         } else {
-          this._navigateTo('Login');
+          this._navigateTo('Signin');
         }
       });
     } catch (error) {
