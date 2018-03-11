@@ -16,7 +16,7 @@ const events = [{"id":1,"title":"Android Hackathon","category":"study","descript
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
-
+const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
 
@@ -71,7 +71,7 @@ constructor(props) {
     <Image source={images[0][category]}
       style={{flex:1, height:200, width: 380}} />
 
-        <View style={{width: 380, height: 75, backgroundColor: 'rgb(72, 133, 237)'}}>
+        <View style={{width: 380, height: 75, backgroundColor:customBlue}}>
         <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {events[id]['title']} </Text>
         <Text style ={[styles.padding, {color:'white'}]}> Date: {events[id]['start_at']} </Text>
         </View> 
@@ -79,21 +79,30 @@ constructor(props) {
      <View
      style={{
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingBottom: 10,
       }}>  
-<Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color = 'black' size = {40} 
-       onPress={() => {this.changeIconName()}} />
+        <TouchableOpacity>
+          <Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color ={customBlue} size = {40} 
+          onPress={() => {this.changeIconName()}} />
+          <Text style={{textAlign:'center', color:customBlue}}>LIKE</Text>
+       </TouchableOpacity>
 
-<Entypo.Button name='check' backgroundColor='transparent' color = 'black' size = {40} />
+       <TouchableOpacity>
+          <Entypo.Button name='check' backgroundColor='transparent' color = {customBlue} size = {40} />
+          <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+      </TouchableOpacity>
 
-<Entypo.Button name='share' backgroundColor='transparent' color = 'black' size = {40} 
-       onPress={() => Share.share({
+      <TouchableOpacity onPress={() => Share.share({
         message: 'ShiftKey Labs hackaton',
         url: 'shiftkeylabs.ca/calendar/android-hackathon/',
         title: 'Wow, did you see that?'
       }, {
         dialogTitle: 'Share info',
-      }) } />
+      }) } >
+        <Entypo.Button name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
+        <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
+      </TouchableOpacity>
 
      </View>
      <View style = {styles.lineStyle}></View>
@@ -104,20 +113,20 @@ constructor(props) {
      <View style = {styles.lineStyle}></View>
 
       <View style={{flexDirection: 'row'}}> 
-      <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = 'rgb(72, 133, 237)' size = {24} paddingRight={15}/>
+      <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Date: {events[id]['start_at']}</Text>  
       </View>
        <View style = {styles.lineStyle}></View>
 
       <View style={{flexDirection: 'row'}}> 
-      <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = 'rgb(72, 133, 237)' size = {24} paddingRight={15}/>
+      <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Category: {category}</Text>  
       </View>
        <View style = {styles.lineStyle}></View>
 
        <TouchableOpacity onPress={() => {Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru")}}>
       <View style={{flexDirection: 'row'}}> 
-      <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = 'rgb(72, 133, 237)' size = {24} paddingRight={15}/>
+      <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {events[id]['address']}</Text>  
       </View>
       </TouchableOpacity>
@@ -126,7 +135,7 @@ constructor(props) {
        
        <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
        <View style={{flexDirection: 'row'}}> 
-      <MaterialIcons.Button name='phone' backgroundColor='transparent' color = 'rgb(72, 133, 237)' size = {24} paddingRight={15}/>
+      <MaterialIcons.Button name='phone' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Phone no: (902) CAT-CATS</Text> 
       </View> 
       </TouchableOpacity>
