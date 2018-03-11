@@ -24,7 +24,7 @@ pressedGoing='black';
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
 
-
+// google api url: https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=events[id]['latitude'],events[id]['longitude']&radius=50&keyword=events[id]['name']&key=AIzaSyA1ihdTdZW3M7nOMQz2tdgtuX0HCVc9tBo
 
 export default class Event_Details_Screen extends React.Component {
 constructor(props) {
@@ -94,11 +94,11 @@ constructor(props) {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
-        message: 'ShiftKey Labs hackaton',
+        message: [events[id]['name'] + events[id]['date']],
         url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-        title: 'Wow, did you see that?'
+        title: events[id]['name'],
       }, {
-        dialogTitle: 'Share info',
+        dialogTitle: 'Share with your friends!',
       }) } >
         <Entypo.Button name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
         <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
@@ -158,27 +158,27 @@ constructor(props) {
        <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:0})} />
      </ScrollView>
             <View style={{
-              height:50,
                flexDirection: 'row',
                justifyContent: 'space-around'
              }}>
-             <TouchableHighlight onPress={() => {
-              Linking.openURL('tel:1234567890');
-             }}>
-         <Icon theme={{ iconFamily: 'Entypo' }} name='phone' size = {40} />
-             </TouchableHighlight>
+             <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
+              <MaterialCommunityIcons.Button name='phone' backgroundColor='transparent' color = 'black' size = {40} />
+              <Text style={{textAlign:'center'}}>CALL</Text>
+             </TouchableOpacity>
 
-             <TouchableHighlight onPress={() => {
+             <TouchableOpacity onPress={() => {
              Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru");
              }}>
-              <Icon theme={{ iconFamily: 'Feather' }} name='navigation' size = {40} />
-             </TouchableHighlight>
+              <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
+              <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
+             </TouchableOpacity>
 
-             <TouchableHighlight onPress={() => {
+             <TouchableOpacity onPress={() => {
               Linking.openURL("https://shiftkeylabs.ca/calendar/android-hackathon/");
              }}>
-              <Icon theme={{ iconFamily: 'MaterialCommunityIcons' }} name='web' size = {40} />
-             </TouchableHighlight>
+              <MaterialCommunityIcons.Button name='web' backgroundColor='transparent' color = 'black' size = {40} />
+              <Text style={{textAlign:'center'}}>WEB</Text>
+             </TouchableOpacity>
             </View>
      </View>
       );
