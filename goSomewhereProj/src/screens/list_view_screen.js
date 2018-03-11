@@ -4,11 +4,6 @@ import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,Toucha
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
-
-// import MenuBar from '../components/map_listview_comps/Menubar';
-
- //import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   StackNavigator,
@@ -22,38 +17,29 @@ export default class List_View_Screen extends React.Component {
         super(props);
         this.state = {
             latitude: null,
+            events: [],
             longitude: null,
             error: null,
-            dataSource: ds.cloneWithRows([
-              {
-              "id" : 1,
-              "title" : 'Hackathon',
-              "description" : null,
-              "start_at" : '2018-02-10T14:10:52.773Z',
-              "end_at" : '2018-02-11T20:12:37.044Z',
-              "attendees" : null,
-              "created_at" : '2018-02-10T18:12:44.050Z',
-              "updated_at" : '2018-02-10T18:12:44.050Z',
-              "latitude" : 44.6374247,
-              "longitude" : -63.5872094,
-              "address" : 'Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5'
-              },
-              {
-              "id" : 2,
-              "title" : 'Party after winning Hackathon',
-              "description" : 'Please bring your own drink',
-              "start_at" : '2018-02-11T22:19:45.595Z',
-              "end_at" : null,
-              "attendees" : null,
-              "created_at" : '2018-02-10T18:21:52.274Z',
-              "updated_at" : '2018-02-10T18:21:52.274Z',
-              "latitude" : 44.6386448,
-              "longitude" : -63.5919118,
-              "address" : 'H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2'
-              }
-          ]),
           interested: 'star-o'
         }
+    }
+
+    componentWillMount(){
+       Alert.alert("events");
+
+      fetch('https://gosomewhere-backend.herokuapp.com/events', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({events: responseJson});
+        });
+
+        navigator.geolocation.clearWatch(this.watchId);
     }
 
   componentDidMount() {
@@ -71,19 +57,12 @@ export default class List_View_Screen extends React.Component {
     );
   }
 
-  componentWillMount() {
-  //this.fetchData();
-
-  //location services
-  navigator.geolocation.clearWatch(this.watchId);
-}
 
   _renderRow(rowData) {
     return(
       <View>
         <View style={styles.row}>
          <Text style={styles.title}>{rowData.title}</Text>
-         <Text style={styles.description}>{rowData.description}</Text>
          <View style={styles.interest}>
           <Text style={styles.description}>Are you interested?</Text>
           <TouchableHighlight onPress={this._interested.bind(this)}>
@@ -115,9 +94,10 @@ export default class List_View_Screen extends React.Component {
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={ds.cloneWithRows(this.state.events)}
           renderRow={this._renderRow.bind(this)}
         />
+
       </View>
     );
   }
@@ -144,12 +124,10 @@ const styles = StyleSheet.create({
   },
   title:{
     fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
+    fontWeight: 'bold'
   },
   description:{
-    fontSize: 14,
-    fontFamily: 'Roboto',
+    fontSize: 14
   },
   interest:{
     flexDirection: 'row',

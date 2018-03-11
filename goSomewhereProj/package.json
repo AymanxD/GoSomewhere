@@ -4,8 +4,13 @@
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-preset-flow": "^6.23.0",
-    "eslint-config-rallycoding": "^3.2.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "jest-expo": "25.0.0",
     "react-native-scripts": "^1.11.1",
     "react-test-renderer": "16.2.0"
@@ -22,13 +27,14 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "eslint-plugin-react-native": "^3.2.1",
     "expo": "^25.0.0",
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-native-fontawesome": "^5.7.0",
     "react-native-material-design": "^0.3.7",
-    "react-native-material-design-styles": "^0.2.7",
+    "react-native-material-textfield": "^0.12.0",
+    "react-native-material-ui": "^1.19.0",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.3"
   }
