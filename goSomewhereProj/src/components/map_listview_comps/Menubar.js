@@ -3,7 +3,9 @@ import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,Toucha
  AsyncStorage,ScrollView,List, ListView, StatusBar
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Button, Subheader, COLOR } from 'react-native-material-design';
+import { BottomNavigation } from 'react-native-material-ui';
+
+
 export default class MenuBar extends React.Component {
 
   componentDidMount() {
@@ -30,22 +32,29 @@ export default class MenuBar extends React.Component {
 
   render() {
     return (
-      <View style={styles.menuBar}>
-        <Subheader text ="Light Theme"/>
-          <View style={styles.menuBar}>
-            <Button text="NORMAL" primary={theme} />
-            <Button text="NORMAL RAISED" primary={theme} raised/>
-            <Button text="DISABLED" primary={theme} disabled/>
-            <Button text="DISABLED RAISED" primary={theme} disabled raised/>
-          </View>
-      </View>
+        <BottomNavigation hidden={false} >
+            <BottomNavigation.Action
+                key= {this.props.buttonLeft.key}
+                icon= {this.props.buttonLeft.icon}
+                label= {this.props.buttonLeft.label}
+                onPress= {this.props.buttonLeft.onPress}
+            />
+            <BottomNavigation.Action
+                key= {this.props.buttonCenter.key}
+                icon= {this.props.buttonCenter.icon}
+                label= {this.props.buttonCenter.label}
+                onPress= {this.props.buttonCenter.onPress}
+            />
+            <BottomNavigation.Action
+                key= {this.props.buttonRight.key}
+                icon= {this.props.buttonRight.icon}
+                label= {this.props.buttonRight.label}
+                onPress= {this.props.buttonRight.onPress}
+            />
+        </BottomNavigation>
+
     );
   }
 }
 
-const styles = StyleSheet.create({
-  menuBar: {
-    flex: 1,
-    padding: 16
-  }
-});
+

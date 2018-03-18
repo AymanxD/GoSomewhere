@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View,Navigator,TextInput, KeyboardAvoidingView,TouchableOpacity,
- AsyncStorage,ScrollView,List, ListView, StatusBar, TouchableHighlight, Alert
+import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import MenuBar from "../components/map_listview_comps/Menubar";
+import { ListItem } from 'react-native-material-ui';
 import {
   StackNavigator,
 } from 'react-navigation';
@@ -20,13 +19,30 @@ export default class List_View_Screen extends React.Component {
             events: [],
             longitude: null,
             error: null,
-          interested: 'star-o'
+            buttonLeft: {
+                key: "Switch City",
+                icon: "location-city",
+                label: "Switch City",
+                onPress: () => this.setState({})
+            },
+            buttonCenter: {
+                key: "Map",
+                icon: "map",
+                label: "Map",
+                onPress: () => this.setState({})
+
+            },
+            buttonRight: {
+                key: "filter",
+                icon: "filter-list",
+                label: "Filter",
+                onPress: () => this.setState({})
+            },
+
         }
     }
 
     componentWillMount(){
-       Alert.alert("events");
-
       fetch('https://gosomewhere-backend.herokuapp.com/events', {
         method: 'GET',
         headers: {
@@ -57,84 +73,35 @@ export default class List_View_Screen extends React.Component {
     );
   }
 
-
   _renderRow(rowData) {
     return(
       <View>
-        <View style={styles.row}>
-         <Text style={styles.title}>{rowData.title}</Text>
-         <View style={styles.interest}>
-          <Text style={styles.description}>Are you interested?</Text>
-          <TouchableHighlight onPress={this._interested.bind(this)}>
-            <Text>
-              <Icon name={this.state.interested} size={25} color="#64b5f6" />
-            </Text>
-          </TouchableHighlight>
-         </View>
-        </View>
+      <ListItem
+        divider
+        leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
+        centerElement={{
+          primaryText: rowData.title,
+          secondaryText: rowData.description,
+        }}
+        onPress={() => {}}
+        />
       </View>
     );
-  }
-
-  _interested(){
-    if(this.state.interested === 'star'){
-      this.setState({
-        interested: 'star-o'
-      });
-    }
-    else {
-      this.setState({
-        interested: 'star'
-      });
-    }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1}}>
         <StatusBar hidden={true} />
         <ListView
           dataSource={ds.cloneWithRows(this.state.events)}
           renderRow={this._renderRow.bind(this)}
+          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
         />
-
+        <MenuBar buttonLeft={this.state.buttonLeft}
+                 buttonCenter={this.state.buttonCenter}
+                 buttonRight={this.state.buttonRight}/>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#bdbdbd',
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  row:{
-    borderWidth: 0,
-    backgroundColor: '#fafafa',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginTop: 5,
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 20,
-    height: 88,
-  },
-  title:{
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
-  },
-  description:{
-    fontSize: 14,
-    fontFamily: 'Roboto',
-  },
-  interest:{
-    flexDirection: 'row',
-    justifyContent:'space-between',
-    alignItems: 'center',
-    width: 300,
-  }
-});
