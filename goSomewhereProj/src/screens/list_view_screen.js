@@ -7,6 +7,7 @@ import { ListItem } from 'react-native-material-ui';
 import {
   StackNavigator,
 } from 'react-navigation';
+import FilterModel from "../components/map_listview_comps/FilterModel";
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -29,7 +30,7 @@ export default class List_View_Screen extends React.Component {
                 key: "Map",
                 icon: "map",
                 label: "Map",
-                onPress: () => this.setState({})
+                onPress: () => this.props.navigation.navigate('Map')
 
             },
             buttonRight: {
@@ -37,10 +38,10 @@ export default class List_View_Screen extends React.Component {
                 icon: "filter-list",
                 label: "Filter",
                 onPress: () => this.setState({})
-            },
+                }
+            }
 
         }
-    }
 
     componentWillMount(){
       fetch('https://gosomewhere-backend.herokuapp.com/events', {
