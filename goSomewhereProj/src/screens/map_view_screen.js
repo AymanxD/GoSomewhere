@@ -5,12 +5,36 @@ import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import axios from 'axios';
 
+import MenuBar from "../components/map_listview_comps/Menubar";
+
 export default class Map_View_Screen extends React.Component {
   
   constructor(props){
     super(props);
     this.state = {
-      events: []
+      events: [],
+        buttonLeft: {
+            key: "Switch City",
+            icon: "location-city",
+            label: "Switch City",
+            onPress: () => this.setState({})
+        },
+        buttonCenter: {
+            key: "List",
+            icon: "list",
+            label: "List",
+            onPress: () => this.props.navigation.navigate('ListView')
+
+        },
+        buttonRight: {
+            key: "filter",
+            icon: "filter-list",
+            label: "Filter",
+            onPress: () => {if(this.state.filterModalVisible === false){
+                this.setState({filterModalVisible: true})
+            } else this.setState({filterModalVisible: false})
+            }
+        }
     }
   }
 
@@ -67,6 +91,10 @@ export default class Map_View_Screen extends React.Component {
             />
           })}
         </MapView>
+        <MenuBar buttonLeft={this.state.buttonLeft}
+                 buttonCenter={this.state.buttonCenter}
+                 buttonRight={this.state.buttonRight}
+        />
       </View>
     )
   }

@@ -3,23 +3,22 @@ import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
-import { ListItem } from 'react-native-material-ui';
-import {
-  StackNavigator,
-} from 'react-navigation';
 import FilterModel from "../components/map_listview_comps/FilterModel";
+import { Toolbar } from 'react-native-material-ui';
+import { ListItem } from 'react-native-material-ui';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class List_View_Screen extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             latitude: null,
             events: [],
             longitude: null,
             error: null,
+            filterModalVisible: false,
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
@@ -37,11 +36,14 @@ export default class List_View_Screen extends React.Component {
                 key: "filter",
                 icon: "filter-list",
                 label: "Filter",
-                onPress: () => this.setState({})
-                }
+                onPress: () => {if(this.state.filterModalVisible === false){
+                                        this.setState({filterModalVisible: true})
+                                    } else this.setState({filterModalVisible: false})
+                                }
             }
 
         }
+    }
 
   componentWillMount(){
     fetch('https://gosomewhere-backend.herokuapp.com/events', {
@@ -77,7 +79,7 @@ export default class List_View_Screen extends React.Component {
   _renderRow(rowData) {
     return(
       <View>
-      <ListItem
+        <ListItem
         divider
         leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
         centerElement={{
@@ -93,15 +95,28 @@ export default class List_View_Screen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1}}>
+        <Toolbar
+          leftElement="menu"
+          onLeftElementPress={() => {
+              this.props.screenProps.toggleMenu();
+          }}
+          centerElement="Events List"
+          searchable={{
+              autoFocus: true,
+              placeholder: 'Search',
+          }}
+        />
         <StatusBar hidden={true} />
         <ListView
           dataSource={ds.cloneWithRows(this.state.events)}
+          enableEmptySections={true}
           renderRow={this._renderRow.bind(this)}
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
         />
         <MenuBar buttonLeft={this.state.buttonLeft}
                  buttonCenter={this.state.buttonCenter}
-                 buttonRight={this.state.buttonRight}/>
+                 buttonRight={this.state.buttonRight}
+        />
       </View>
     );
   }

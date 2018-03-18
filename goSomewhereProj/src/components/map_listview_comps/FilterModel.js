@@ -1,21 +1,39 @@
-import React from 'react';
-import { Dialog,
-} from 'react-native';
+import React, {Component} from 'react';
+import {Modal, Text, TouchableHighlight, View} from 'react-native';
 
-
-
-export default class FilterModel extends React.Component {
-
+class FilterModel extends Component {
 
     render() {
         return (
-            <Modal isVisible={true} style={styles.modal}>
-                <View style={{ flex: 1 }}>
-                    <Text>Hello!</Text>
-                </View>
-            </Modal>
+            <View style={{marginTop: 22}}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.props.FilterModel}
+                    onRequestClose={() => {
+                        alert('Modal has been closed.');
+                    }}>
+                    <View style={{marginTop: 22}}>
+                        <View>
+                            <Text>Hello World!</Text>
+
+                            <TouchableHighlight
+                                onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible);
+                                }}>
+                                <Text>Hide Modal</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
+
+                <TouchableHighlight
+                    onPress={() => {
+                        this.setModalVisible(true);
+                    }}>
+                    <Text>Show Modal</Text>
+                </TouchableHighlight>
+            </View>
         );
     }
 }
-
-
