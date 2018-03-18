@@ -19,10 +19,6 @@ import { StackNavigator, NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
 
 export default class Signup_Screen extends React.Component {
-  static navigationOptions = {
-    header: null
-  }
-  
   constructor(props) {
     super(props);
     this.state = {
