@@ -104,4 +104,3 @@ export default class List_View_Screen extends React.Component {
       </View>
     );
   }
-}
