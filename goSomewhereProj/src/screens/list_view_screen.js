@@ -43,24 +43,24 @@ export default class List_View_Screen extends React.Component {
 
         }
 
-    componentWillMount(){
-      fetch('https://gosomewhere-backend.herokuapp.com/events', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          this.setState({events: responseJson});
-        });
+  componentWillMount(){
+    fetch('https://gosomewhere-backend.herokuapp.com/events', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({events: responseJson});
+      });
 
-        navigator.geolocation.clearWatch(this.watchId);
-    }
+      navigator.geolocation.clearWatch(this.watchId);
+  }
 
   componentDidMount() {
-      //location services
+    //location services
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this.setState({
