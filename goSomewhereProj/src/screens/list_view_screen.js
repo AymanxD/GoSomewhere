@@ -12,54 +12,54 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class List_View_Screen extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            latitude: null,
-            events: [],
-            longitude: null,
-            error: null,
-            buttonLeft: {
-                key: "Switch City",
-                icon: "location-city",
-                label: "Switch City",
-                onPress: () => this.setState({})
-            },
-            buttonCenter: {
-                key: "Map",
-                icon: "map",
-                label: "Map",
-                onPress: () => this.setState({})
+  constructor(props){
+      super(props);
+      this.state = {
+          latitude: null,
+          events: [],
+          longitude: null,
+          error: null,
+          buttonLeft: {
+              key: "Switch City",
+              icon: "location-city",
+              label: "Switch City",
+              onPress: () => this.setState({})
+          },
+          buttonCenter: {
+              key: "Map",
+              icon: "map",
+              label: "Map",
+              onPress: () => this.setState({})
 
-            },
-            buttonRight: {
-                key: "filter",
-                icon: "filter-list",
-                label: "Filter",
-                onPress: () => this.setState({})
-            },
+          },
+          buttonRight: {
+              key: "filter",
+              icon: "filter-list",
+              label: "Filter",
+              onPress: () => this.setState({})
+          },
 
-        }
-    }
+      }
+  }
 
-    componentWillMount(){
-      fetch('https://gosomewhere-backend.herokuapp.com/events', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          this.setState({events: responseJson});
-        });
+  componentWillMount(){
+    fetch('https://gosomewhere-backend.herokuapp.com/events', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({events: responseJson});
+      });
 
-        navigator.geolocation.clearWatch(this.watchId);
-    }
+      navigator.geolocation.clearWatch(this.watchId);
+  }
 
   componentDidMount() {
-      //location services
+    //location services
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this.setState({
@@ -104,3 +104,4 @@ export default class List_View_Screen extends React.Component {
       </View>
     );
   }
+}
