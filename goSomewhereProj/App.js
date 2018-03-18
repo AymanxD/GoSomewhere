@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,Navigator } from 'react-native';
 import { ThemeProvider } from 'react-native-material-ui';
 import {StackNavigator} from 'react-navigation';
+import axios from 'axios';
 
 import Signin from './src/screens/login_screen';
 import Splash from './src/screens/splash_screen';
@@ -58,6 +59,11 @@ const Application = StackNavigator({
 });
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    axios.defaults.baseURL = 'https://gosomewhere-backend.herokuapp.com';
+  }
+
   render() {
     return (
       <ThemeProvider uiTheme={uiTheme}>

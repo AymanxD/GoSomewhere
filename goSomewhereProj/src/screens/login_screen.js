@@ -12,6 +12,7 @@ import {
   Image,
   Alert
 } from 'react-native';
+import axios from 'axios';
 
 import { Button } from 'react-native-material-ui';
 import { StackNavigator, NavigationActions } from 'react-navigation';
@@ -25,8 +26,8 @@ export default class Login_Screen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      email: 'sid@mailinator.com',
+      password: '111111'
     }
   }
 
@@ -41,6 +42,7 @@ export default class Login_Screen extends React.Component {
       await AsyncStorage.getItem('user', (err, result) => {
         const user = JSON.parse(result);
         if (user && user.auth_token) {
+          axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
           this.checkAuthTokenValidity(user.auth_token);
         }
       });
@@ -51,15 +53,7 @@ export default class Login_Screen extends React.Component {
 
   // Check if the saved auth_token is still valid and stored in backend
   checkAuthTokenValidity(authToken) {
-    fetch('https://gosomewhere-backend.herokuapp.com/users/current', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Go-Auth': authToken
-      }
-    })
-    .then((response) => response.json())
+    axios.get('/users/current')
     .then(async (res) => {
       if (res.errors === 'Unauthorized') {
         await AsyncStorage.removeItem('user');
@@ -75,7 +69,51 @@ export default class Login_Screen extends React.Component {
       index: 0,
       actions: [NavigationActions.navigate({ routeName })]
     })
-    this.props.navigation.dispatch(actionToDispatch)
+    this.props.navigation.dispatch(actionToDispatch);
+  }
+
+  toMapView = () => {
+    this.props.navigation.navigate('Map');
+  }
+
+  toSignUp = () => {
+    this.props.navigation.navigate('SignUp');
+  }
+
+  async setUserLocally(user) {
+    axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user), () => {
+        const actionToDispatch = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Map' })]
+        })
+        this.props.navigation.dispatch(actionToDispatch)
+      });
+    } catch (error) {
+      Alert.alert("catching exception 1", JSON.stringify(error));
+    }
+  }
+
+  signin = () => {
+    //send to server
+    axios.post('/signin', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then(async (response) => {
+      // if email and pass combination is valid, then log the user in
+      if(response.data.auth_token) {
+        this.setUserLocally(response.data);
+      }
+    })
+    .catch((error) => {
+      if(error.response && error.response.data) {
+        Alert.alert(JSON.stringify(error.response.data.errors));
+      } else {
+        Alert.alert("catching exception 2", JSON.stringify(error));
+      }
+    });
   }
 
   render() {
@@ -113,52 +151,6 @@ export default class Login_Screen extends React.Component {
         </View>
       </ScrollView>
     );
-  }
-
-  toMapView = () => {
-    this.props.navigation.navigate('Map');
-  }
-
-  toSignUp = () => {
-    this.props.navigation.navigate('SignUp');
-  }
-
-  signin = () => {
-    //send to server
-    fetch('https://gosomewhere-backend.herokuapp.com/signin', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      })
-    })
-
-    //handle response
-    .then((response) => response.json())
-    .then(async (res) => {
-      // if email and pass combination is valid, then log the user in
-      if(res.auth_token) {
-        try {
-          await AsyncStorage.setItem('user', JSON.stringify(res), () => {
-            const actionToDispatch = NavigationActions.reset({
-              index: 0,
-              actions: [NavigationActions.navigate({ routeName: 'Map' })]
-            })
-            this.props.navigation.dispatch(actionToDispatch)        
-          });
-        } catch (error) {
-          Alert.alert("catching exception");
-        }
-      } else if (res.errors) {
-        Alert.alert(res.errors);
-      }
-    }).catch((err) => {
-      Alert.alert("catching exception")
-    }).done();
   }
 }
 

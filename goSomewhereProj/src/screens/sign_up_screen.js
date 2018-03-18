@@ -12,6 +12,7 @@ import {
   Image,
   Alert
 } from 'react-native';
+import axios from 'axios';
 
 import { Button } from 'react-native-material-ui';
 import { StackNavigator, NavigationActions } from 'react-navigation';
@@ -128,41 +129,39 @@ export default class Signup_Screen extends React.Component {
     this.props.navigation.navigate('Signin');
   }
 
+  async setUserLocally(user) {
+    axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user), () => {
+        const actionToDispatch = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Map' })]
+        })
+        this.props.navigation.dispatch(actionToDispatch)
+      });
+    } catch (error) {
+      Alert.alert("catching exception 1", JSON.stringify(error));
+    }
+  }
+
   signup = () => {
     //send to server
-    fetch('https://gosomewhere-backend.herokuapp.com/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: {
-          name: this.state.name,
-          email: this.state.email,
-          password: this.state.password
-        }
-      })
-    })
-
-    //handle response
-    .then((response) => response.json())
-    .then(async (res) => {
-      // if email and pass combination is valid, then log the user in
-      if(res.auth_token) {
-        try {
-          await AsyncStorage.setItem('user', JSON.stringify(res), () => {
-            this._navigateTo('Map');        
-          });
-        } catch (error) {
-          Alert.alert("catching exception");
-        }
-      } else if (res.errors) {
-        // show inline errors here TODO
-        Alert.alert("error", JSON.stringify(res.errors));
+    axios.post('/users', {
+      user: {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
       }
-    }).catch((err) => {
-      Alert.alert("catching exception")
+    })
+    .then(async (response) => {
+      // if email and pass combination is valid, then log the user in
+      if(response.data.auth_token) {
+        this.setUserLocally(response.data);
+      }
+    }).catch((error) => {
+      if (error.response && error.response.data.errors) {
+        Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+      }
     }).done();
   }
 }
