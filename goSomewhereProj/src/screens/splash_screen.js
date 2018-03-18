@@ -15,7 +15,7 @@ export default class Splash_Screen extends React.Component {
 
   async getCurrentUser() {
     try {
-      // for logout : await AsyncStorage.removeItem('user'); 
+      // await AsyncStorage.removeItem('user'); // for logout
       await AsyncStorage.getItem('user', (err, result) => {
         const user = JSON.parse(result);
         if (user && user.auth_token) {
