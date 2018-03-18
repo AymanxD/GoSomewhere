@@ -56,15 +56,19 @@ export default class Map_View_Screen extends React.Component {
           }}
         >
           {this.state.events.map((event) => {
-            return <MapView.Marker
-              coordinate={{latitude: event['latitude'], longitude: event['longitude']}}
-              key={event['id']}
-              title={event['title']}
-              description={event['description']}
-              onCalloutPress={()=>{
-                this.props.navigation.navigate('Event', { id: event['id'] });
-             }}
-            />
+            return (
+              <MapView.Marker
+                coordinate={{latitude: event['latitude'], longitude: event['longitude']}}
+                key={event['id']}
+                onCalloutPress={()=>{
+                  this.props.navigation.navigate('Event', { event: event });
+                }}>
+                <MapView.Callout style={{ width: 300 }}>
+                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{event['title']}</Text>
+                  <Text>{event['description']}</Text>
+                </MapView.Callout>
+              </MapView.Marker>
+            )
           })}
         </MapView>
       </View>
