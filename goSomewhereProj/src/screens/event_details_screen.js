@@ -11,9 +11,6 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-// var lat = events[id]['latitude'];
-// var long = events[id]['longitude'];
-// var addr = events[id]['address'];
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":"Mittens was dancing on the tables","start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
@@ -36,22 +33,17 @@ images = [{"party":require("../components/event_details_comps/party_category_ima
 
 
 export default class Event_Details_Screen extends React.Component {
-constructor(props) {
-  super(props);
-  this.state = {
-    colorLike:'black', 
-    colorGoing:'black',
-    message:'No one was petting me',
-    checkIcon:"star-outlined",
-  //  dataSource: ['row 1', 'row 2']
-  };
-  const id=this.props.navigation.state.params.id;
-  const category= events[id]['category'];
- //const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  constructor(props) {
+    super(props);
+    this.state = {
+      colorLike:'black', 
+      colorGoing:'black',
+      message:'No one was petting me',
+      checkIcon:"star-outlined",
+      event: props.navigation.state.params.event
+    };
 
-  this.changeIconName = this.changeIconName.bind(this);
-
-
+    this.changeIconName = this.changeIconName.bind(this);
   }
   changeIconName() {
     if (this.state.checkIcon === "star-outlined") {
@@ -67,7 +59,6 @@ constructor(props) {
   }
     render() {
       const id=this.props.navigation.state.params.id;
-      const category= events[id]['category'];
 
       return (
 
@@ -77,12 +68,12 @@ constructor(props) {
        justifyContent: 'space-around',
      }}>
     <ScrollView>
-    <Image source={images[0][category]}
-      style={{flex:1, height:200, width: 380}} />
+    <Image source={{uri: this.state.event.image}}
+      style={{ flex:1, height:200 }} />
 
-        <View style={{width: 380, height: 75, backgroundColor:customBlue}}>
-        <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {events[id]['title']} </Text>
-        <Text style ={[styles.padding, {color:'white'}]}> Date: {events[id]['start_at']} </Text>
+        <View style={{ height: 75, backgroundColor:customBlue}}>
+        <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
+        <Text style ={[styles.padding, {color:'white'}]}> Date: {this.state.event['start_at']} </Text>
         </View> 
 
      <View
@@ -103,9 +94,9 @@ constructor(props) {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
-        message: [events[id]['name'] + events[id]['date']],
+        message: [this.state.event['name'] + this.state.event['date']],
         url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-        title: events[id]['name'],
+        title: this.state.event['name'],
       }, {
         dialogTitle: 'Share with your friends!',
       }) } >
@@ -116,27 +107,27 @@ constructor(props) {
      </View>
      <View style = {styles.lineStyle}></View>
      <View style={styles.padding}> 
-     <Text>{events[id]['description']} </Text>
+     <Text>{this.state.event['description']} </Text>
       </View>
      <View style={{ padding: 10}}>
      <View style = {styles.lineStyle}></View>
 
       <View style={{flexDirection: 'row'}}> 
       <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={styles.details}>Date: {events[id]['start_at']}</Text>  
+      <Text style ={styles.details}>Date: {this.state.event['start_at']}</Text>  
       </View>
        <View style = {styles.lineStyle}></View>
 
       <View style={{flexDirection: 'row'}}> 
       <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={styles.details}>Category: {category}</Text>  
+      <Text style ={styles.details}>Category: Dummy</Text>  
       </View>
        <View style = {styles.lineStyle}></View>
 
        <TouchableOpacity onPress={() => {Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru")}}>
       <View style={{flexDirection: 'row'}}> 
       <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {events[id]['address']}</Text>  
+      <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {this.state.event['address']}</Text>  
       </View>
       </TouchableOpacity>
       
