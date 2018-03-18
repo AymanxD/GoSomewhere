@@ -22,7 +22,7 @@ export default class Login_Screen extends React.Component {
   static navigationOptions = {
     header: null
   }
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +35,10 @@ export default class Login_Screen extends React.Component {
   componentDidMount() {
     const user = this.getCurrentUser();
   }
-  
+
   async getCurrentUser() {
     try {
-      // for logout : await AsyncStorage.removeItem('user'); 
+      // for logout : await AsyncStorage.removeItem('user');
       await AsyncStorage.getItem('user', (err, result) => {
         const user = JSON.parse(result);
         if (user && user.auth_token) {
@@ -63,7 +63,7 @@ export default class Login_Screen extends React.Component {
       }
     }).done();
   }
-  
+
   _navigateTo(routeName) {
     const actionToDispatch = NavigationActions.reset({
       index: 0,
@@ -124,7 +124,7 @@ export default class Login_Screen extends React.Component {
             style={styles.logo}
             source={require('../assets/logo.png')}
           />
-          
+
           <TextField
             label='Email'
             value={this.state.email}
@@ -139,6 +139,10 @@ export default class Login_Screen extends React.Component {
           />
 
           <Button primary raised text="Sign in" onPress={this.signin} />
+          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn} containerStyle={{marginTop: 40}} />
+
+
+
 
           <View style={styles.forgotBtnContainer}>
             <Button text="Forgot password?" containerStyle={{backgroundColor: 'red', marginTop: 20}} upperCase={false} onPress={this.toSignin} />
@@ -151,6 +155,28 @@ export default class Login_Screen extends React.Component {
         </View>
       </ScrollView>
     );
+  }
+
+  async fbLogIn() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
+      permissions: ['public_profile'],
+    });
+
+    //Alert.alert("Name", JSON.stringify(type));
+    ///console.log('type =' + {type});
+    //console.log('token =' + {token});
+
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+      //console.log('response =' + {response});
+    }
   }
 }
 
