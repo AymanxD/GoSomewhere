@@ -6,7 +6,7 @@ import { Toolbar } from 'react-native-material-ui';
 import axios from 'axios';
 
 export default class Map_View_Screen extends React.Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ export default class Map_View_Screen extends React.Component {
   toEventDetails = () => {
     this.props.navigation.navigate('Event');
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,7 +65,7 @@ export default class Map_View_Screen extends React.Component {
                 }}>
                 <MapView.Callout style={{ width: 300 }}>
                   <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{event['title']}</Text>
-                  <Text>{event['description']}</Text>
+                    <Text>{event['description'].substring(0,event['description'].indexOf(".",100)+1)}</Text>
                 </MapView.Callout>
               </MapView.Marker>
             )
