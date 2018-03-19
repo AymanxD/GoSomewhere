@@ -19,7 +19,7 @@ import { StackNavigator, NavigationActions } from 'react-navigation';
 import { TextField } from 'react-native-material-textfield';
 
 export default class Login_Screen extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -136,7 +136,7 @@ export default class Login_Screen extends React.Component {
           />
 
           <Button primary raised text="Sign in" onPress={this.signin} />
-          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn} containerStyle={{marginTop: 40}} />
+          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn.bind(this)} containerStyle={{marginTop: 40}} />
 
 
 
@@ -155,6 +155,9 @@ export default class Login_Screen extends React.Component {
   }
 
   async fbLogIn() {
+
+
+
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
       permissions: ['public_profile'],
     });
@@ -168,12 +171,18 @@ export default class Login_Screen extends React.Component {
       const response = await fetch(
         `https://graph.facebook.com/me?access_token=${token}`);
 
+
+
+    /*
       Alert.alert(
         'Logged in!',
         `Hi ${(await response.json()).name}!`,
-      );
-      //console.log('response =' + {response});
+    );*/
+
+      this.props.navigation.navigate('Map');
+
     }
+
   }
 }
 
