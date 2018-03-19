@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
+import ListView from "./list_view_screen";
 
 export default class Splash_Screen extends React.Component {
 
