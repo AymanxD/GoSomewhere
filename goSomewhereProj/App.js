@@ -14,6 +14,7 @@ import Event from './src/screens/event_details_screen';
 import SignUp from './src/screens/sign_up_screen';
 import ListView from './src/screens/list_view_screen';
 import Comments from './src/screens/comment_screen';
+import Directions from './src/screens/navigation_screen';
 
 const uiTheme = {
   toolbar: {
@@ -52,7 +53,10 @@ const Application = StackNavigator({
   },
   Comments: {
     screen: Comments,
-  }
+  },
+  Directions: {
+    screen: Directions,
+  },
 }, {
   headerMode: 'none'
 });

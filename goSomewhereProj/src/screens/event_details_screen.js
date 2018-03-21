@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {View, MapView, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 // import {Button} from 'react-native';
 import { Button, Icon } from 'react-native-material-ui';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,8 +11,12 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-=======
-import MapViewDirection from 'react-native-maps-directions'
+import MapViewDirections from 'react-native-maps-directions'
+// var lat = events[id]['latitude'];
+// var long = events[id]['longitude'];
+// var addr = events[id]['address'];
+
+
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":"Mittens was dancing on the tables","start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
@@ -21,20 +25,19 @@ const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
 
-
 //https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
 
-// fetch('https:maps.googleapis.com/maps/api/place/nearbysearch/json?', {
+// fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', {
 // body: JSON.stringify({
 //   firstParam: 'location=' + lat + ',' + long,
-//   secondParam: 'radius=5&rankby=prominence&',
-//   thirdParam: 'keyword=' + addr + '&key=AIzaSyA1ihdTdZW3M7nOMQz2tdgtuX0HCVc9tBo',
+//   secondParam: '&radius=5&rankby=prominence&',
+//   thirdParam: 'keyword=computerscience&key=AIzaSyA1ihdTdZW3M7nOMQz2tdgtuX0HCVc9tBo',
 // }), });
 
-
 export default class Event_Details_Screen extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +49,7 @@ export default class Event_Details_Screen extends React.Component {
     };
 
     this.changeIconName = this.changeIconName.bind(this);
+
   }
   changeIconName() {
     if (this.state.checkIcon === "star-outlined") {
@@ -168,9 +172,7 @@ export default class Event_Details_Screen extends React.Component {
               <Text style={{textAlign:'center'}}>CALL</Text>
              </TouchableOpacity>
 
-             <TouchableOpacity onPress={() => {
-             Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru");
-             }}>
+             <TouchableOpacity onPress={() => this.props.navigation.navigate('Directions', {id:0})}>
               <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
               <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
              </TouchableOpacity>
