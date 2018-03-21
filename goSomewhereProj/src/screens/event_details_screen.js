@@ -13,16 +13,35 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // var lat = events[id]['latitude'];
 // var long = events[id]['longitude'];
 // var addr = events[id]['address'];
-
+import getDirections from 'react-native-google-maps-directions';
 
 const events = [{"id":1,"title":"Android Hackathon","category":"study","description":"Mittens was dancing on the tables","start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
 const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
+const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA'; 
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
 
+// handleGetDirections = () => {
+//   const data = {
+//     source: {
+//       latitude: starting,
+//       longitude: starting
+//     },
+//     destination: {
+//       latitude: this.state.event['latitude'],
+//       longitude: this.state.event['longitude'],
+//     },
+//     params: [ {
+//       key: {GoogleMapsKey},
+//       value: "w"
+//     }
+//     ]
+//   }
+//   getDirections(data)
+// }
 //https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
@@ -59,6 +78,24 @@ export default class Event_Details_Screen extends React.Component {
           checkIcon: "star-outlined"
         })      
       }
+  }
+  handleGetDirections = () => {
+    const data = {
+      source: {
+        latitude: events[0]['latitude'],
+        longitude: events[0]['longitude']
+      },
+      destination: {
+        latitude: events[1]['longitude'],
+        longitude: events[1]['longitude'],
+      },
+      params: [ {
+        key: "dirflg",
+        value: "w"
+       }
+      ]
+    }
+    getDirections(data)
   }
   
     render() {
@@ -170,17 +207,15 @@ export default class Event_Details_Screen extends React.Component {
               <Text style={{textAlign:'center'}}>CALL</Text>
              </TouchableOpacity> */}
 
-             <TouchableOpacity onPress={() => this.props.navigation.navigate('Directions', {id:0})}>
+             {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('Directions', this.state.event[])}>
+              <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
+              <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
+             </TouchableOpacity> */}
+
+             <TouchableOpacity onPress={this.handleGetDirections}>
               <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
               <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
              </TouchableOpacity>
-
-             {/* <TouchableOpacity onPress={() => {
-              Linking.openURL("https://shiftkeylabs.ca/calendar/android-hackathon/");
-             }}>
-              <MaterialCommunityIcons.Button name='web' backgroundColor='transparent' color = 'black' size = {40} />
-              <Text style={{textAlign:'center'}}>WEB</Text>
-             </TouchableOpacity> */}
             </View>
      </View>
       );

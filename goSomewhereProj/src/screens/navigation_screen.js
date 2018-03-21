@@ -12,8 +12,8 @@ const coordinates = [{
     latitude: events[0]['latitude'],
     longitude: events[0]['longitude'],
   }, {  
-    latitude: events[1]['latitude'],
-    longitude: events[1]['longitude'],
+    latitude: this.state.event['latitude'],
+    longitude: this.state.event['longitude'],
   }];
 
 export default class Navigation_Screen extends React.Component {
