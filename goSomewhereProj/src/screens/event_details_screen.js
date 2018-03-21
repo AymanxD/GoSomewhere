@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, MapView, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
-// import {Button} from 'react-native';
+import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
 import { Button, Icon } from 'react-native-material-ui';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -11,7 +10,6 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import MapViewDirections from 'react-native-maps-directions'
 // var lat = events[id]['latitude'];
 // var long = events[id]['longitude'];
 // var addr = events[id]['address'];
@@ -61,8 +59,8 @@ export default class Event_Details_Screen extends React.Component {
           checkIcon: "star-outlined"
         })      
       }
-
   }
+  
     render() {
       const id=this.props.navigation.state.params.id;
 
@@ -167,22 +165,22 @@ export default class Event_Details_Screen extends React.Component {
                flexDirection: 'row',
                justifyContent: 'space-around'
              }}>
-             <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
+             {/* <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
               <MaterialCommunityIcons.Button name='phone' backgroundColor='transparent' color = 'black' size = {40} />
               <Text style={{textAlign:'center'}}>CALL</Text>
-             </TouchableOpacity>
+             </TouchableOpacity> */}
 
              <TouchableOpacity onPress={() => this.props.navigation.navigate('Directions', {id:0})}>
               <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
               <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
              </TouchableOpacity>
 
-             <TouchableOpacity onPress={() => {
+             {/* <TouchableOpacity onPress={() => {
               Linking.openURL("https://shiftkeylabs.ca/calendar/android-hackathon/");
              }}>
               <MaterialCommunityIcons.Button name='web' backgroundColor='transparent' color = 'black' size = {40} />
               <Text style={{textAlign:'center'}}>WEB</Text>
-             </TouchableOpacity>
+             </TouchableOpacity> */}
             </View>
      </View>
       );
