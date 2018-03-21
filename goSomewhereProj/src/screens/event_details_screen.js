@@ -81,13 +81,10 @@ export default class Event_Details_Screen extends React.Component {
   }
   handleGetDirections = () => {
     const data = {
-      source: {
-        latitude: events[0]['latitude'],
-        longitude: events[0]['longitude']
-      },
+      source: {},
       destination: {
-        latitude: events[1]['longitude'],
-        longitude: events[1]['longitude'],
+        latitude: this.state.event['latitude'],
+        longitude: this.state.event['longitude'],
       },
       params: [ {
         key: "dirflg",
