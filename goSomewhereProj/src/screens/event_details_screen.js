@@ -23,6 +23,8 @@ const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
 const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
+var date;
+var time;
 
 // handleGetDirections = () => {
 //   const data = {
@@ -62,23 +64,30 @@ export default class Event_Details_Screen extends React.Component {
       colorGoing:'black',
       message:'No one was petting me',
       checkIcon:"star-outlined",
-      event: props.navigation.state.params.event
+      event: props.navigation.state.params.event,
+      
     };
 
     this.changeIconName = this.changeIconName.bind(this);
+    date = this.state.event['start_at'];
+    date = date.substring(0,10);
+    time = this.state.event['start_at'];
+    time = time.substring(11,19);
 
   }
-  changeIconName() {
-    if (this.state.checkIcon === "star-outlined") {
-      this.setState({
-        checkIcon: "star"
-      })
-      } else {
-        this.setState({
-          checkIcon: "star-outlined"
-        })      
-      }
-  }
+  // changeIconName() {
+  //   if (this.state.checkIcon === "star-outlined") {
+  //     this.setState({
+  //       checkIcon: "star"
+  //     })
+  //     } else {
+  //       this.setState({
+  //         checkIcon: "star-outlined"
+  //       })      
+  //     }
+  // }
+
+  
   handleGetDirections = () => {
     const data = {
       source: {},
@@ -111,7 +120,7 @@ export default class Event_Details_Screen extends React.Component {
 
         <View style={{ height: 75, backgroundColor:customBlue}}>
         <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
-        <Text style ={[styles.padding, {color:'white'}]}> Date: {this.state.event['start_at']} </Text>
+        <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
         </View> 
 
      <View
@@ -120,11 +129,11 @@ export default class Event_Details_Screen extends React.Component {
         justifyContent: 'space-around',
         paddingBottom: 10,
       }}>  
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color ={customBlue} size = {40} 
           onPress={() => {this.changeIconName()}} />
           <Text style={{textAlign:'center', color:customBlue}}>LIKE</Text>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
 
        <TouchableOpacity>
           <Entypo.Button name='check' backgroundColor='transparent' color = {customBlue} size = {40} />
@@ -149,18 +158,18 @@ export default class Event_Details_Screen extends React.Component {
       </View>
      <View style={{ padding: 10}}>
      <View style = {styles.lineStyle}></View>
-
+    
       <View style={{flexDirection: 'row'}}> 
       <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={styles.details}>Date: {this.state.event['start_at']}</Text>  
+      <Text style ={styles.details}>Date: {date}</Text>  
       </View>
        <View style = {styles.lineStyle}></View>
 
-      {/* <View style={{flexDirection: 'row'}}> 
-      <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={styles.details}>Category: Dummy</Text>  
+      <View style={{flexDirection: 'row'}}> 
+      <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Time: {time}</Text>  
       </View>
-       <View style = {styles.lineStyle}></View> */}
+       <View style = {styles.lineStyle}></View>
 
        <TouchableOpacity onPress={this.handleGetDirections}>
       <View style={{flexDirection: 'row'}}> 
