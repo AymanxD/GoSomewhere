@@ -52,7 +52,7 @@ const Application = StackNavigator({
   },
   Comments: {
     screen: Comments,
-  }
+  },
 }, {
   headerMode: 'none'
 });
