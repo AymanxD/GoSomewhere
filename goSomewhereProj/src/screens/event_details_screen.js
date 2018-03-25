@@ -65,14 +65,13 @@ export default class Event_Details_Screen extends React.Component {
       message:'No one was petting me',
       checkIcon:"star-outlined",
       event: props.navigation.state.params.event,
-      
     };
 
-    this.changeIconName = this.changeIconName.bind(this);
+   // this.changeIconName = this.changeIconName.bind(this);
     date = this.state.event['start_at'];
     date = date.substring(0,10);
     time = this.state.event['start_at'];
-    time = time.substring(11,19);
+    time = time.substring(11,16);
 
   }
   // changeIconName() {
