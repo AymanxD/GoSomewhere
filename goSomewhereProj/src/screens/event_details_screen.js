@@ -162,21 +162,12 @@ export default class Event_Details_Screen extends React.Component {
       </View>
        <View style = {styles.lineStyle}></View>
 
-       <TouchableOpacity onPress={() => {Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru")}}>
+       {/* <TouchableOpacity onPress={() => {this.handleGetDirections}}>
       <View style={{flexDirection: 'row'}}> 
       <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {this.state.event['address']}</Text>  
       </View>
-      </TouchableOpacity>
-      
-       <View style = {styles.lineStyle}></View>
-       
-       <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
-       <View style={{flexDirection: 'row'}}> 
-      <MaterialIcons.Button name='phone' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
-      <Text style ={styles.details}>Phone no: (902) CAT-CATS</Text> 
-      </View> 
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
        <View style = {styles.lineStyle}></View>       
        </View>
@@ -199,15 +190,6 @@ export default class Event_Details_Screen extends React.Component {
                flexDirection: 'row',
                justifyContent: 'space-around'
              }}>
-             {/* <TouchableOpacity onPress={() => {Linking.openURL('tel:1234567890')}}>
-              <MaterialCommunityIcons.Button name='phone' backgroundColor='transparent' color = 'black' size = {40} />
-              <Text style={{textAlign:'center'}}>CALL</Text>
-             </TouchableOpacity> */}
-
-             {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('Directions', this.state.event[])}>
-              <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
-              <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
-             </TouchableOpacity> */}
 
              <TouchableOpacity onPress={this.handleGetDirections}>
               <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
@@ -230,7 +212,6 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     fontSize: 11,
     fontWeight: 'bold',
-  //  backgroundColor: 'rgba(247,247,247,1.0)',
   },
   lineStyle:{
     borderWidth: 0.5,
