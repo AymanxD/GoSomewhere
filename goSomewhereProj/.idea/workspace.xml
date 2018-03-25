@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f44546-84e8-41c9-b1c7-b915081aa67d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/screens/event_details_screen.js" afterPath="$PROJECT_DIR$/src/screens/event_details_screen.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/components/map_listview_comps/FilterModel.js" />
+      <change beforePath="$PROJECT_DIR$/src/screens/list_view_screen.js" afterPath="$PROJECT_DIR$/src/screens/list_view_screen.js" />
+      <change beforePath="$PROJECT_DIR$/src/screens/login_screen.js" afterPath="$PROJECT_DIR$/src/screens/login_screen.js" />
       <change beforePath="$PROJECT_DIR$/src/screens/map_view_screen.js" afterPath="$PROJECT_DIR$/src/screens/map_view_screen.js" />
-      <change beforePath="$PROJECT_DIR$/src/screens/navigation_screen.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/screens/splash_screen.js" afterPath="$PROJECT_DIR$/src/screens/splash_screen.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,9 +25,12 @@
       <file leaf-file-name="list_view_screen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/screens/list_view_screen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="89" column="3" lean-forward="false" selection-start-line="88" selection-start-column="6" selection-end-line="89" selection-end-column="3" />
-              <folding />
+            <state relative-caret-position="691">
+              <caret line="92" column="3" lean-forward="false" selection-start-line="92" selection-start-column="3" selection-end-line="92" selection-end-column="3" />
+              <folding>
+                <marker date="1521997877187" expanded="true" signature="3638:3640" ph="&lt;MenuBar/&gt;" />
+                <marker date="1521997877187" expanded="true" signature="3638:3667" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,11 +61,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="map_view_screen.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="map_view_screen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/screens/map_view_screen.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1163">
-              <caret line="111" column="3" lean-forward="false" selection-start-line="111" selection-start-column="3" selection-end-line="111" selection-end-column="3" />
+              <caret line="193" column="3" lean-forward="false" selection-start-line="193" selection-start-column="3" selection-end-line="193" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+                <marker date="1521997877220" expanded="true" signature="363:6266" ph="{...}" />
+                <marker date="1521997877220" expanded="true" signature="6301:6377" ph="{...}" />
+                <marker date="1521997877220" expanded="true" signature="6318:6375" ph="{&quot;justifyContent&quot;: 'center'...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_up_screen.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/screens/sign_up_screen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1645">
+              <caret line="116" column="6" lean-forward="true" selection-start-line="116" selection-start-column="6" selection-end-line="116" selection-end-column="6" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -107,7 +129,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -202,18 +224,17 @@
       <workItem from="1520787370783" duration="1255000" />
       <workItem from="1521310413273" duration="11040000" />
       <workItem from="1521390445242" duration="153000" />
-      <workItem from="1521906751142" duration="2072000" />
+      <workItem from="1521906751142" duration="2758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14520000" />
+    <option name="totallyTimeSpent" value="15206000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="-16" width="3232" height="1732" extended-state="7" />
-    <editor active="true" />
+    <frame x="-16" y="-16" width="3232" height="1732" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -250,7 +271,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1521997877187" expanded="true" signature="3638:3640" ph="&lt;MenuBar/&gt;" />
+            <marker date="1521997877187" expanded="true" signature="3638:3667" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -266,7 +290,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="20" column="24" lean-forward="true" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-          <folding />
+          <folding>
+            <marker date="1521997877187" expanded="true" signature="3638:3640" ph="&lt;MenuBar/&gt;" />
+            <marker date="1521997877187" expanded="true" signature="3638:3667" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -282,7 +309,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1521997877187" expanded="true" signature="3638:3640" ph="&lt;MenuBar/&gt;" />
+            <marker date="1521997877187" expanded="true" signature="3638:3667" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -296,9 +326,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/screens/list_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="89" column="3" lean-forward="false" selection-start-line="88" selection-start-column="6" selection-end-line="89" selection-end-column="3" />
-          <folding />
+        <state relative-caret-position="691">
+          <caret line="92" column="3" lean-forward="false" selection-start-line="92" selection-start-column="3" selection-end-line="92" selection-end-column="3" />
+          <folding>
+            <marker date="1521997877187" expanded="true" signature="3638:3640" ph="&lt;MenuBar/&gt;" />
+            <marker date="1521997877187" expanded="true" signature="3638:3667" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -329,7 +362,20 @@
     <entry file="file://$PROJECT_DIR$/src/screens/map_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1163">
-          <caret line="111" column="3" lean-forward="false" selection-start-line="111" selection-start-column="3" selection-end-line="111" selection-end-column="3" />
+          <caret line="193" column="3" lean-forward="false" selection-start-line="193" selection-start-column="3" selection-end-line="193" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <marker date="1521997877220" expanded="true" signature="363:6266" ph="{...}" />
+            <marker date="1521997877220" expanded="true" signature="6301:6377" ph="{...}" />
+            <marker date="1521997877220" expanded="true" signature="6318:6375" ph="{&quot;justifyContent&quot;: 'center'...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/sign_up_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1645">
+          <caret line="116" column="6" lean-forward="true" selection-start-line="116" selection-start-column="6" selection-end-line="116" selection-end-column="6" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
