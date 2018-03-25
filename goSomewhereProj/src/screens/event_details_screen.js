@@ -156,18 +156,18 @@ export default class Event_Details_Screen extends React.Component {
       </View>
        <View style = {styles.lineStyle}></View>
 
-      <View style={{flexDirection: 'row'}}> 
+      {/* <View style={{flexDirection: 'row'}}> 
       <MaterialCommunityIcons.Button name='tag-text-outline' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Category: Dummy</Text>  
       </View>
-       <View style = {styles.lineStyle}></View>
+       <View style = {styles.lineStyle}></View> */}
 
-       {/* <TouchableOpacity onPress={() => {this.handleGetDirections}}>
+       <TouchableOpacity onPress={this.handleGetDirections}>
       <View style={{flexDirection: 'row'}}> 
       <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {this.state.event['address']}</Text>  
       </View>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
        <View style = {styles.lineStyle}></View>       
        </View>
