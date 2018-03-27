@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Alert, AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import ListView from "./list_view_screen";
+import axios from 'axios';
 
 export default class Splash_Screen extends React.Component {
 
@@ -20,6 +21,7 @@ export default class Splash_Screen extends React.Component {
       await AsyncStorage.getItem('user', (err, result) => {
         const user = JSON.parse(result);
         if (user && user.auth_token) {
+          axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
           this._navigateTo('Map');
         } else {
           this._navigateTo('Signin');

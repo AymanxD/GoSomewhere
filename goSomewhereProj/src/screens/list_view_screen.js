@@ -6,6 +6,8 @@ import MenuBar from "../components/map_listview_comps/Menubar";
 import FilterModel from "../components/map_listview_comps/FilterModel";
 import { Toolbar } from 'react-native-material-ui';
 import { ListItem } from 'react-native-material-ui';
+import { EventRegister } from 'react-native-event-listeners';
+import SideBarContainer from '../components/shared_comps/SideBarContainer';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -82,10 +84,6 @@ export default class List_View_Screen extends React.Component {
         <ListItem
         divider
         leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
-        centerElement={{
-          primaryText: rowData.title,
-          secondaryText: rowData.description,
-        }}
         onPress={() => {}}
         />
       </View>
@@ -94,30 +92,38 @@ export default class List_View_Screen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1}}>
-        <Toolbar
-          leftElement="menu"
-          onLeftElementPress={() => {
-              this.props.screenProps.toggleMenu();
-          }}
-          centerElement="Events List"
-          searchable={{
-              autoFocus: true,
-              placeholder: 'Search',
-          }}
-        />
-        <StatusBar hidden={true} />
-        <ListView
-          dataSource={ds.cloneWithRows(this.state.events)}
-          enableEmptySections={true}
-          renderRow={this._renderRow.bind(this)}
-          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
-        />
-        <MenuBar buttonLeft={this.state.buttonLeft}
-                 buttonCenter={this.state.buttonCenter}
-                 buttonRight={this.state.buttonRight}
-        />
-      </View>
+      <SideBarContainer navigation={this.props.navigation}>
+        <View style={styles.container}>
+          <Toolbar
+            leftElement="menu"
+            onLeftElementPress={() => EventRegister.emit('menuToggle') }
+            centerElement="Events List"
+            searchable={{
+                autoFocus: true,
+                placeholder: 'Search',
+            }}
+          />
+          <StatusBar hidden={true} />
+          <ListView
+            dataSource={ds.cloneWithRows(this.state.events)}
+            enableEmptySections={true}
+            renderRow={this._renderRow.bind(this)}
+            renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
+          />
+          <MenuBar buttonLeft={this.state.buttonLeft}
+                   buttonCenter={this.state.buttonCenter}
+                   buttonRight={this.state.buttonRight}
+          />
+        </View>
+      </SideBarContainer>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: 'center'
+  }
+});
