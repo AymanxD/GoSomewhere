@@ -88,14 +88,18 @@ export default class List_View_Screen extends React.Component {
 
   _renderRow(rowData) {
     return(
-      <View>
-        <ListItem
-        divider
-        leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
-        onPress={() => {}}
-        />
-      </View>
-    );
+        <View>
+            <ListItem
+                divider
+                leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
+                centerElement={{
+                    primaryText: rowData.title,
+                    secondaryText: rowData.description,
+                }}
+                onPress={() => {}}
+            />
+        </View>
+    )
   }
 
   render() {
