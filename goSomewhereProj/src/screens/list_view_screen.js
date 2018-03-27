@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert
 
 import MenuBar from "../components/map_listview_comps/Menubar";
 import FilterModel from "../components/map_listview_comps/FilterModel";
-import { Toolbar } from 'react-native-material-ui';
-import { ListItem } from 'react-native-material-ui';
+import { Toolbar, ListItem } from 'react-native-material-ui';
+import axios from "axios/index";
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -18,6 +18,7 @@ export default class List_View_Screen extends React.Component {
             events: [],
             longitude: null,
             error: null,
+            distance: 50,
             filterModalVisible: false,
             buttonLeft: {
                 key: "Switch City",
@@ -36,27 +37,26 @@ export default class List_View_Screen extends React.Component {
                 key: "filter",
                 icon: "filter-list",
                 label: "Filter",
-                onPress: () => {if(this.state.filterModalVisible === false){
-                                        this.setState({filterModalVisible: true})
-                                    } else this.setState({filterModalVisible: false})
-                                }
+                onPress: () => {
+                    this.setState({filterModalVisible: !this.state.filterModalVisible})
+                }
             }
 
         }
     }
 
   componentWillMount(){
-    fetch('https://gosomewhere-backend.herokuapp.com/events', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({events: responseJson});
-      });
+      axios.get('/events')
+          .then(async (response) => {
+              this.setState({events: response.data});
+          })
+          .catch((error) => {
+              if(error.response && error.response.data) {
+                  Alert.alert(JSON.stringify(error.response.data));
+              } else {
+                  Alert.alert("catching exception", JSON.stringify(error));
+              }
+          });
 
       navigator.geolocation.clearWatch(this.watchId);
   }
@@ -75,6 +75,12 @@ export default class List_View_Screen extends React.Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
     );
   }
+
+    distanceChange(newDistance){
+        this.setState({
+            distance: newDistance
+        });
+    }
 
   _renderRow(rowData) {
     return(
@@ -113,9 +119,17 @@ export default class List_View_Screen extends React.Component {
           renderRow={this._renderRow.bind(this)}
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
         />
-        <MenuBar buttonLeft={this.state.buttonLeft}
-                 buttonCenter={this.state.buttonCenter}
-                 buttonRight={this.state.buttonRight}
+        <FilterModel
+            filterModalVisible={this.state.filterModalVisible}
+            distance={this.state.distance}
+            onPress={this.state.buttonRight.onPress}
+            onChange={this.distanceChange.bind(this)}
+        />
+
+        <MenuBar
+            buttonLeft={this.state.buttonLeft}
+            buttonCenter={this.state.buttonCenter}
+            buttonRight={this.state.buttonRight}
         />
       </View>
     );
