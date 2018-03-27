@@ -135,14 +135,11 @@ export default class Login_Screen extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
 
-          <Button primary raised text="Sign in" onPress={this.signin} />
-          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn.bind(this)} containerStyle={{marginTop: 40}} />
-
-
-
+          <Button primary raised text="Sign in" onPress={this.signin} style={{container: { marginBottom: 20 }}}/>
+          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn.bind(this)} />
 
           <View style={styles.forgotBtnContainer}>
-            <Button text="Forgot password?" containerStyle={{backgroundColor: 'red', marginTop: 20}} upperCase={false} onPress={this.toSignin} />
+            <Button text="Forgot password?" containerStyle={{ marginTop: 20 }} upperCase={false} onPress={this.toSignin} />
           </View>
 
           <View style={styles.signupBtnContainer}>
@@ -156,33 +153,17 @@ export default class Login_Screen extends React.Component {
 
   async fbLogIn() {
 
-
-
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
       permissions: ['public_profile'],
     });
-
-    //Alert.alert("Name", JSON.stringify(type));
-    ///console.log('type =' + {type});
-    //console.log('token =' + {token});
 
     if (type === 'success') {
       // Get the user's name using Facebook's Graph API
       const response = await fetch(
         `https://graph.facebook.com/me?access_token=${token}`);
 
-
-
-    /*
-      Alert.alert(
-        'Logged in!',
-        `Hi ${(await response.json()).name}!`,
-    );*/
-
       this.props.navigation.navigate('Map');
-
     }
-
   }
 }
 
