@@ -22,13 +22,13 @@ export default class Pick_City_Screen extends React.Component {
               name:'Halifax',
               lat:44.651070,
               long:-63.582687,
-              image: '../assets/halifax.jpg',
+              image: require('../assets/city-images/halifax.jpg')
               },
               {
               name: 'Toronto',
               lat: 43.761539,
               long:-79.411079,
-              image: '../assets/toronto.jpg'
+              image: require('../assets/city-images/toronto.jpg')
               }
         ],
           longitude: null,
@@ -77,7 +77,7 @@ export default class Pick_City_Screen extends React.Component {
       <ListItem
         divider
         //might need to stringify the rowData.image. might not need require
-        leftElement={<Image source={{uri: rowData.image}} style={{ width: 50, height: 50, borderRadius: 50}} /> }
+        leftElement={<Image source={rowData.image} style={{ width: 50, height: 50, borderRadius: 50}} /> }
         centerElement={{
           primaryText: rowData.name,
           //secondaryText: rowData.description,
