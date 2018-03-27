@@ -116,17 +116,17 @@ export default class List_View_Screen extends React.Component {
                         }}
                     />
                     <StatusBar hidden={true} />
-                    <FilterModel
-                        filterModalVisible={this.state.filterModalVisible}
-                        distance={this.state.distance}
-                        onPress={this.state.buttonRight.onPress}
-                        onChange={this.distanceChange.bind(this)}
-                    />
                     <ListView
                         dataSource={ds.cloneWithRows(this.state.events)}
                         enableEmptySections={true}
                         renderRow={this._renderRow.bind(this)}
                         renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
+                    />
+                    <FilterModel
+                        filterModalVisible={this.state.filterModalVisible}
+                        distance={this.state.distance}
+                        onPress={this.state.buttonRight.onPress}
+                        onChange={this.distanceChange.bind(this)}
                     />
                     <MenuBar buttonLeft={this.state.buttonLeft}
                              buttonCenter={this.state.buttonCenter}
