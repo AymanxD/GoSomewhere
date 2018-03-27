@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert
+import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert, TouchableOpacity
 } from 'react-native';
 
 import { ListItem } from 'react-native-material-ui';
@@ -7,6 +7,8 @@ import { ListItem } from 'react-native-material-ui';
 import {
   StackNavigator,
 } from 'react-navigation';
+
+import CityCard from '../components/choose_city_screen/CityCard';
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -22,13 +24,15 @@ export default class Pick_City_Screen extends React.Component {
               name:'Halifax',
               lat:44.651070,
               long:-63.582687,
-              image: require('../assets/city-images/halifax.jpg')
+              image: require('../assets/city-images/halifax.jpg'),
+              onPress: () => this.props.navigation.navigate('Map'),
               },
               {
               name: 'Toronto',
               lat: 43.761539,
               long:-79.411079,
-              image: require('../assets/city-images/toronto.jpg')
+              image: require('../assets/city-images/toronto.jpg'),
+              onPress: () => this.props.navigation.navigate('Map'),
               }
         ],
           longitude: null,
@@ -73,18 +77,9 @@ export default class Pick_City_Screen extends React.Component {
 
   _renderRow(rowData) {
     return(
-      <View>
-      <ListItem
-        divider
-        //might need to stringify the rowData.image. might not need require
-        leftElement={<Image source={rowData.image} style={{ width: 50, height: 50, borderRadius: 50}} /> }
-        centerElement={{
-          primaryText: rowData.name,
-          //secondaryText: rowData.description,
-        }}
-        onPress={() => {}} ////////////////////******
-        />
-      </View>
+      <TouchableOpacity style={{ width: 250, height: 250}} onPress={rowData.onPress}>
+          <CityCard image={rowData.image} title={rowData.name} />
+      </TouchableOpacity>
     );
   }
 
@@ -95,8 +90,9 @@ export default class Pick_City_Screen extends React.Component {
         <ListView
           dataSource={ds.cloneWithRows(this.state.cities)}
           renderRow={this._renderRow.bind(this)}
-          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
+          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 100}} />}
         />
+
 
       </View>
     );
