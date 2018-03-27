@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Alert, AsyncStorage } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { View, Text, Alert, AsyncStorage, StyleSheet, Image } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { COLOR } from 'react-native-material-ui';
 import ListView from "./list_view_screen";
 import axios from 'axios';
 
@@ -43,10 +44,25 @@ export default class Splash_Screen extends React.Component {
 
   render() {
     return (
-      <View>
-      <Text>Splash Screen (style this screen with some loader)</Text>
+      <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require('../assets/logo_bg.png')}
+        />
       </View>
     );
   }
-
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLOR.blue700, // for statusbar
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logo: {
+    width: 320,
+    height: 142
+  }
+});

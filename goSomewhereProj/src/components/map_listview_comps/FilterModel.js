@@ -79,7 +79,7 @@ export default class FilterModel extends Component {
                             </Text>
                         </View>
                         <TouchableHighlight onPress={this.props.onPress} style={{justifyContent: "flex-end", flexDirection: 'column'}}>
-                            <Text style={{fontsize: 16, fontcolor: 'blue'}}>Accept</Text>
+                            <Text style={{fontSize: 16, fontcolor: 'blue'}}>Accept</Text>
                         </TouchableHighlight>
                     </View>
                 </Modal>

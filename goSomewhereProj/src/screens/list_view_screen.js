@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ListView, StatusBar, Image, Alert
+import { StyleSheet, Text, View, ListView, Image, Alert
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
@@ -115,7 +115,6 @@ export default class List_View_Screen extends React.Component {
                             placeholder: 'Search',
                         }}
                     />
-                    <StatusBar hidden={true} />
                     <ListView
                         dataSource={ds.cloneWithRows(this.state.events)}
                         enableEmptySections={true}
