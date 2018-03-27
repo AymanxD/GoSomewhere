@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Navigator, Alert } from 'react-native';
 import { ThemeProvider, COLOR, ListItem } from 'react-native-material-ui';
 import { StackNavigator, NavigationActions } from 'react-navigation';
-import { Constants } from 'expo';
+import { Font, Constants } from 'expo';
 import Sidebar from 'react-native-sidebar';
 import SideMenu from 'react-native-side-menu';
 import axios from 'axios';
@@ -63,7 +63,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMenuOpen: false
+      isMenuOpen: false,
+      fontLoaded: false
     }
     this.toggleMenu = this.toggleMenu.bind(this);
     axios.defaults.baseURL = 'https://gosomewhere-backend.herokuapp.com';
@@ -74,7 +75,14 @@ export default class App extends React.Component {
       isMenuOpen: !this.state.isMenuOpen
     })
   }
-  
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Roboto': require('./src/assets/fonts/Roboto-Regular.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+  }
+
   renderLeftSidebar = () => (
     <View style={{ flex: 1 }}>
       <View style={{ height: Constants.statusBarHeight, backgroundColor: COLOR.blue500}}></View>
@@ -97,19 +105,21 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <ThemeProvider uiTheme={uiTheme}>
-        <SideMenu
-          isOpen={this.state.isMenuOpen}
-          onChange={ (isOpen) => this.setState({ isMenuOpen: isOpen }) }
-          menu={this.renderLeftSidebar()}>
-          <Application
-            screenProps={{
-              toggleMenu: this.toggleMenu
-            }}
-            //some people have renderScene function
-          />
-        </SideMenu>
-      </ThemeProvider>
+      this.state.fontLoaded ? (
+        <ThemeProvider uiTheme={uiTheme}>
+          <SideMenu
+            isOpen={this.state.isMenuOpen}
+            onChange={ (isOpen) => this.setState({ isMenuOpen: isOpen }) }
+            menu={this.renderLeftSidebar()}>
+            <Application
+              screenProps={{
+                toggleMenu: this.toggleMenu
+              }}
+              //some people have renderScene function
+            />
+          </SideMenu>
+        </ThemeProvider>
+      ) : null
     );
   }
 }
