@@ -8,7 +8,6 @@ export default class Sidebar extends React.Component {
   render() {
     return(
       <View style={styles.container}>
-        <View style={{ height: Constants.statusBarHeight, backgroundColor: COLOR.blue500}}></View>
         <ListItem
           divider
           centerElement={{
