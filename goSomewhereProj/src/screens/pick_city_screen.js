@@ -85,12 +85,12 @@ export default class Pick_City_Screen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1, paddingTop: 50, paddingLeft: 10}}>
         <StatusBar hidden={true} />
         <ListView
           dataSource={ds.cloneWithRows(this.state.cities)}
           renderRow={this._renderRow.bind(this)}
-          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 100}} />}
+          renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 70}} />}
         />
 
 
