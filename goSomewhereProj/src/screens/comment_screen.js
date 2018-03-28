@@ -44,7 +44,8 @@ state = {
         label='Leave a comment...'
         multiline = {true}
         onChangeText={ (message) => {this.setState({message:message});this.setState({message_length:message.length}) }}/>
-        <Button raised primary text="Post" onPress={() => this.props.navigation.goBack()} />
+        <Button raised primary text="Post" onPress={(message) => {this.postComment();this.props.navigation.goBack()
+        }} />
         <Text>ID is {id}</Text>
         <Text>Message length is {this.state.message_length}</Text>
         </View>
@@ -53,12 +54,13 @@ state = {
 
    postComment = () => {
      //send to server
-     axios.post('/events/'+this.state.message+'/comments', {
+     axios.post('/events/'+id+'/comments', {
        comment: {
          content: this.state.message
        }
      })
      .then(async (response) => {
+       //Alert.alert('Posted?')
        // if email and pass combination is valid, then log the user in
        //if(response.data.auth_token) {
         // this.setUserLocally(response.data);
