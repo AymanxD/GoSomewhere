@@ -25,14 +25,14 @@ export default class Pick_City_Screen extends React.Component {
               lat:44.651070,
               long:-63.582687,
               image: require('../assets/city-images/halifax.jpg'),
-              onPress: () => this.props.navigation.navigate('Map'),
+              onPress: () => this.props.navigation.navigate('Map',{lat:44.651070,long:-63.582687}),
               },
               {
               name: 'Toronto',
               lat: 43.761539,
               long:-79.411079,
               image: require('../assets/city-images/toronto.jpg'),
-              onPress: () => this.props.navigation.navigate('Map'),
+              onPress: () => this.props.navigation.navigate('Map',{lat:43.761539,long:-79.411079}),
               }
         ],
           longitude: null,
