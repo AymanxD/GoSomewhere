@@ -27,7 +27,7 @@ constructor(props) {
  // this.state = {colorLike:'black', colorGoing:'black'};
 
  // category=events[id]['category'];
-id=0;
+
 }
 state = {
   message: '',
@@ -35,6 +35,7 @@ state = {
 
     render() {
       let {phone} = this.state;
+      id=this.props.navigation.state.params.id;
       return (
 
         <View>
