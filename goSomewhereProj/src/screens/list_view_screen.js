@@ -28,7 +28,7 @@ export default class List_View_Screen extends React.Component {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: () => this.setState({})
+                onPress: () => this.props.navigation.navigate('PickCity')
             },
             buttonCenter: {
                 key: "Map",
