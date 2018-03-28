@@ -25,9 +25,9 @@ export default class Comments_Screen extends React.Component {
 constructor(props) {
   super(props);
  // this.state = {colorLike:'black', colorGoing:'black'};
-  id=this.props.navigation.state.params.id;
- // category=events[id]['category'];
 
+ // category=events[id]['category'];
+id=0;
 }
 state = {
   message: '',
@@ -37,12 +37,13 @@ state = {
       let {phone} = this.state;
       return (
 
-        <View>        
+        <View>
             <TextField
         label='Leave a comment...'
         multiline = {true}
         onChangeText={ (message) => this.setState({message}) }/>
-        <Button raised primary text="Post" onPress={() => this.props.navigation.navigate('Event', {id:0})} />    
+        <Button raised primary text="Post" onPress={() => this.props.navigation.goBack()} />
+        <Text>ID is {id}</Text>
         </View>
       );
    };
