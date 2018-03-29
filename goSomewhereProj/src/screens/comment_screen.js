@@ -24,6 +24,7 @@ const events = [{"id":1,"title":"Android Hackathon","category":"study","descript
 export default class Comments_Screen extends React.Component {
 constructor(props) {
   super(props);
+
  // this.state = {colorLike:'black', colorGoing:'black'};
 
  // category=events[id]['category'];
@@ -32,6 +33,7 @@ constructor(props) {
 state = {
   message: '',
   message_length: 0,
+  event: this.props.navigation.state.params.event,
 };
 
     render() {
@@ -44,7 +46,7 @@ state = {
         label='Leave a comment...'
         multiline = {true}
         onChangeText={ (message) => {this.setState({message:message});this.setState({message_length:message.length}) }}/>
-        <Button raised primary text="Post" onPress={(message) => {this.postComment();this.props.navigation.goBack()
+        <Button raised primary text="Post" onPress={(message) => {this.postComment();this.props.navigation.navigate('Event',{event: this.state.event });
         }} />
         <Text>ID is {id}</Text>
         <Text>Message length is {this.state.message_length}</Text>
