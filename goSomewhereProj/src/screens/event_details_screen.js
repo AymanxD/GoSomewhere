@@ -226,7 +226,7 @@ keyExtractor={extractKey}
 />
 </View>
 
-       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:0})} />
+       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event })} />
      </ScrollView>
             <View style={{
                flexDirection: 'row',
