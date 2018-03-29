@@ -12,9 +12,6 @@ Furthermore, users can share their experience about the environment and access f
 Requirements:
 Mobile phone/application running Android 4.1 and up.
 
-Installing:
-Installed through the application store.
-
 Navigation:
 1. Login or sign up.
 2. Pick your city (Toronto or Halifax).
@@ -53,13 +50,6 @@ react-native-tab-view
 react-native-vector-icons
 react-native-navigation
 
-	Librarys used:
-	React Native Vector Icons - 'Customizable icons for React Native'
-	(url: https://github.com/oblador/react-native-vector-icons#android)
-
-Running the tests:
-//Meow meow meow
-
 Deployment: 
 The application is set to launch at an unknown date in the 'Play Store'. 
 
@@ -69,7 +59,6 @@ Matthew Hemming
 Ayman Mohatarem
 Siddhant Bhardwaj
 Andrey Almabeko
-
 
 Acknowledgements:
 Eric Desjardins (Dalhousie University)

@@ -22,37 +22,15 @@ const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
 var date;
+var message;
 var time;
+var description;
+var eventName;
 
-// handleGetDirections = () => {
-//   const data = {
-//     source: {
-//       latitude: starting,
-//       longitude: starting
-//     },
-//     destination: {
-//       latitude: this.state.event['latitude'],
-//       longitude: this.state.event['longitude'],
-//     },
-//     params: [ {
-//       key: {GoogleMapsKey},
-//       value: "w"
-//     }
-//     ]
-//   }
-//   getDirections(data)
-// }
 //https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
 
-// fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', {
-// body: JSON.stringify({
-//   firstParam: 'location=' + lat + ',' + long,
-//   secondParam: '&radius=5&rankby=prominence&',
-//   thirdParam: 'keyword=computerscience&key=AIzaSyA1ihdTdZW3M7nOMQz2tdgtuX0HCVc9tBo',
-// }), });
-//for the FlatList
 const extractKey = ({id}) => id //for the flatlist
 
 export default class Event_Details_Screen extends React.Component {
@@ -65,6 +43,7 @@ export default class Event_Details_Screen extends React.Component {
       message:'No one was petting me',
       checkIcon:"star-outlined",
       event: props.navigation.state.params.event,
+        result: ' ',
     };
 
    // this.changeIconName = this.changeIconName.bind(this);
@@ -72,9 +51,12 @@ export default class Event_Details_Screen extends React.Component {
     date = date.substring(0,10);
     time = this.state.event['start_at'];
     time = time.substring(11,16);
-
+    description = this.state.event['description'];
+    eventName = this.state.event['title'];
   }
-
+    _showResult(result){
+        this.setState({result})
+    }
   //to get comments from the backend
     componentDidMount() {
       axios.get('/events/'+this.state.event['id']+'/comments')
@@ -160,17 +142,15 @@ export default class Event_Details_Screen extends React.Component {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
-        message: [this.state.event['name'] + this.state.event['date']],
-        url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-        title: this.state.event['name'],
-      }, {
-        dialogTitle: 'Share with your friends!',
-      }) } >
+        message: description,
+       title: 'Check out: ' + eventName + '\nDate: ' + date + '\nTime: ' + time + '\n',
+      //    url: 'https://play.google.com/store?hl=en',// Will change to dynamic link when live
+    }) .then(this._showResult) .catch(err => console.log(err))} >
         <Entypo.Button name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
         <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
       </TouchableOpacity>
-
      </View>
+
      <View style = {styles.lineStyle}></View>
      <View style={styles.padding}>
      <Text>{this.state.event['description']} </Text>
