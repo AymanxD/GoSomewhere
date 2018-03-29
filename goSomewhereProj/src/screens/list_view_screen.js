@@ -22,7 +22,7 @@ export default class List_View_Screen extends React.Component {
             events: [],
             longitude: null,
             error: null,
-            distance: 50,
+            distance: 25,
             filterModalVisible: false,
             buttonLeft: {
                 key: "Switch City",
@@ -84,6 +84,29 @@ export default class List_View_Screen extends React.Component {
         this.setState({
             distance: newDistance
         });
+
+        this.updateFilter();
+    }
+
+    updateFilter(){
+
+        let tempArr= [];
+
+        for( i = 0; i < this.state.events.length; i++){
+            let overallDistance = this.distanceComparator(this.state.events[i].latitude, this.state.events[i].longitude);
+
+            if(overallDistance < this.state.distance){
+                tempArr.push(this.state.events[i]);
+            }
+        }
+
+        this.setState({
+            events: tempArr
+        });
+    }
+
+    distanceComparator(lat, lon){
+        return Math.sqrt(Math.pow(lat - this.state.latitude, 2) + Math.pow(lon - this.state.longitude, 2));
     }
 
   _renderRow(rowData) {
@@ -104,36 +127,37 @@ export default class List_View_Screen extends React.Component {
 
   render() {
     return (
-            <SideBarContainer navigation={this.props.navigation}>
-                <View style={styles.container}>
-                    <Toolbar
-                        leftElement="menu"
-                        onLeftElementPress={() => EventRegister.emit('menuToggle') }
-                        centerElement="Events List"
-                        searchable={{
-                            autoFocus: true,
-                            placeholder: 'Search',
-                        }}
-                    />
-                    <StatusBar hidden={true} />
-                    <ListView
-                        dataSource={ds.cloneWithRows(this.state.events)}
-                        enableEmptySections={true}
-                        renderRow={this._renderRow.bind(this)}
-                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
-                    />
-                    <FilterModel
-                        filterModalVisible={this.state.filterModalVisible}
-                        distance={this.state.distance}
-                        onPress={this.state.buttonRight.onPress}
-                        onChange={this.distanceChange.bind(this)}
-                    />
-                    <MenuBar buttonLeft={this.state.buttonLeft}
-                             buttonCenter={this.state.buttonCenter}
-                             buttonRight={this.state.buttonRight}
-                    />
-                </View>
-            </SideBarContainer>
+        <SideBarContainer navigation={this.props.navigation}>
+            <View style={styles.container}>
+                <Toolbar
+                    leftElement="menu"
+                    onLeftElementPress={() => EventRegister.emit('menuToggle') }
+                    centerElement="Events List"
+                    searchable={{
+                        autoFocus: true,
+                        placeholder: 'Search',
+                    }}
+                />
+                <StatusBar hidden={true} />
+                <ListView
+                    dataSource={ds.cloneWithRows(this.state.events)}
+                    enableEmptySections={true}
+                    renderRow={this._renderRow.bind(this)}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}
+                />
+                <FilterModel
+                    filterModalVisible={this.state.filterModalVisible}
+                    distance={this.state.distance}
+                    onPress={this.state.buttonRight.onPress}
+                    onChange={this.distanceChange.bind(this)}
+                />
+                <MenuBar
+                    buttonLeft={this.state.buttonLeft}
+                    buttonCenter={this.state.buttonCenter}
+                    buttonRight={this.state.buttonRight}
+                />
+            </View>
+        </SideBarContainer>
     );
   }
 }

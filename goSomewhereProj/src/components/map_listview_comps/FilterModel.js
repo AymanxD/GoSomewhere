@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Text, TouchableHighlight, TouchableOpacity, View, CheckBox, Slider} from 'react-native';
 import Modal from "react-native-modal";
 
-import { Toolbar, ListItem } from 'react-native-material-ui';
+import { Button } from 'react-native-material-ui';
 
 
 export default class FilterModel extends Component {
@@ -10,19 +10,22 @@ export default class FilterModel extends Component {
     constructor(props){
         super(props);
 
-        this.sliderChange.bind(this);
-
         this.state = {
             value: 25
         }
     }
 
-    sliderChange(value){
+    acceptChange(value){
+        this.onChange(this.state.value);
+        this.props.onPress();
+    }
+
+    rejectChange() {
         this.setState({
-            value: value
+            value: 25
         });
 
-        this.props.onChange(this.state.value);
+        this.props.onPress();
     }
 
     render() {
@@ -30,17 +33,16 @@ export default class FilterModel extends Component {
         let value = this.state.value;
 
         return (
-            <View style={{ flex: 1 }}>
-
+            <View>
                 <Modal
                     isVisible={this.props.filterModalVisible}
                     backdropColor={"black"}
-                    style={{marginTop: 64, marginBottom: 64, marginLeft: 32, marginRight: 32}}
-                    onBackdropPress={() => this.props.onPress}
-                    onSwipe={() => this.props.onPress}>
-                    <View style={{ flex: 1, backgroundColor: 'white', padding: 16}}>
+                    style={{}}
+                    onBackdropPress={() => this.rejectChange.bind(this)}
+                    >
+                    <View style={{ backgroundColor: "white", padding: 16, alignSelf: "center"}}>
                         <Text>Time range:</Text>
-                        <View style={{flexDirection: "row", justifyContent: "center", margin: 16}}>
+                        <View style={{flex: 0.25, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
                             <CheckBox/>
                             <Text>
                                 Today
@@ -67,8 +69,6 @@ export default class FilterModel extends Component {
                                     this.setState({
                                         value: val
                                     });
-
-                                    this.props.onChange(val);
                                 }}
                                 style={{flex: 1}}
                                 minimumTrackTintColor='#1073ff'
@@ -78,9 +78,10 @@ export default class FilterModel extends Component {
                                 {this.state.value}
                             </Text>
                         </View>
-                        <TouchableHighlight onPress={this.props.onPress} style={{justifyContent: "flex-end", flexDirection: 'column'}}>
-                            <Text style={{fontsize: 16, fontcolor: 'blue'}}>Accept</Text>
-                        </TouchableHighlight>
+                        <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
+                            <Button primary text="Accept" onPress={this.acceptChange} style={{container:{justifyContent: "flex-end", flexDirection: 'column'}}}/>
+                            <Button primary text="Back" onPress={this.rejectChange.bind(this)} style={{container:{justifyContent: "flex-end", flexDirection: 'column'}}}/>
+                        </View>
                     </View>
                 </Modal>
             </View>
