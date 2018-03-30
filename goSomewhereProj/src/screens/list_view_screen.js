@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ListView, StatusBar, Image, Alert
+import { StyleSheet, Text, View, ListView, Image, Alert
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
@@ -31,7 +31,7 @@ export default class List_View_Screen extends React.Component {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: () => this.setState({})
+                onPress: () => this.props.navigation.navigate('PickCity')
             },
             buttonCenter: {
                 key: "Map",
@@ -182,7 +182,6 @@ export default class List_View_Screen extends React.Component {
                         placeholder: 'Search',
                     }}
                 />
-                <StatusBar hidden={true} />
                 <ListView
                     dataSource={this.ds.cloneWithRows(this.state.events)}
                     enableEmptySections={true}

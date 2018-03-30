@@ -17,11 +17,13 @@ export default class Map_View_Screen extends React.Component {
         this.state = {
             events: [],
             distance: 25,
+            curr_city_lat:44.6374247,
+            curr_city_long:-63.5872094,
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: () => this.setState({})
+                onPress: () => this.props.navigation.navigate('PickCity')
             },
             buttonCenter: {
                 key: "List",
@@ -59,6 +61,14 @@ export default class Map_View_Screen extends React.Component {
         this.setState({
             distance: newDistance
         });
+    componentWillMount(){
+        if(this.props.navigation.state.params){
+            const {lat,long} = this.props.navigation.state.params;
+            this.setState({curr_city_lat: lat});
+            this.setState({curr_city_long: long});
+        }
+
+
     }
 
     toEventDetails = () => {
@@ -66,6 +76,8 @@ export default class Map_View_Screen extends React.Component {
     }
 
     render() {
+
+
         return (
             <SideBarContainer navigation={this.props.navigation}>
                 <View style={styles.container}>
@@ -81,8 +93,8 @@ export default class Map_View_Screen extends React.Component {
                     <MapView
                         style={{ flex: 1 }}
                         initialRegion={{
-                            latitude: 44.6374247,
-                            longitude: -63.5872094,
+                            latitude: this.state.curr_city_lat,
+                            longitude: this.state.curr_city_long,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         }}
