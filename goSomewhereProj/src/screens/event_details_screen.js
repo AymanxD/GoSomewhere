@@ -2,11 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
 import { Toolbar, Button, Icon } from 'react-native-material-ui';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,37 +18,15 @@ const customBlue = 'rgb(72, 133, 237)';
 pressedLike='black';
 pressedGoing='black';
 var date;
+var message;
 var time;
-
-// handleGetDirections = () => {
-//   const data = {
-//     source: {
-//       latitude: starting,
-//       longitude: starting
-//     },
-//     destination: {
-//       latitude: this.state.event['latitude'],
-//       longitude: this.state.event['longitude'],
-//     },
-//     params: [ {
-//       key: {GoogleMapsKey},
-//       value: "w"
-//     }
-//     ]
-//   }
-//   getDirections(data)
-// }
+var description;
+var eventName;
+var address;
 //https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
 
-// fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', {
-// body: JSON.stringify({
-//   firstParam: 'location=' + lat + ',' + long,
-//   secondParam: '&radius=5&rankby=prominence&',
-//   thirdParam: 'keyword=computerscience&key=AIzaSyA1ihdTdZW3M7nOMQz2tdgtuX0HCVc9tBo',
-// }), });
-//for the FlatList
 const extractKey = ({id}) => id //for the flatlist
 
 export default class Event_Details_Screen extends React.Component {
@@ -65,6 +39,7 @@ export default class Event_Details_Screen extends React.Component {
       message:'No one was petting me',
       checkIcon:"star-outlined",
       event: props.navigation.state.params.event,
+        result: ' ',
     };
 
    // this.changeIconName = this.changeIconName.bind(this);
@@ -72,9 +47,13 @@ export default class Event_Details_Screen extends React.Component {
     date = date.substring(0,10);
     time = this.state.event['start_at'];
     time = time.substring(11,16);
-
+    description = this.state.event['description'];
+    eventName = this.state.event['title'];
+    address = this.state.event['address'];
   }
-
+    _showResult(result){
+        this.setState({result})
+    }
   //to get comments from the backend
     componentDidMount() {
       axios.get('/events/'+this.state.event['id']+'/comments')
@@ -148,29 +127,25 @@ export default class Event_Details_Screen extends React.Component {
         justifyContent: 'space-around',
         paddingBottom: 10,
       }}>
-        {/* <TouchableOpacity>
-          <Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color ={customBlue} size = {40}
-          onPress={() => {this.changeIconName()}} />
-          <Text style={{textAlign:'center', color:customBlue}}>LIKE</Text>
-       </TouchableOpacity> */}
 
-       <TouchableOpacity>
-          <Entypo.Button name='check' backgroundColor='transparent' color = {customBlue} size = {40} />
-          <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+       <TouchableOpacity onPress={this.handleGetDirections} >
+           <View style={styles.button}>
+               <Entypo name='check' backgroundColor='transparent' color={customBlue} size={40}/>
+               <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+           </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
-        message: [this.state.event['name'] + this.state.event['date']],
-        url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-        title: this.state.event['name'],
-      }, {
-        dialogTitle: 'Share with your friends!',
-      }) } >
-        <Entypo.Button name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
+          title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
+          message: description,
+    }) .then(this._showResult) .catch(err => console.log(err))} >
+          <View style={styles.button}>
+        <Entypo name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
         <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
+          </View>
       </TouchableOpacity>
-
      </View>
+
      <View style = {styles.lineStyle}></View>
      <View style={styles.padding}>
      <Text>{this.state.event['description']} </Text>
@@ -229,13 +204,14 @@ keyExtractor={extractKey}
        <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event })} />
      </ScrollView>
             <View style={{
-               flexDirection: 'row',
-               justifyContent: 'space-around'
+                flexDirection: 'column',
+                alignItems: 'center',
              }}>
 
              <TouchableOpacity onPress={this.handleGetDirections}>
-              <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
-              <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
+              <MaterialCommunityIcons name='navigation' style={{alignSelf: 'center'}} backgroundColor='transparent' color = 'black'
+                                      size = {40} />
+              <Text>DIRECTIONS</Text>
              </TouchableOpacity>
             </View>
      </View>
@@ -247,6 +223,11 @@ const styles = StyleSheet.create({
    flex: 1,
    paddingTop: 22
   },
+    button: {
+        width: 50,
+        height: 60,
+        alignItems: 'center',
+    },
   sectionHeader: {
     paddingTop: 2,
     paddingLeft: 10,
