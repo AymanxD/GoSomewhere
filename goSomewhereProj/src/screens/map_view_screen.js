@@ -61,6 +61,7 @@ export default class Map_View_Screen extends React.Component {
         this.setState({
             distance: newDistance
         });
+      }
     componentWillMount(){
         if(this.props.navigation.state.params){
             const {lat,long} = this.props.navigation.state.params;
