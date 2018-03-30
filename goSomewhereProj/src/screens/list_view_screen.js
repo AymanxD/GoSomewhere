@@ -182,7 +182,6 @@ export default class List_View_Screen extends React.Component {
                         placeholder: 'Search',
                     }}
                 />
-                <StatusBar hidden={true} />
                 <ListView
                     dataSource={this.ds.cloneWithRows(this.state.events)}
                     enableEmptySections={true}
