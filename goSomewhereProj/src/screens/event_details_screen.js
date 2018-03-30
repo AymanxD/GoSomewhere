@@ -2,11 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
 import { Toolbar, Button, Icon } from 'react-native-material-ui';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -26,7 +22,7 @@ var message;
 var time;
 var description;
 var eventName;
-
+var address;
 //https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
 images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
@@ -53,6 +49,7 @@ export default class Event_Details_Screen extends React.Component {
     time = time.substring(11,16);
     description = this.state.event['description'];
     eventName = this.state.event['title'];
+    address = this.state.event['address'];
   }
     _showResult(result){
         this.setState({result})
@@ -130,24 +127,22 @@ export default class Event_Details_Screen extends React.Component {
         justifyContent: 'space-around',
         paddingBottom: 10,
       }}>
-        {/* <TouchableOpacity>
-          <Entypo.Button name={this.state.checkIcon} backgroundColor='transparent' color ={customBlue} size = {40}
-          onPress={() => {this.changeIconName()}} />
-          <Text style={{textAlign:'center', color:customBlue}}>LIKE</Text>
-       </TouchableOpacity> */}
 
-       <TouchableOpacity>
-          <Entypo.Button name='check' backgroundColor='transparent' color = {customBlue} size = {40} />
-          <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+       <TouchableOpacity onPress={this.handleGetDirections} >
+           <View style={styles.button}>
+               <Entypo name='check' backgroundColor='transparent' color={customBlue} size={40}/>
+               <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+           </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
-        message: description,
-       title: 'Check out: ' + eventName + '\nDate: ' + date + '\nTime: ' + time + '\n',
-      //    url: 'https://play.google.com/store?hl=en',// Will change to dynamic link when live
+          message: description,
+       title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
     }) .then(this._showResult) .catch(err => console.log(err))} >
-        <Entypo.Button name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
+          <View style={styles.button}>
+        <Entypo name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
         <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
+          </View>
       </TouchableOpacity>
      </View>
 
@@ -209,13 +204,14 @@ keyExtractor={extractKey}
        <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:0})} />
      </ScrollView>
             <View style={{
-               flexDirection: 'row',
-               justifyContent: 'space-around'
+                flexDirection: 'column',
+                alignItems: 'center',
              }}>
 
              <TouchableOpacity onPress={this.handleGetDirections}>
-              <MaterialCommunityIcons.Button name='navigation' paddingLeft={18} backgroundColor='transparent' color = 'black' size = {40} />
-              <Text style={{textAlign:'center'}}>DIRECTIONS</Text>
+              <MaterialCommunityIcons name='navigation' style={{alignSelf: 'center'}} backgroundColor='transparent' color = 'black'
+                                      size = {40} />
+              <Text>DIRECTIONS</Text>
              </TouchableOpacity>
             </View>
      </View>
@@ -227,6 +223,11 @@ const styles = StyleSheet.create({
    flex: 1,
    paddingTop: 22
   },
+    button: {
+        width: 50,
+        height: 60,
+        alignItems: 'center',
+    },
   sectionHeader: {
     paddingTop: 2,
     paddingLeft: 10,
