@@ -7,6 +7,7 @@ import { EventRegister } from 'react-native-event-listeners';
 import axios from 'axios';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
+import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
 
 export default class Map_View_Screen extends React.Component {
@@ -15,6 +16,7 @@ export default class Map_View_Screen extends React.Component {
         super(props);
         this.state = {
             events: [],
+            distance: 25,
             curr_city_lat:44.6374247,
             curr_city_long:-63.5872094,
             buttonLeft: {
@@ -34,9 +36,8 @@ export default class Map_View_Screen extends React.Component {
                 key: "filter",
                 icon: "filter-list",
                 label: "Filter",
-                onPress: () => {if(this.state.filterModalVisible === false){
-                    this.setState({filterModalVisible: true})
-                } else this.setState({filterModalVisible: false})
+                onPress: () => {
+                    this.setState({filterModalVisible: !this.state.filterModalVisible})
                 }
             }
         }
@@ -56,6 +57,10 @@ export default class Map_View_Screen extends React.Component {
             });
     }
 
+    distanceChange(newDistance){
+        this.setState({
+            distance: newDistance
+        });
     componentWillMount(){
         if(this.props.navigation.state.params){
             const {lat,long} = this.props.navigation.state.params;
@@ -110,9 +115,16 @@ export default class Map_View_Screen extends React.Component {
                             )
                         })}
                     </MapView>
-                    <MenuBar buttonLeft={this.state.buttonLeft}
-                             buttonCenter={this.state.buttonCenter}
-                             buttonRight={this.state.buttonRight}
+                    <MenuBar
+                        buttonLeft={this.state.buttonLeft}
+                        buttonCenter={this.state.buttonCenter}
+                        buttonRight={this.state.buttonRight}
+                    />
+                    <FilterModel
+                        filterModalVisible={this.state.filterModalVisible}
+                        distance={this.state.distance}
+                        onPress={this.state.buttonRight.onPress}
+                        onChange={this.distanceChange.bind(this)}
                     />
                 </View>
            </SideBarContainer>

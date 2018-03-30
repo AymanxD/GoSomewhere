@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Text, TouchableHighlight, TouchableOpacity, View, CheckBox, Slider} from 'react-native';
+import { Text, View, CheckBox, Slider, } from 'react-native';
 import Modal from "react-native-modal";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
-import { Toolbar, ListItem } from 'react-native-material-ui';
+import { Button } from 'react-native-material-ui';
 
 
 export default class FilterModel extends Component {
@@ -10,51 +11,65 @@ export default class FilterModel extends Component {
     constructor(props){
         super(props);
 
-        this.sliderChange.bind(this);
-
         this.state = {
-            value: 25
+            value: this.props.distance,
+            tempValue: 25,
+            time: this.props.time,
+            tempTime: 30
         }
     }
 
-    sliderChange(value){
+    acceptChange(){
         this.setState({
-            value: value
+            value: this.state.tempValue,
+            time: this.state.tempTime
+        }, () => {
+            this.props.onChange(this.state.tempValue, this.state.time);
+            this.props.onPress();
+        });
+    }
+
+    rejectChange() {
+        this.setState({
+            tempValue: this.state.value,
+            tempTime: this.state.time
         });
 
-        this.props.onChange(this.state.value);
+        this.props.onPress();
     }
 
     render() {
 
-        let value = this.state.value;
+        let radio_props = [
+            {label: 'Today', value: 0 },
+            {label: 'Two Weeks', value: 14 },
+            {label: 'One Month', value: 30 }
+        ];
 
         return (
-            <View style={{ flex: 1 }}>
-
+            <View>
                 <Modal
                     isVisible={this.props.filterModalVisible}
                     backdropColor={"black"}
-                    style={{marginTop: 64, marginBottom: 64, marginLeft: 32, marginRight: 32}}
-                    onBackdropPress={() => this.props.onPress}
-                    onSwipe={() => this.props.onPress}>
-                    <View style={{ flex: 1, backgroundColor: 'white', padding: 16}}>
-                        <Text>Time range:</Text>
-                        <View style={{flexDirection: "row", justifyContent: "center", margin: 16}}>
-                            <CheckBox/>
-                            <Text>
-                                Today
-                            </Text>
-                            <CheckBox/>
-                            <Text>
-                                Two weeks
-                            </Text>
-                            <CheckBox/>
-                            <Text>
-                                One month
-                            </Text>
+                    style={{}}
+                    onBackdropPress={() => this.rejectChange.bind(this)}
+                    >
+                    <View style={{ backgroundColor: "white", padding: 16, alignSelf: "center"}}>
+                        <Text style={{margin: 16}}>Time range:</Text>
+                        <View style={{flex: 0.15, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                        <RadioForm
+                            radio_props={radio_props}
+                            initial={2}
+                            buttonSize={5}
+                            formHorizontal={true}
+                            labelHorizontal={true}
+                            buttonColor={'#2196f3'}
+                            animation={true}
+                            labelStyle={{marginRight: 8, marginLeft:-4}}
+                            onPress={(option) => {this.setState({tempTime: option})}}
+                        />
                         </View>
-                        <Text>
+                        <Text style={{margin: 16}}>
                             Distance:
                         </Text>
                         <View style={{flexDirection: "row", justifyContent: "center", margin: 16}}>
@@ -65,22 +80,21 @@ export default class FilterModel extends Component {
                                 maximumValue={50}
                                 onValueChange={(val) => {
                                     this.setState({
-                                        value: val
+                                        tempValue: val
                                     });
-
-                                    this.props.onChange(val);
                                 }}
                                 style={{flex: 1}}
                                 minimumTrackTintColor='#1073ff'
                                 maximumTrackTintColor='#b7b7b7'
                             />
                             <Text>
-                                {this.state.value}
+                                {this.state.tempValue} km
                             </Text>
                         </View>
-                        <TouchableHighlight onPress={this.props.onPress} style={{justifyContent: "flex-end", flexDirection: 'column'}}>
-                            <Text style={{ fontSize: 16 }}>Accept</Text>
-                        </TouchableHighlight>
+                        <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
+                            <Button primary text="Accept" onPress={this.acceptChange.bind(this)} style={{container:{justifyContent: "flex-end", flexDirection: 'column'}}}/>
+                            <Button primary text="Back" onPress={this.rejectChange.bind(this)} style={{container:{justifyContent: "flex-end", flexDirection: 'column'}}}/>
+                        </View>
                     </View>
                 </Modal>
             </View>
