@@ -136,8 +136,8 @@ export default class Event_Details_Screen extends React.Component {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Share.share({
+          title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
           message: description,
-       title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
     }) .then(this._showResult) .catch(err => console.log(err))} >
           <View style={styles.button}>
         <Entypo name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
