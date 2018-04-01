@@ -115,7 +115,6 @@ export default class Map_View_Screen extends React.Component {
     };
 
     async searchFilter() {
-        
         let events = await AsyncStorage.getItem('originalEvents');
         let search = await AsyncStorage.getItem('search');
         events = JSON.parse(events);
@@ -130,7 +129,7 @@ export default class Map_View_Screen extends React.Component {
         }
         console.log(searchArr);
 
-        AsyncStorage.setItem('eventsTextFiltered', JSON.stringify(searchArr));
+        AsyncStorage.setItem('events', JSON.stringify(searchArr));
 
         this.props.changeEvents();
         this.forceUpdate;
