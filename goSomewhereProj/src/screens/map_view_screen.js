@@ -95,14 +95,14 @@ export default class Map_View_Screen extends React.Component {
         this.setState({
             events: JSON.parse(await AsyncStorage.getItem('events'))
         });
-    componentWillMount(){
-        if(this.props.navigation.state.params){
-            const {lat,long} = this.props.navigation.state.params;
-            this.setState({curr_city_lat: lat});
-            this.setState({curr_city_long: long});
+    componentWillMount()
+        {
+            if (this.props.navigation.state.params) {
+                const {lat, long} = this.props.navigation.state.params;
+                this.setState({curr_city_lat: lat});
+                this.setState({curr_city_long: long});
+            }
         }
-
-
     }
 
     toEventDetails = () => {

@@ -1,9 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
 import { StyleSheet, View, ListView, Image, Alert, AsyncStorage
-=======
-import { StyleSheet, Text, View, ListView, Image, Alert
->>>>>>> 518c6db8ec75fd28b235d047e7848cbadd1ab701
+
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
