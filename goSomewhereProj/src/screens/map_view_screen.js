@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
 import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
@@ -42,28 +42,62 @@ export default class Map_View_Screen extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/events')
-            .then(async (response) => {
-                this.setState({events: response.data});
-            })
-            .catch((error) => {
-                if(error.response && error.response.data) {
-                    Alert.alert(JSON.stringify(error.response.data));
-                } else {
-                    Alert.alert("catching exception", JSON.stringify(error));
-                }
-            });
+        //location services
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    error: null,
+                }, () =>{
+                    AsyncStorage.setItem('lat', JSON.stringify(this.state.latitude));
+                    AsyncStorage.setItem('lon', JSON.stringify(this.state.longitude));
+                });
+            },
+            (error) => this.setState({ error: error.message }),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+        );
+
     }
 
-    distanceChange(newDistance){
+   async componentWillMount() {
+
+        let events = await AsyncStorage.getItem('events');
+
+        if(events == null) {
+            axios.get('/events')
+                .then(async (response) => {
+                    this.setState({events: response.data}, () => {
+                        AsyncStorage.setItem('originalEvents', JSON.stringify(this.state.events));
+                    });
+                })
+                .catch((error) => {
+                    if (error.response && error.response.data) {
+                        Alert.alert(JSON.stringify(error.response.data));
+                    } else {
+                        Alert.alert("catching exception", JSON.stringify(error));
+                    }
+                });
+        } else{
+            let events = await AsyncStorage.getItem('events');
+
+            this.setState({
+                events: JSON.parse(events),
+            });
+        }
+
+        navigator.geolocation.clearWatch(this.watchId);
+    }
+
+    async changeEvents(){
         this.setState({
-            distance: newDistance
+            events: JSON.parse(await AsyncStorage.getItem('events'))
         });
     }
 
     toEventDetails = () => {
         this.props.navigation.navigate('Event');
-    }
+    };
 
     render() {
         return (
@@ -110,9 +144,8 @@ export default class Map_View_Screen extends React.Component {
                     />
                     <FilterModel
                         filterModalVisible={this.state.filterModalVisible}
-                        distance={this.state.distance}
                         onPress={this.state.buttonRight.onPress}
-                        onChange={this.distanceChange.bind(this)}
+                        changeEvents={this.changeEvents.bind(this)}
                     />
                 </View>
            </SideBarContainer>
