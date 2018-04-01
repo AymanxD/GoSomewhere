@@ -95,6 +95,7 @@ export default class Map_View_Screen extends React.Component {
         this.setState({
             events: JSON.parse(await AsyncStorage.getItem('events'))
         });
+      
     componentWillMount()
         {
             if (this.props.navigation.state.params) {
@@ -102,8 +103,7 @@ export default class Map_View_Screen extends React.Component {
                 this.setState({curr_city_lat: lat});
                 this.setState({curr_city_long: long});
             }
-        }
-    }
+      }
 
     toEventDetails = () => {
         this.props.navigation.navigate('Event');
