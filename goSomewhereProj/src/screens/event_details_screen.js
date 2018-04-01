@@ -232,7 +232,6 @@ export default class Event_Details_Screen extends React.Component {
 */}
 
 <View>
-<Text style={{fontSize:13, fontWeight:'bold'}}>Is going is:{this.state.details['is_attending']}</Text>
 <Text style={{fontSize:13, fontWeight:'bold'}}>Reviews</Text>
 
 <FlatList
