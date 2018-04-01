@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ListView, Image, Alert
+import { StyleSheet, View, ListView, Image, Alert, AsyncStorage
+
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
@@ -24,8 +25,6 @@ export default class List_View_Screen extends React.Component {
             longitude: null,
             events: [],
             error: null,
-            distanceRange: 25,
-            timeRange: 30,
             filterModalVisible: false,
             buttonLeft: {
                 key: "Switch City",
@@ -52,105 +51,63 @@ export default class List_View_Screen extends React.Component {
         }
     }
 
-  componentWillMount(){
-      axios.get('/events')
-          .then(async (response) => {
-              this.setState({
-                  events: response.data,
-              });
-          })
-          .catch((error) => {
-              if(error.response && error.response.data) {
-                  Alert.alert(JSON.stringify(error.response.data));
-              } else {
-                  Alert.alert("catching exception", JSON.stringify(error));
-              }
+  async componentWillMount(){
+
+      let events = await AsyncStorage.getItem('events');
+
+      if(events == null) {
+          let events = await AsyncStorage.getItem('originalEvents');
+
+          this.setState({
+              events: JSON.parse(events),
           });
 
-      navigator.geolocation.clearWatch(this.watchId);
+      }else{
+          let events = await AsyncStorage.getItem('events');
 
+          this.setState({
+              events: JSON.parse(events),
+          });
+      }
   }
 
-  componentDidMount() {
-    //location services
-    this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
+    async changeEvents(){
         this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        });
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
-    );
-  }
-
-    filterChange(newDistance, newTime){
-        this.setState({
-            distanceRange: newDistance,
-            timeRange: newTime
-        }, () => {
-            this.updateDistanceFilter();
-            this.updateTimeFilter();
+            events: JSON.parse(await AsyncStorage.getItem('events'))
         });
     }
 
-    updateDistanceFilter(){
 
-        let tempArr = [];
-
-        for(let i = 0; i < this.state.events.length; i++){
-            let overallDistance = this.distanceComparator(this.state.events[i].latitude, this.state.events[i].longitude);
-
-            if(overallDistance <= this.state.distanceRange){
-                tempArr.push(this.state.events[i]);
-                console.log(this.state.events[i]);
-            }
-        }
-
-        this.setState({
-            events: tempArr
-        });
-    }
-
-    distanceComparator(lat, lon){
-        return Math.sqrt(Math.pow(lat - this.state.latitude, 2) + Math.pow(lon - this.state.longitude, 2));
-    }
-
-
-    updateTimeFilter(){
-        let today = new Date();
-        let dateToday = today.getDate();
-        let monthToday = today.getMonth();
-        let eventDate, eventDay, eventMonth;
-        let tempArr = [];
-
-        let daysBetweenDates;
-
-        for(let i = 0; i < this.state.events.length; i++){
-
-            eventDate = new Date(this.state.events[i].start_at);
-            eventDay = eventDate.getDate();
-            eventMonth = eventDate.getMonth();
-
-            daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
-
-            if((daysBetweenDates <= this.state.timeRange)){
-                tempArr.push(this.state.events[i]);
-            }
-        }
-
-        this.setState({
-            events: tempArr
-        })
-    }
-
-    timeComparator(dateToday, monthToday, eventDay, eventMonth){
-        return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
-    }
-
-
+    // updateTimeFilter(){
+    //     let today = new Date();
+    //     let dateToday = today.getDate();
+    //     let monthToday = today.getMonth();
+    //     let eventDate, eventDay, eventMonth;
+    //     let tempArr = [];
+    //
+    //     let daysBetweenDates;
+    //
+    //     for(let i = 0; i < this.state.events.length; i++){
+    //
+    //         eventDate = new Date(this.state.events[i].start_at);
+    //         eventDay = eventDate.getDate();
+    //         eventMonth = eventDate.getMonth();
+    //
+    //         daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
+    //
+    //         if((daysBetweenDates <= this.state.timeRange)){
+    //             tempArr.push(this.state.events[i]);
+    //         }
+    //     }
+    //
+    //     this.setState({
+    //         events: tempArr
+    //     });
+    // }
+    //
+    // static timeComparator(dateToday, monthToday, eventDay, eventMonth){
+    //     return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
+    // }
 
 
   _renderRow(rowData) {
@@ -190,10 +147,8 @@ export default class List_View_Screen extends React.Component {
                 />
                 <FilterModel
                     filterModalVisible={this.state.filterModalVisible}
-                    distance={this.state.distanceRange}
-                    time={this.state.time}
                     onPress={this.state.buttonRight.onPress}
-                    onChange={this.filterChange.bind(this)}
+                    changeEvents={this.changeEvents.bind(this)}
                 />
                 <MenuBar
                     buttonLeft={this.state.buttonLeft}
