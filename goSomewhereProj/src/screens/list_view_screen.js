@@ -77,39 +77,6 @@ export default class List_View_Screen extends React.Component {
         });
     }
 
-
-    // updateTimeFilter(){
-    //     let today = new Date();
-    //     let dateToday = today.getDate();
-    //     let monthToday = today.getMonth();
-    //     let eventDate, eventDay, eventMonth;
-    //     let tempArr = [];
-    //
-    //     let daysBetweenDates;
-    //
-    //     for(let i = 0; i < this.state.events.length; i++){
-    //
-    //         eventDate = new Date(this.state.events[i].start_at);
-    //         eventDay = eventDate.getDate();
-    //         eventMonth = eventDate.getMonth();
-    //
-    //         daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
-    //
-    //         if((daysBetweenDates <= this.state.timeRange)){
-    //             tempArr.push(this.state.events[i]);
-    //         }
-    //     }
-    //
-    //     this.setState({
-    //         events: tempArr
-    //     });
-    // }
-    //
-    // static timeComparator(dateToday, monthToday, eventDay, eventMonth){
-    //     return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
-    // }
-
-
   _renderRow(rowData) {
     return(
         <View>
