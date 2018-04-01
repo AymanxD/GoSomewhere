@@ -155,7 +155,7 @@ export default class Event_Details_Screen extends React.Component {
     <Image source={{uri: this.state.event.image}}
       style={{ flex:1, height:200 }} />
 
-        <View style={{ height: 75, backgroundColor:customBlue}}>
+        <View style={{backgroundColor:customBlue}}>
         <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
         <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
         </View>
