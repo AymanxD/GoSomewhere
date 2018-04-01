@@ -15,6 +15,7 @@ const image_categories = [{"party":"party_category_image.jpg","study":"Computer-
 const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const customBlue = 'rgb(72, 133, 237)';
+const customGreen = 'rgb(25,220,40)';
 pressedLike='black';
 pressedGoing='black';
 var date;
@@ -55,6 +56,23 @@ export default class Event_Details_Screen extends React.Component {
     _showResult(result){
         this.setState({result})
     }
+
+//change going status on backend
+    updateGoing = () => {
+      //send to server
+      axios.post('/events/'+this.state.event['id']+'/change_attending', {
+
+      })
+      .then(async (response) => {
+        this.setState({event: response.data});
+      }).catch((error) => {
+        if (error.response && error.response.data.errors) {
+          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        }
+      }).done();
+    }
+
+
   //to get comments from the backend
     componentDidMount() {
       axios.get('/events/'+this.state.event['id']+'/comments')
@@ -143,7 +161,7 @@ export default class Event_Details_Screen extends React.Component {
         paddingBottom: 10,
       }}>
 
-       <TouchableOpacity onPress={this.handleGetDirections} >
+       <TouchableOpacity onPress={() => this.updateGoing() } >
            <View style={styles.button}>
                <Entypo name='check' backgroundColor='transparent' color={customBlue} size={40}/>
                <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
@@ -243,6 +261,8 @@ keyExtractor={extractKey}
       );
   };
 };
+
+
 const styles = StyleSheet.create({
   container: {
    flex: 1,
