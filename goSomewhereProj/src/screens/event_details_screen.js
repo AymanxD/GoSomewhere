@@ -89,6 +89,11 @@ export default class Event_Details_Screen extends React.Component {
         axios.get('/events/'+this.state.event['id']+'/')
         .then(async (response) => {
           this.setState({details: response.data});
+          if (this.state.details['is_attending']==true) {
+            this.setState( {
+              checkIcon: "star"
+            })
+          };
         })
         .catch((error) => {
           if(error.response && error.response.data) {
