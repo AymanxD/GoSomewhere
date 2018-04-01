@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, CheckBox, Slider, } from 'react-native';
+import {Text, View, CheckBox, Slider, AsyncStorage,} from 'react-native';
 import Modal from "react-native-modal";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
@@ -12,31 +12,62 @@ export default class FilterModel extends Component {
         super(props);
 
         this.state = {
-            value: this.props.distance,
-            tempValue: 25,
-            time: this.props.time,
+            distance: 25,
+            tempDistance: 25,
+            time: 30,
             tempTime: 30
         }
     }
 
     acceptChange(){
         this.setState({
-            value: this.state.tempValue,
+            distance: this.state.tempDistance,
             time: this.state.tempTime
         }, () => {
-            this.props.onChange(this.state.tempValue, this.state.time);
+            this.filterChange();
             this.props.onPress();
         });
     }
 
     rejectChange() {
         this.setState({
-            tempValue: this.state.value,
+            tempDistance: this.state.distance,
             tempTime: this.state.time
         });
 
         this.props.onPress();
     }
+
+    filterChange(){
+        this.updateDistanceFilter();
+    }
+
+    async updateDistanceFilter(){
+
+        let events = await AsyncStorage.getItem('originalEvents');
+        let lat = await AsyncStorage.getItem('lat');
+        let lon = await AsyncStorage.getItem('lon');
+
+        events = JSON.parse(events);
+
+        let tempArr = [];
+
+        for(let i = 0; i < events.length; i++){
+            let overallDistance = this.distanceComparator(events[i].latitude, events[i].longitude, lat, lon);
+            if(overallDistance <= this.state.tempDistance){
+                tempArr.push(events[i]);
+            }
+        }
+
+        AsyncStorage.setItem('events', JSON.stringify(tempArr));
+
+        this.props.changeEvents();
+    }
+
+    distanceComparator(lat, lon, currentLat, currentLon){
+        return Math.sqrt(Math.pow(lat - currentLat, 2) + Math.pow(lon - currentLon, 2));
+    }
+
 
     render() {
 
@@ -57,30 +88,30 @@ export default class FilterModel extends Component {
                     <View style={{ backgroundColor: "white", padding: 16, alignSelf: "center"}}>
                         <Text style={{margin: 16}}>Time range:</Text>
                         <View style={{flex: 0.15, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                        <RadioForm
-                            radio_props={radio_props}
-                            initial={2}
-                            buttonSize={5}
-                            formHorizontal={true}
-                            labelHorizontal={true}
-                            buttonColor={'#2196f3'}
-                            animation={true}
-                            labelStyle={{marginRight: 8, marginLeft:-4}}
-                            onPress={(option) => {this.setState({tempTime: option})}}
-                        />
+                        {/*<RadioForm*/}
+                            {/*radio_props={radio_props}*/}
+                            {/*initial={2}*/}
+                            {/*buttonSize={5}*/}
+                            {/*formHorizontal={true}*/}
+                            {/*labelHorizontal={true}*/}
+                            {/*buttonColor={'#2196f3'}*/}
+                            {/*animation={true}*/}
+                            {/*labelStyle={{marginRight: 8, marginLeft:-4}}*/}
+                            {/*onPress={(option) => {this.setState({tempTime: option})}}*/}
+                        {/*/>*/}
                         </View>
                         <Text style={{margin: 16}}>
                             Distance:
                         </Text>
                         <View style={{flexDirection: "row", justifyContent: "center", margin: 16}}>
                             <Slider
-                                value = {this.state.value}
+                                value = {this.state.distance}
                                 step = {1}
-                                minimunValue={1}
+                                minimumValue={1}
                                 maximumValue={50}
                                 onValueChange={(val) => {
                                     this.setState({
-                                        tempValue: val
+                                        tempDistance: val
                                     });
                                 }}
                                 style={{flex: 1}}
@@ -88,7 +119,7 @@ export default class FilterModel extends Component {
                                 maximumTrackTintColor='#b7b7b7'
                             />
                             <Text>
-                                {this.state.tempValue} km
+                                {this.state.tempDistance} km
                             </Text>
                         </View>
                         <View style={{flexDirection: 'row', justifyContent:'space-around'}}>
