@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, StyleSheet, SectionList, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
+import {Alert, View, Image, ScrollView, StyleSheet, SectionList, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
 import { Toolbar, Button, Icon } from 'react-native-material-ui';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,7 +10,6 @@ import getDirections from 'react-native-google-maps-directions';
 
 import axios from 'axios';
 
-const user = [{"id":1,"name":"Mittens","date":"25 Jan 2018","message":"Nobody petted me!"},{"id":2,"name":"Demon","date":"1 Dec 2017","message":"I said Chicken, not Ham"},{"id":3,"name":"BigCatLover","date":"2 Nov 2017","message":"Lots of heavy petting"}];
 const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
 const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
@@ -42,7 +41,7 @@ export default class Event_Details_Screen extends React.Component {
         result: ' ',
     };
 
-   // this.changeIconName = this.changeIconName.bind(this);
+  //  this.changeIconName = this.changeIconName.bind(this);
     date = this.state.event['start_at'];
     date = date.substring(0,10);
     time = this.state.event['start_at'];
@@ -68,17 +67,18 @@ export default class Event_Details_Screen extends React.Component {
         }
       });
     }
-  // changeIconName() {
-  //   if (this.state.checkIcon === "star-outlined") {
-  //     this.setState({
-  //       checkIcon: "star"
-  //     })
-  //     } else {
-  //       this.setState({
-  //         checkIcon: "star-outlined"
-  //       })
-  //     }
-  // }
+
+  changeIconName() {
+    if (this.state.checkIcon === "star-outlined") {
+      this.setState({
+        checkIcon: "star"
+      })
+      } else {
+        this.setState({
+          checkIcon: "star-outlined"
+        })
+      }
+  }
 
 
   handleGetDirections = () => {
@@ -128,9 +128,9 @@ export default class Event_Details_Screen extends React.Component {
         paddingBottom: 10,
       }}>
 
-       <TouchableOpacity onPress={this.handleGetDirections} >
+       <TouchableOpacity onPress={this.changeIconName.bind(this)}>
            <View style={styles.button}>
-               <Entypo name='check' backgroundColor='transparent' color={customBlue} size={40}/>
+           <Entypo name={this.state.checkIcon} backgroundColor='transparent' color={customBlue} size={40}/>
                <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
            </View>
       </TouchableOpacity>
