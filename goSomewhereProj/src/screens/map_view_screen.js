@@ -19,6 +19,7 @@ export default class Map_View_Screen extends React.Component {
             distance: 25,
             curr_city_lat:44.6374247,
             curr_city_long:-63.5872094,
+            search: '',
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
@@ -107,6 +108,34 @@ export default class Map_View_Screen extends React.Component {
         this.props.navigation.navigate('Event');
     };
 
+    onSearchPressed(fieldText){
+        console.log(fieldText + 'in on search Pressed');
+       AsyncStorage.setItem('search', fieldText);
+       this.searchFilter();
+    };
+
+    async searchFilter() {
+        
+        let events = await AsyncStorage.getItem('originalEvents');
+        let search = await AsyncStorage.getItem('search');
+        events = JSON.parse(events);
+
+        let searchArr = [];
+
+        for (let i = 0; i < events.length; i++) {
+            let title = events[i].title;
+            if (title.contains(search)) {
+                searchArr.push(events[i]);
+            }
+        }
+        console.log(searchArr);
+
+        AsyncStorage.setItem('eventsTextFiltered', JSON.stringify(searchArr));
+
+        this.props.changeEvents();
+        this.forceUpdate;
+    }
+
     render() {
 
 
@@ -120,7 +149,9 @@ export default class Map_View_Screen extends React.Component {
                         searchable={{
                             autoFocus: true,
                             placeholder: 'Search',
-                        }}
+                            onChangeText: (fieldText) =>
+                            {this.onSearchPressed(fieldText)}
+                                      }}
                     />
                     <MapView
                         style={{ flex: 1 }}
