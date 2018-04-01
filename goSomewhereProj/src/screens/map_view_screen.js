@@ -89,21 +89,19 @@ export default class Map_View_Screen extends React.Component {
         }
 
         navigator.geolocation.clearWatch(this.watchId);
+
+       if (this.props.navigation.state.params) {
+           const {lat, long} = this.props.navigation.state.params;
+           this.setState({curr_city_lat: lat});
+           this.setState({curr_city_long: long});
+       }
     }
 
-    async changeEvents(){
+    async changeEvents() {
         this.setState({
             events: JSON.parse(await AsyncStorage.getItem('events'))
         });
-      
-    componentWillMount()
-        {
-            if (this.props.navigation.state.params) {
-                const {lat, long} = this.props.navigation.state.params;
-                this.setState({curr_city_lat: lat});
-                this.setState({curr_city_long: long});
-            }
-      }
+    }
 
     toEventDetails = () => {
         this.props.navigation.navigate('Event');
