@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import { StyleSheet, View, ListView, Image, Alert, AsyncStorage
+=======
+import { StyleSheet, Text, View, ListView, Image, Alert
+>>>>>>> 518c6db8ec75fd28b235d047e7848cbadd1ab701
 } from 'react-native';
 
 import MenuBar from "../components/map_listview_comps/Menubar";
@@ -29,7 +33,7 @@ export default class List_View_Screen extends React.Component {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: () => this.setState({})
+                onPress: () => this.props.navigation.navigate('PickCity')
             },
             buttonCenter: {
                 key: "Map",

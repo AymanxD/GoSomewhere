@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Navigator, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Navigator, Alert, AsyncStorage, Platform, StatusBar } from 'react-native';
 import { ThemeProvider, COLOR, ListItem } from 'react-native-material-ui';
 import { NavigationActions } from 'react-navigation';
 import { Font, Constants } from 'expo';
@@ -11,8 +11,7 @@ import StackNavigator from './src/utils/StackNavigator';
 const uiTheme = {
   toolbar: {
     container: {
-      height: 50 + Constants.statusBarHeight,
-      paddingTop: Constants.statusBarHeight
+
     },
   },
 };
@@ -39,10 +38,21 @@ export default class App extends React.Component {
   render() {
     return (
       this.state.fontLoaded ? (
-        <ThemeProvider uiTheme={uiTheme}>
-          <StackNavigator />
-        </ThemeProvider>
+        <View style={styles.container}>
+          <StatusBar barStyle="light-content" />
+          <ThemeProvider uiTheme={uiTheme}>
+            <StackNavigator />
+          </ThemeProvider>
+        </View>
       ) : null
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight, // for statusbar
+    backgroundColor: COLOR.blue700 // for statusbar
+  }
+});

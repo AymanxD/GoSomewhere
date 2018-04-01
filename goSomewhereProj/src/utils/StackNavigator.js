@@ -7,6 +7,7 @@ import Event from '../screens/event_details_screen';
 import SignUp from '../screens/sign_up_screen';
 import ListView from '../screens/list_view_screen';
 import Comments from '../screens/comment_screen';
+import PickCity from '../screens/pick_city_screen';
 
 
 export default StackNavigator({
@@ -30,6 +31,9 @@ export default StackNavigator({
   },
   Comments: {
     screen: Comments,
+  },
+  PickCity: {
+      screen: PickCity,
   },
 }, {
   headerMode: 'none'
