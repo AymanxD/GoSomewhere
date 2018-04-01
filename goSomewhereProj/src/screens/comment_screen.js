@@ -45,11 +45,21 @@ state = {
             <TextField
         label='Leave a comment...'
         multiline = {true}
+        maxLength={140}
         onChangeText={ (message) => {this.setState({message:message});this.setState({message_length:message.length}) }}/>
-        <Button raised primary text="Post" onPress={(message) => {this.postComment();this.props.navigation.navigate('Event',{event: this.state.event });
-        }} />
-        <Text>ID is {id}</Text>
-        <Text>Message length is {this.state.message_length}</Text>
+        <Button raised primary text="Post" onPress=
+          {
+            (message) =>
+              {
+                if (this.state.message_length>0)
+                  {
+                  this.postComment();
+                  this.props.navigation.navigate('Event',{event: this.state.event });
+                  }
+              }
+          }
+        />
+        <Text>Remaining length is: {140-this.state.message_length}/140</Text>
         </View>
       );
    };
