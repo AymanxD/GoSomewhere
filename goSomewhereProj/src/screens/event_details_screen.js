@@ -40,6 +40,7 @@ export default class Event_Details_Screen extends React.Component {
       checkIcon:"star-outlined",
       event: props.navigation.state.params.event,
         result: ' ',
+        details: [],
     };
 
    // this.changeIconName = this.changeIconName.bind(this);
@@ -67,6 +68,20 @@ export default class Event_Details_Screen extends React.Component {
           Alert.alert("catching exception", JSON.stringify(error));
         }
       });
+
+        axios.get('/events/'+this.state.event['id']+'/')
+        .then(async (response) => {
+          this.setState({details: response.data});
+        })
+        .catch((error) => {
+          if(error.response && error.response.data) {
+            Alert.alert(JSON.stringify(error.response.data));
+          } else {
+            Alert.alert("catching exception", JSON.stringify(error));
+          }
+        });
+
+
     }
   // changeIconName() {
   //   if (this.state.checkIcon === "star-outlined") {
@@ -159,6 +174,12 @@ export default class Event_Details_Screen extends React.Component {
       </View>
        <View style = {styles.lineStyle}></View>
 
+       <View style={{flexDirection: 'row'}}>
+       <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
+       <Text style ={styles.details}>Attendees: {this.state.event['attendees']}</Text>
+       </View>
+        <View style = {styles.lineStyle}></View>
+
       <View style={{flexDirection: 'row'}}>
       <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Time: {time}</Text>
@@ -174,6 +195,9 @@ export default class Event_Details_Screen extends React.Component {
 
        <View style = {styles.lineStyle}></View>
        </View>
+
+
+
 {/*
        <View style={[styles.padding, {flex:1}]}>
        <Text style={{fontSize:13, fontWeight:'bold'}}> Reviews</Text>
@@ -190,6 +214,7 @@ export default class Event_Details_Screen extends React.Component {
 */}
 
 <View>
+<Text style={{fontSize:13, fontWeight:'bold'}}>Is going is:{this.state.details['is_attending']}</Text>
 <Text style={{fontSize:13, fontWeight:'bold'}}>Reviews</Text>
 
 <FlatList
