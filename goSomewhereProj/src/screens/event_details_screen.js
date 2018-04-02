@@ -244,7 +244,6 @@ export default class Event_Details_Screen extends React.Component {
 
 <View>
 <Text style={{fontSize:13, fontWeight:'bold'}}>Reviews</Text>
-<Text style={{fontSize:13, fontWeight:'bold'}}>{typeof([].concat(this.state.comment))}</Text>
 
 <FlatList
 data={this.state.comment}
