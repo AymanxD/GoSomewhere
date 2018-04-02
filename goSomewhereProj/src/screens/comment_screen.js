@@ -33,8 +33,20 @@ constructor(props) {
 state = {
   message: '',
   message_length: 0,
+  posted_comment: [],
   event: this.props.navigation.state.params.event,
 };
+
+goBack() {
+  const { navigation } = this.props;
+  if (this.state.message_length>0)
+    {
+      Keyboard.dismiss();
+      this.postComment();
+      navigation.goBack();
+      navigation.state.params.onGoBack();
+    }
+}
 
     render() {
       let {phone} = this.state;
@@ -53,10 +65,7 @@ state = {
               {
                 if (this.state.message_length>0)
                   {
-                  Keyboard.dismiss();
-                  this.postComment();
-                  this.props.navigation.state.params.onGoBack();
-                  this.props.navigation.goBack();
+                  this.goBack();
                   }
               }
           }
@@ -79,6 +88,7 @@ state = {
        //if(response.data.auth_token) {
         // this.setUserLocally(response.data);
        //}
+       this.setState({posted_comment: response.data});
      }).catch((error) => {
        if (error.response && error.response.data.errors) {
          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
