@@ -63,7 +63,7 @@ export default class Event_Details_Screen extends React.Component {
 
       })
       .then(async (response) => {
-        this.setState({event: response.data});
+        this.setState({details: response.data});
       }).catch((error) => {
         if (error.response && error.response.data.errors) {
           Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
@@ -200,7 +200,7 @@ export default class Event_Details_Screen extends React.Component {
 
        <View style={{flexDirection: 'row'}}>
        <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
-       <Text style ={styles.details}>Attendees: {this.state.event['attendees']+0}</Text>
+       <Text style ={styles.details}>Attendees: {this.state.details['attendees']+0}</Text>
        </View>
         <View style = {styles.lineStyle}></View>
 
