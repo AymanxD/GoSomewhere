@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Text, View, Slider, AsyncStorage,} from 'react-native';
-import Modal from "react-native-modal";
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 
+import {Text, View, Slider, AsyncStorage,} from 'react-native';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import { Button } from 'react-native-material-ui';
 
+import Modal from "react-native-modal";
 
 export default class FilterModel extends Component {
 
@@ -14,8 +14,8 @@ export default class FilterModel extends Component {
         this.state = {
             distance: 25,
             tempDistance: 25,
-            time: 30,
-            tempTime: 30
+            time: "all",
+            tempTime: "all"
         }
     }
 
@@ -24,7 +24,7 @@ export default class FilterModel extends Component {
             distance: this.state.tempDistance,
             time: this.state.tempTime
         }, () => {
-            this.filterChange();
+            this.updateTimeFilter();
             this.props.onPress();
         });
     }
@@ -38,24 +38,69 @@ export default class FilterModel extends Component {
         this.props.onPress();
     }
 
-    filterChange(){
+    async updateTimeFilter(){
+        let tempArr;
+
+        if(this.state.tempTime === "all"){
+            let events = await AsyncStorage.getItem('originalEvents');
+            events = JSON.parse(events);
+
+            tempArr = events;
+
+        } else {
+            let today = new Date();
+            let dateToday = today.getDate();
+            let monthToday = today.getMonth();
+            let eventDate, eventDay, eventMonth;
+
+            tempArr = [];
+
+            let events = await AsyncStorage.getItem('originalEvents');
+
+            events = JSON.parse(events);
+
+            let daysBetweenDates;
+
+            for (let i = 0; i < events.length; i++) {
+
+                eventDate = new Date(events[i].start_at);
+                eventDay = eventDate.getDate();
+                eventMonth = eventDate.getMonth();
+
+                daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
+
+                if ((daysBetweenDates <= this.state.tempTime) && !(daysBetweenDates < 0)) {
+
+                    tempArr.push(events[i]);
+                }
+            }
+
+        }
+
+        AsyncStorage.setItem('events', JSON.stringify(tempArr));
+
+        this.props.changeEvents();
+
         this.updateDistanceFilter();
+    }
+
+    timeComparator(dateToday, monthToday, eventDay, eventMonth){
+        return  (eventMonth * 30 + eventDay) - (monthToday * 30 + dateToday);
     }
 
     async updateDistanceFilter(){
 
-        let events = await AsyncStorage.getItem('originalEvents');
+        let events = await AsyncStorage.getItem('events');
         let lat = await AsyncStorage.getItem('lat');
         let lon = await AsyncStorage.getItem('lon');
 
         events = JSON.parse(events);
-        console.log(events);
 
         let tempArr = [];
 
-        for(let i = 0; i < events.length; i++){
+        for (let i = 0; i < events.length; i++) {
             let overallDistance = this.distanceComparator(events[i].latitude, events[i].longitude, lat, lon);
-            if(overallDistance <= this.state.tempDistance){
+            if (overallDistance <= this.state.tempDistance) {
                 tempArr.push(events[i]);
             }
         }
@@ -63,50 +108,25 @@ export default class FilterModel extends Component {
         AsyncStorage.setItem('events', JSON.stringify(tempArr));
 
         this.props.changeEvents();
-        this.updateTimeFilter();
     }
 
-    distanceComparator(lat, lon, currentLat, currentLon){
-        return Math.sqrt(Math.pow(lat - currentLat, 2) + Math.pow(lon - currentLon, 2));
+    distanceComparator(lat1, lon1, lat2, lon2){
+
+        //cite : https://www.geodatasource.com/developers/javascript
+
+        let radlat1 = Math.PI * lat1/180;
+        let radlat2 = Math.PI * lat2/180;
+        let theta = lon1-lon2;
+        let radtheta = Math.PI * theta/180;
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344;
+
+        return dist;
     }
 
-
-    async updateTimeFilter(){
-        let today = new Date();
-        let dateToday = today.getDate();
-        let monthToday = today.getMonth();
-        let eventDate, eventDay, eventMonth;
-        let tempArr = [];
-
-        let events = await AsyncStorage.getItem('originalEvents');
-
-        events = JSON.parse(events);
-        console.log(events);
-
-        let daysBetweenDates;
-
-        for(let i = 0; i < events.length; i++){
-
-            eventDate = new Date(events[i].start_at);
-            eventDay = eventDate.getDate();
-            eventMonth = eventDate.getMonth();
-
-            daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
-
-            if((daysBetweenDates <= this.state.tempTime) && !(daysBetweenDates < 0)){
-                tempArr.push(events[i]);
-            }
-        }
-
-
-        AsyncStorage.setItem('events', JSON.stringify(tempArr));
-
-        this.props.changeEvents();
-    }
-
-     timeComparator(dateToday, monthToday, eventDay, eventMonth){
-        return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
-    }
 
 
     render() {
@@ -132,16 +152,16 @@ export default class FilterModel extends Component {
 
                             style={{flexDirection: "row", marginTop: 8, marginBottom: 8}}
                         >
-                            <RadioButton value={0} >
-                                <Text>Today</Text>
-                            </RadioButton>
-
-                            <RadioButton value={14}>
+                            <RadioButton value={14} >
                                 <Text>Two Weeks</Text>
                             </RadioButton>
 
                             <RadioButton value={30}>
                                 <Text>One Month</Text>
+                            </RadioButton>
+
+                            <RadioButton value={"all"}>
+                                <Text>All</Text>
                             </RadioButton>
                         </RadioGroup>
 
@@ -151,7 +171,7 @@ export default class FilterModel extends Component {
                         </Text>
                         <View style={{flexDirection: "row", justifyContent: "center", margin: 16}}>
                             <Slider
-                                value = {this.state.distance}
+                                value = {this.state.tempDistance}
                                 step = {1}
                                 minimumValue={1}
                                 maximumValue={50}
