@@ -46,6 +46,8 @@ export default class Map_View_Screen extends React.Component {
 
         let events = await AsyncStorage.getItem('events');
 
+        console.log(events);
+
         if(events == null) {
             axios.get('/events')
                 .then(async (response) => {
@@ -96,16 +98,26 @@ export default class Map_View_Screen extends React.Component {
 
     }
 
-    async componentWillUnmount(){
-        clear();
-    }
-
-
 
     async changeEvents() {
+
+        let events = JSON.parse(await AsyncStorage.getItem('events'));
+
+        if(events == null){
+            events = JSON.parse(await AsyncStorage.getItem('originalEvents'));
+        }
+
         this.setState({
-            events: JSON.parse(await AsyncStorage.getItem('events'))
+            events: events
         });
+    }
+
+    resetFilter(){
+        AsyncStorage.removeItem('originalEvents');
+        AsyncStorage.removeItem('events');
+
+        this.state.buttonRight.onPress();
+        this.props.navigation.navigate('Map');
     }
 
     toEventDetails = () => {
@@ -159,6 +171,7 @@ export default class Map_View_Screen extends React.Component {
                     />
                     <FilterModel
                         filterModalVisible={this.state.filterModalVisible}
+                        reset = {this.resetFilter.bind(this)}
                         onPress={this.state.buttonRight.onPress}
                         changeEvents={this.changeEvents.bind(this)}
                     />

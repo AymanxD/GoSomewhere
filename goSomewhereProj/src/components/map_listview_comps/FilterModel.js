@@ -45,6 +45,8 @@ export default class FilterModel extends Component {
             let events = await AsyncStorage.getItem('originalEvents');
             events = JSON.parse(events);
 
+            AsyncStorage.removeItem('events');
+
             tempArr = events;
 
         } else {
@@ -91,6 +93,10 @@ export default class FilterModel extends Component {
     async updateDistanceFilter(){
 
         let events = await AsyncStorage.getItem('events');
+
+        if(events == null){
+            events = await AsyncStorage.getItem('originalEvents')
+        }
         let lat = await AsyncStorage.getItem('lat');
         let lon = await AsyncStorage.getItem('lon');
 
@@ -126,8 +132,6 @@ export default class FilterModel extends Component {
 
         return dist;
     }
-
-
 
     render() {
 
@@ -190,6 +194,7 @@ export default class FilterModel extends Component {
                         </View>
                         <View style={{flexDirection: 'row', justifyContent:'space-around', alignItems: "flex-end"}}>
                             <Button primary text="Accept" raised onPress={this.acceptChange.bind(this)}/>
+                            <Button primary text="Reset Filter" onPress={this.props.reset}/>
                             <Button primary text="Back" onPress={this.rejectChange.bind(this)}/>
                         </View>
                     </View>

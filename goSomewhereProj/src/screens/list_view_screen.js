@@ -68,15 +68,25 @@ export default class List_View_Screen extends React.Component {
       }
   }
 
-   async componentWillUnmount(){
-        clear();
+    async changeEvents() {
+
+        let events = JSON.parse(await AsyncStorage.getItem('events'));
+
+        if(events == null){
+            events = JSON.parse(await AsyncStorage.getItem('originalEvents'));
+        }
+
+        this.setState({
+            events: events
+        });
     }
 
+    resetFilter(){
+        AsyncStorage.removeItem('originalEvents');
+        AsyncStorage.removeItem('events');
 
-    async changeEvents(){
-        this.setState({
-            events: JSON.parse(await AsyncStorage.getItem('events'))
-        });
+        this.state.buttonRight.onPress();
+        this.props.navigation.navigate('Map');
     }
 
   _renderRow(rowData) {
@@ -116,6 +126,7 @@ export default class List_View_Screen extends React.Component {
                 />
                 <FilterModel
                     filterModalVisible={this.state.filterModalVisible}
+                    reset = {this.resetFilter.bind(this)}
                     onPress={this.state.buttonRight.onPress}
                     changeEvents={this.changeEvents.bind(this)}
                 />
