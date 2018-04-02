@@ -39,6 +39,8 @@ export default class FilterModel extends Component {
         this.props.onPress();
     }
 
+
+
     filterChange(){
         this.updateDistanceFilter();
     }

@@ -5,9 +5,9 @@ import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
 import axios from 'axios';
-
+import searchFilter from "../src/utils/textSearchUtil";
 import MenuBar from "../components/map_listview_comps/Menubar";
-import FilterModel from "../components/map_listview_comps/FilterModel";
+import { searchFilter, FilterModel } from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
 
 export default class Map_View_Screen extends React.Component {
@@ -111,29 +111,10 @@ export default class Map_View_Screen extends React.Component {
     onSearchPressed(fieldText){
         console.log(fieldText + 'in on search Pressed');
        AsyncStorage.setItem('search', fieldText);
-       this.searchFilter();
+       searchFilter.searchFilter();
     };
 
-    async searchFilter() {
-        let events = await AsyncStorage.getItem('originalEvents');
-        let search = await AsyncStorage.getItem('search');
-        events = JSON.parse(events);
 
-        let searchArr = [];
-
-        for (let i = 0; i < events.length; i++) {
-            let title = events[i].title;
-            if (title.contains(search)) {
-                searchArr.push(events[i]);
-            }
-        }
-        console.log(searchArr);
-
-        AsyncStorage.setItem('events', JSON.stringify(searchArr));
-
-        this.props.changeEvents();
-        this.forceUpdate;
-    }
 
     render() {
 
