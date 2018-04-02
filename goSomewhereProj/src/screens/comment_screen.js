@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight,Keyboard} from 'react-native';
 //import globalContainerStyle  from '../styles/Global_Container_Style';
 import { Button } from 'react-native-material-ui';
 import { TextField } from 'react-native-material-textfield';
@@ -53,6 +53,7 @@ state = {
               {
                 if (this.state.message_length>0)
                   {
+                  Keyboard.dismiss();
                   this.postComment();
                   this.props.navigation.navigate('Event',{event: this.state.event });
                   }

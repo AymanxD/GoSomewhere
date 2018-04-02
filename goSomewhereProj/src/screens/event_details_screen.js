@@ -14,6 +14,7 @@ const image_categories = [{"party":"party_category_image.jpg","study":"Computer-
 const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
 //const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const customBlue = 'rgb(72, 133, 237)';
+const customGreen = 'rgb(25,220,40)';
 pressedLike='black';
 pressedGoing='black';
 var date;
@@ -39,6 +40,7 @@ export default class Event_Details_Screen extends React.Component {
       checkIcon:"star-outlined",
       event: props.navigation.state.params.event,
         result: ' ',
+        details: [],
     };
 
   //  this.changeIconName = this.changeIconName.bind(this);
@@ -53,6 +55,23 @@ export default class Event_Details_Screen extends React.Component {
     _showResult(result){
         this.setState({result})
     }
+
+//change going status on backend
+    updateGoing = () => {
+      //send to server
+      axios.post('/events/'+this.state.event['id']+'/change_attending', {
+
+      })
+      .then(async (response) => {
+        this.setState({details: response.data});
+      }).catch((error) => {
+        if (error.response && error.response.data.errors) {
+          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        }
+      }).done();
+    }
+
+
   //to get comments from the backend
     componentDidMount() {
       axios.get('/events/'+this.state.event['id']+'/comments')
@@ -66,6 +85,25 @@ export default class Event_Details_Screen extends React.Component {
           Alert.alert("catching exception", JSON.stringify(error));
         }
       });
+
+        axios.get('/events/'+this.state.event['id']+'/')
+        .then(async (response) => {
+          this.setState({details: response.data});
+          if (this.state.details['is_attending']==true) {
+            this.setState( {
+              checkIcon: "star"
+            })
+          };
+        })
+        .catch((error) => {
+          if(error.response && error.response.data) {
+            Alert.alert(JSON.stringify(error.response.data));
+          } else {
+            Alert.alert("catching exception", JSON.stringify(error));
+          }
+        });
+
+
     }
 
   changeIconName() {
@@ -78,6 +116,7 @@ export default class Event_Details_Screen extends React.Component {
           checkIcon: "star-outlined"
         })
       }
+      this.updateGoing();
   }
 
 
@@ -116,7 +155,7 @@ export default class Event_Details_Screen extends React.Component {
     <Image source={{uri: this.state.event.image}}
       style={{ flex:1, height:200 }} />
 
-        <View style={{ height: 75, backgroundColor:customBlue}}>
+        <View style={{backgroundColor:customBlue}}>
         <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
         <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
         </View>
@@ -159,6 +198,12 @@ export default class Event_Details_Screen extends React.Component {
       </View>
        <View style = {styles.lineStyle}></View>
 
+       <View style={{flexDirection: 'row'}}>
+       <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
+       <Text style ={styles.details}>Attendees: {this.state.details['attendees']+0}</Text>
+       </View>
+        <View style = {styles.lineStyle}></View>
+
       <View style={{flexDirection: 'row'}}>
       <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
       <Text style ={styles.details}>Time: {time}</Text>
@@ -174,6 +219,9 @@ export default class Event_Details_Screen extends React.Component {
 
        <View style = {styles.lineStyle}></View>
        </View>
+
+
+
 {/*
        <View style={[styles.padding, {flex:1}]}>
        <Text style={{fontSize:13, fontWeight:'bold'}}> Reviews</Text>
@@ -218,6 +266,8 @@ keyExtractor={extractKey}
       );
   };
 };
+
+
 const styles = StyleSheet.create({
   container: {
    flex: 1,
