@@ -55,7 +55,8 @@ state = {
                   {
                   Keyboard.dismiss();
                   this.postComment();
-                  this.props.navigation.navigate('Event',{event: this.state.event });
+                  this.props.navigation.state.params.onGoBack();
+                  this.props.navigation.goBack();
                   }
               }
           }
