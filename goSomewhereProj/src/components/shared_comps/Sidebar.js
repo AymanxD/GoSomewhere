@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   pictureWrapper: {
-    flex: 0.3,
+    flex: 0.4,
     padding: 30,
     justifyContent: 'center',
     alignItems: 'center'
