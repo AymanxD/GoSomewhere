@@ -68,6 +68,11 @@ export default class List_View_Screen extends React.Component {
       }
   }
 
+   async componentWillUnmount(){
+        clear();
+    }
+
+
     async changeEvents(){
         this.setState({
             events: JSON.parse(await AsyncStorage.getItem('events'))

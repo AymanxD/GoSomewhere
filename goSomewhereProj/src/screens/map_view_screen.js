@@ -42,26 +42,7 @@ export default class Map_View_Screen extends React.Component {
         }
     }
 
-    componentDidMount() {
-        //location services
-        this.watchId = navigator.geolocation.watchPosition(
-            (position) => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                }, () =>{
-                    AsyncStorage.setItem('lat', JSON.stringify(this.state.latitude));
-                    AsyncStorage.setItem('lon', JSON.stringify(this.state.longitude));
-                });
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
-        );
-
-    }
-
-   async componentWillMount() {
+    async componentWillMount() {
 
         let events = await AsyncStorage.getItem('events');
 
@@ -89,12 +70,37 @@ export default class Map_View_Screen extends React.Component {
 
         navigator.geolocation.clearWatch(this.watchId);
 
-       if (this.props.navigation.state.params) {
-           const {lat, long} = this.props.navigation.state.params;
-           this.setState({curr_city_lat: lat});
-           this.setState({curr_city_long: long});
-       }
+        if (this.props.navigation.state.params) {
+            const {lat, long} = this.props.navigation.state.params;
+            this.setState({curr_city_lat: lat});
+            this.setState({curr_city_long: long});
+        }
     }
+
+    componentDidMount() {
+        //location services
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    error: null,
+                }, () =>{
+                    AsyncStorage.setItem('lat', JSON.stringify(this.state.latitude));
+                    AsyncStorage.setItem('lon', JSON.stringify(this.state.longitude));
+                });
+            },
+            (error) => this.setState({ error: error.message }),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+        );
+
+    }
+
+    async componentWillUnmount(){
+        clear();
+    }
+
+
 
     async changeEvents() {
         this.setState({
