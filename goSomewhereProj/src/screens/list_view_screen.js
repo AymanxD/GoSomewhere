@@ -1,15 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, ListView, Image, Alert, AsyncStorage
+import { StyleSheet, View, ListView, Image, AsyncStorage} from 'react-native';
 
-} from 'react-native';
-
-import MenuBar from "../components/map_listview_comps/Menubar";
-import FilterModel from "../components/map_listview_comps/FilterModel";
-
-import axios from "axios/index";
 import { Toolbar } from 'react-native-material-ui';
 import { ListItem } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
+
+import MenuBar from "../components/map_listview_comps/Menubar";
+import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
 import Event from "./event_details_screen";
 
@@ -76,39 +73,6 @@ export default class List_View_Screen extends React.Component {
             events: JSON.parse(await AsyncStorage.getItem('events'))
         });
     }
-
-
-    // updateTimeFilter(){
-    //     let today = new Date();
-    //     let dateToday = today.getDate();
-    //     let monthToday = today.getMonth();
-    //     let eventDate, eventDay, eventMonth;
-    //     let tempArr = [];
-    //
-    //     let daysBetweenDates;
-    //
-    //     for(let i = 0; i < this.state.events.length; i++){
-    //
-    //         eventDate = new Date(this.state.events[i].start_at);
-    //         eventDay = eventDate.getDate();
-    //         eventMonth = eventDate.getMonth();
-    //
-    //         daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
-    //
-    //         if((daysBetweenDates <= this.state.timeRange)){
-    //             tempArr.push(this.state.events[i]);
-    //         }
-    //     }
-    //
-    //     this.setState({
-    //         events: tempArr
-    //     });
-    // }
-    //
-    // static timeComparator(dateToday, monthToday, eventDay, eventMonth){
-    //     return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
-    // }
-
 
   _renderRow(rowData) {
     return(

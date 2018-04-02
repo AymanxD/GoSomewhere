@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, AsyncStorage } from 'react-native';
-import PropTypes from 'prop-types';
 import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
