@@ -55,7 +55,19 @@ export default class Event_Details_Screen extends React.Component {
     _showResult(result){
         this.setState({result})
     }
-
+    getComments = () => {
+      axios.get('/events/'+this.state.event['id']+'/comments')
+      .then(async (response) => {
+        this.setState({comment: response.data});
+      })
+      .catch((error) => {
+        if(error.response && error.response.data) {
+          Alert.alert(JSON.stringify(error.response.data));
+        } else {
+          Alert.alert("catching exception", JSON.stringify(error));
+        }
+      });
+    }
 //change going status on backend
     updateGoing = () => {
       //send to server
@@ -72,19 +84,10 @@ export default class Event_Details_Screen extends React.Component {
     }
 
 
+
   //to get comments from the backend
     componentDidMount() {
-      axios.get('/events/'+this.state.event['id']+'/comments')
-      .then(async (response) => {
-        this.setState({comment: response.data});
-      })
-      .catch((error) => {
-        if(error.response && error.response.data) {
-          Alert.alert(JSON.stringify(error.response.data));
-        } else {
-          Alert.alert("catching exception", JSON.stringify(error));
-        }
-      });
+      this.getComments();
 
         axios.get('/events/'+this.state.event['id']+'/')
         .then(async (response) => {
