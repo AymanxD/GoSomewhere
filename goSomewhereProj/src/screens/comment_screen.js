@@ -43,8 +43,8 @@ goBack() {
     {
       Keyboard.dismiss();
       this.postComment();
-      navigation.goBack();
       navigation.state.params.onGoBack();
+      this.props.navigation.navigate('Event',{event: this.state.event });
     }
 }
 
