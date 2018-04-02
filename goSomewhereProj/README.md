@@ -1,5 +1,5 @@
 # GoSomewhere
-Planning a night out? See all the events in select canadian cities. View the events in a list view or map view. Go somewhere! 
+Planning a night out? See all the events in select canadian cities. View the events in a list view or map view. Go somewhere!
 
 #### Authors and Contributors:
 - Andrea Christians
@@ -48,7 +48,7 @@ Planning a night out? See all the events in select canadian cities. View the eve
 - Mobile phone/application running Android 4.1 and up.
 
 #### Built with:
-- React Native 
+- React Native
 - Expo 25.0.0- Android Emulator
 - Node 8.9.4 - Installer
 
@@ -138,3 +138,5 @@ What to include in your project sources:
 - Remember AC/DC *Always Cite / Don't Cheat* (see Lecture 0 for more info)
 
 [1] "Java (programming language)", En.wikipedia.org, 2018. [Online]. Available: https://en.wikipedia.org/wiki/Java_(programming_language).
+
+[1]“Facebook,” Facebook - Expo Documentation. [Online]. Available: https://docs.expo.io/versions/latest/sdk/facebook.html. [Accessed: 02-Apr-2018].
