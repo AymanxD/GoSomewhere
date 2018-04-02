@@ -200,7 +200,7 @@ export default class Event_Details_Screen extends React.Component {
 
        <View style={{flexDirection: 'row'}}>
        <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
-       <Text style ={styles.details}>Attendees: {this.state.event['attendees']}</Text>
+       <Text style ={styles.details}>Attendees: {this.state.event['attendees']+0}</Text>
        </View>
         <View style = {styles.lineStyle}></View>
 
