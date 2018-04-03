@@ -34,6 +34,7 @@ state = {
   message: '',
   message_length: 0,
   posted_comment: [],
+  button_disabled:true,
   event: this.props.navigation.state.params.event,
 };
 
@@ -53,15 +54,19 @@ goBack() {
         label='Leave a comment...'
         multiline = {true}
         maxLength={140}
-        onChangeText={ (message) => {this.setState({message:message});this.setState({message_length:message.length}) }}/>
-        <Button raised primary text="Post" onPress=
+        onChangeText={ (message) => {this.setState({message:message});this.setState({message_length:message.length});
+        if (message.length>0) {this.setState({button_disabled:false});}
+        if (message.length==0) {this.setState({button_disabled:true});} //you cannot post empty comments
+
+       }}/>
+        <Button raised primary text="Post" disabled={this.state.button_disabled} onPress=
           {
             (message) =>
               {
-                if (this.state.message_length>0)
-                  {
+
+                  this.setState({button_disabled:true}); //you cannot press button multiple times with same comment
                   this.postComment();
-                  }
+
               }
           }
         />
