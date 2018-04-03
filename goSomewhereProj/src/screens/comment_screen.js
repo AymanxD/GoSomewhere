@@ -38,14 +38,9 @@ state = {
 };
 
 goBack() {
-  const { navigation } = this.props;
-  if (this.state.message_length>0)
-    {
       Keyboard.dismiss();
-      this.postComment();
-      navigation.state.params.onGoBack();
-      this.props.navigation.navigate('Event',{event: this.state.event });
-    }
+       this.props.navigation.state.params.onGoBack();
+       this.props.navigation.goBack();
 }
 
     render() {
@@ -65,7 +60,7 @@ goBack() {
               {
                 if (this.state.message_length>0)
                   {
-                  this.goBack();
+                  this.postComment();
                   }
               }
           }
@@ -88,7 +83,9 @@ goBack() {
        //if(response.data.auth_token) {
         // this.setUserLocally(response.data);
        //}
-       this.setState({posted_comment: response.data});
+       //this.setState({posted_comment: response.data});
+      this.goBack(response)
+
      }).catch((error) => {
        if (error.response && error.response.data.errors) {
          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
