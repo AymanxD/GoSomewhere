@@ -5,9 +5,9 @@ import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
 import axios from 'axios';
-import searchFilter from "../src/utils/textSearchUtil";
+//import searchFilter from "../components/map_listview_comps/textSearchUtil";
 import MenuBar from "../components/map_listview_comps/Menubar";
-import { searchFilter, FilterModel } from "../components/map_listview_comps/FilterModel";
+import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
 
 export default class Map_View_Screen extends React.Component {
@@ -97,6 +97,30 @@ export default class Map_View_Screen extends React.Component {
            this.setState({curr_city_long: long});
        }
     }
+// export function searchFilter(events, props) {
+    async searchFilter() {
+
+        let events = await AsyncStorage.getItem('originalEvents');
+
+        let search = await AsyncStorage.getItem('search');
+
+        events = JSON.parse(events);
+
+        let searchArr = [];
+
+        for (let i = 0; i < events.length; i++) {
+            let title = events[i].title;
+            if (title.contains(search)) {
+                searchArr.push(events[i]);
+            }
+        }
+        console.log(searchArr);
+
+        AsyncStorage.setItem('events', JSON.stringify(searchArr));
+
+              this.props.changeEvents();
+        //    this.forceUpdate;
+    }
 
     async changeEvents() {
         this.setState({
@@ -111,7 +135,7 @@ export default class Map_View_Screen extends React.Component {
     onSearchPressed(fieldText){
         console.log(fieldText + 'in on search Pressed');
        AsyncStorage.setItem('search', fieldText);
-       searchFilter.searchFilter();
+    searchFilter();
     };
 
 
@@ -129,9 +153,9 @@ export default class Map_View_Screen extends React.Component {
                         searchable={{
                             autoFocus: true,
                             placeholder: 'Search',
-                            onChangeText: (fieldText) =>
-                            {this.onSearchPressed(fieldText)}
-                                      }}
+                             onChangeText: (fieldText) =>
+                             {this.onSearchPressed(fieldText)},
+                        }}
                     />
                     <MapView
                         style={{ flex: 1 }}

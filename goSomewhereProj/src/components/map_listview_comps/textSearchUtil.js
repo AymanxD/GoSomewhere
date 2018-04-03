@@ -1,9 +1,14 @@
 import {AsyncStorage} from "react-native";
+import {Component} from "react";
 
-export function searchFilter() {
+export default class textSearchUtil extends Component {
+// export function searchFilter(events, props) {
+    async searchFilter() {
 
-        let events = await AsyncStorage.getItem('events');
+        let events = await AsyncStorage.getItem('originalEvents');
+
         let search = await AsyncStorage.getItem('search');
+
         events = JSON.parse(events);
 
         let searchArr = [];
@@ -18,6 +23,8 @@ export function searchFilter() {
 
         AsyncStorage.setItem('events', JSON.stringify(searchArr));
 
-        this.props.changeEvents();
-        this.forceUpdate;
+ //       props.changeEvents();
+        //    this.forceUpdate;
     }
+}
+//module.exports.searchFilter = searchFilter;

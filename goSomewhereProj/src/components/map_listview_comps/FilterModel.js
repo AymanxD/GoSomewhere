@@ -45,25 +45,6 @@ export default class FilterModel extends Component {
         this.updateDistanceFilter();
     }
 
-    // async searchFilter() {
-    //     let events = await AsyncStorage.getItem('originalEvents');
-    //     let search = await AsyncStorage.getItem('search');
-    //     events = JSON.parse(events);
-    //
-    //     let searchArr = [];
-    //
-    //     for (let i = 0; i < events.length; i++) {
-    //         let title = events[i].title;
-    //         if (title.contains(search)) {
-    //             searchArr.push(events[i]);
-    //         }
-    //     }
-    //     console.log(searchArr);
-    //
-    //     AsyncStorage.setItem('events', JSON.stringify(searchArr));
-    //
-    //     this.props.changeEvents();
-    // }
     async updateDistanceFilter(){
 
         let events = await AsyncStorage.getItem('originalEvents');
