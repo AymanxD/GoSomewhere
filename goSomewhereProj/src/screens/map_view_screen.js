@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, AsyncStorage } from 'react-native';
-import PropTypes from 'prop-types';
 import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
@@ -14,11 +13,16 @@ export default class Map_View_Screen extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+
+            // Saves all of the current events used in the application
             events: [],
-            distance: 25,
             curr_city_lat:44.6374247,
             curr_city_long:-63.5872094,
-            search: '',
+
+            // Menu bar button, icons, labels, and functions
+            // buttonLeft and buttonCenter are used to navigate to different
+            // application screens. buttonRight is used to switch between
+            // the filter modal being visible and invisible.
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
@@ -30,7 +34,6 @@ export default class Map_View_Screen extends React.Component {
                 icon: "list",
                 label: "List",
                 onPress: () => this.props.navigation.navigate('ListView')
-
             },
             buttonRight: {
                 key: "filter",
@@ -43,32 +46,19 @@ export default class Map_View_Screen extends React.Component {
         }
     }
 
-    componentDidMount() {
-        //location services
-        this.watchId = navigator.geolocation.watchPosition(
-            (position) => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                }, () =>{
-                    AsyncStorage.setItem('lat', JSON.stringify(this.state.latitude));
-                    AsyncStorage.setItem('lon', JSON.stringify(this.state.longitude));
-                });
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
-        );
+    async componentWillMount() {
 
-    }
-
-   async componentWillMount() {
-
+        // Returns AsyncStorage for previously filtered events.
         let events = await AsyncStorage.getItem('events');
 
+        // if there are no filtered events then call the API to provide new events.
         if(events == null) {
+
+            // axios is used for API calls.
             axios.get('/events')
                 .then(async (response) => {
+
+                    // Saves events from the API in the events state and AsyncStorage
                     this.setState({events: response.data}, () => {
                         AsyncStorage.setItem('originalEvents', JSON.stringify(this.state.events));
                     });
@@ -81,6 +71,8 @@ export default class Map_View_Screen extends React.Component {
                     }
                 });
         } else{
+
+            // If there are filtered events  set the state to represent those events
             let events = await AsyncStorage.getItem('events');
 
             this.setState({
@@ -88,13 +80,15 @@ export default class Map_View_Screen extends React.Component {
             });
         }
 
+        // Geolocation to find user locations
         navigator.geolocation.clearWatch(this.watchId);
 
-       if (this.props.navigation.state.params) {
-           const {lat, long} = this.props.navigation.state.params;
-           this.setState({curr_city_lat: lat});
-           this.setState({curr_city_long: long});
-       }
+        // Saves latitude and longitude to state.
+        if (this.props.navigation.state.params) {
+            const {lat, long} = this.props.navigation.state.params;
+            this.setState({curr_city_lat: lat});
+            this.setState({curr_city_long: long});
+        }
     }
 // export function searchFilter(events, props) {
     async searchFilter() {
@@ -121,15 +115,50 @@ export default class Map_View_Screen extends React.Component {
         //    this.forceUpdate;
     }
 
+    componentDidMount() {
+        //location services
+        // Saves latitude and longitude to state and AsyncStorage.
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                this.setState({
+                    curr_city_lat: position.coords.latitude,
+                    curr_city_long: position.coords.longitude,
+                    error: null,
+                }, () =>{
+                    AsyncStorage.setItem('lat', JSON.stringify(this.state.curr_city_lat));
+                    AsyncStorage.setItem('lon', JSON.stringify(this.state.curr_city_long));
+                });
+            },
+            (error) => this.setState({ error: error.message }),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+        );
+
+    }
+
+    // Sets the displayed events to filtered events if they exist, otherwise
+    // the displayed events are set to all of the events.
     async changeEvents() {
+
+        let events = JSON.parse(await AsyncStorage.getItem('events'));
+
+        if(events == null){
+            events = JSON.parse(await AsyncStorage.getItem('originalEvents'));
+        }
+
         this.setState({
-            events: JSON.parse(await AsyncStorage.getItem('events'))
+            events: events
         });
     }
 
-    toEventDetails = () => {
-        this.props.navigation.navigate('Event');
-    };
+    // Resets all filters, by removing all events from AsyncStorage and
+    // calling for new events.
+    resetFilter(){
+        AsyncStorage.removeItem('originalEvents');
+        AsyncStorage.removeItem('events');
+
+        this.state.buttonRight.onPress();
+        this.props.navigation.navigate('Map');
+    }
 
     onSearchPressed(fieldText){
         console.log(fieldText + 'in on search Pressed');
@@ -188,6 +217,7 @@ export default class Map_View_Screen extends React.Component {
                     />
                     <FilterModel
                         filterModalVisible={this.state.filterModalVisible}
+                        reset = {this.resetFilter.bind(this)}
                         onPress={this.state.buttonRight.onPress}
                         changeEvents={this.changeEvents.bind(this)}
                     />

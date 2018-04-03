@@ -8,7 +8,7 @@ import SignUp from '../screens/sign_up_screen';
 import ListView from '../screens/list_view_screen';
 import Comments from '../screens/comment_screen';
 import PickCity from '../screens/pick_city_screen';
-
+import CameraScreen from '../screens/camera_screen';
 
 export default StackNavigator({
   Splash: {
@@ -35,6 +35,9 @@ export default StackNavigator({
   PickCity: {
       screen: PickCity,
   },
+  Camera:{
+    screen: CameraScreen
+  }
 }, {
   headerMode: 'none'
 });

@@ -1,15 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, ListView, Image, Alert, AsyncStorage
+import { StyleSheet, View, ListView, Image, AsyncStorage} from 'react-native';
 
-} from 'react-native';
-
-import MenuBar from "../components/map_listview_comps/Menubar";
-import FilterModel from "../components/map_listview_comps/FilterModel";
-
-import axios from "axios/index";
 import { Toolbar } from 'react-native-material-ui';
 import { ListItem } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
+
+import MenuBar from "../components/map_listview_comps/Menubar";
+import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
 import Event from "./event_details_screen";
 
@@ -18,14 +15,21 @@ export default class List_View_Screen extends React.Component {
 
     constructor(props) {
         super(props);
+
+        // Used to assess whether a row in the ListView is different from another.
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
-            latitude: null,
-            longitude: null,
+
+            // Saves all of the current events used in the application
             events: [],
             error: null,
             filterModalVisible: false,
+
+            // Menu bar button, icons, labels, and functions
+            // buttonLeft and buttonCenter are used to navigate to different
+            // application screens. buttonRight is used to switch between
+            // the filter modal being visible and invisible.
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
@@ -51,65 +55,52 @@ export default class List_View_Screen extends React.Component {
         }
     }
 
-  async componentWillMount(){
+    // If filtered events exist, display them. Else display
+    // the unfiltered events.
+      async componentWillMount(){
 
-      let events = await AsyncStorage.getItem('events');
-
-      if(events == null) {
-          let events = await AsyncStorage.getItem('originalEvents');
-
-          this.setState({
-              events: JSON.parse(events),
-          });
-
-      }else{
           let events = await AsyncStorage.getItem('events');
 
-          this.setState({
-              events: JSON.parse(events),
-          });
-      }
-  }
+          if(events == null) {
+              events = await AsyncStorage.getItem('originalEvents');
 
-    async changeEvents(){
+              this.setState({
+                  events: JSON.parse(events),
+              });
+
+          }else{
+              this.setState({
+                  events: JSON.parse(events),
+              });
+          }
+      }
+
+    // Sets the displayed events to filtered events if they exist, otherwise
+    // the displayed events are set to all of the events.
+    async changeEvents() {
+
+        let events = JSON.parse(await AsyncStorage.getItem('events'));
+
+        if(events == null){
+            events = JSON.parse(await AsyncStorage.getItem('originalEvents'));
+        }
+
         this.setState({
-            events: JSON.parse(await AsyncStorage.getItem('events'))
+            events: events
         });
     }
 
+    // Resets all filters, by removing all events from AsyncStorage and
+    // calling for new events.
+    resetFilter(){
+        AsyncStorage.removeItem('originalEvents');
+        AsyncStorage.removeItem('events');
 
-    // updateTimeFilter(){
-    //     let today = new Date();
-    //     let dateToday = today.getDate();
-    //     let monthToday = today.getMonth();
-    //     let eventDate, eventDay, eventMonth;
-    //     let tempArr = [];
-    //
-    //     let daysBetweenDates;
-    //
-    //     for(let i = 0; i < this.state.events.length; i++){
-    //
-    //         eventDate = new Date(this.state.events[i].start_at);
-    //         eventDay = eventDate.getDate();
-    //         eventMonth = eventDate.getMonth();
-    //
-    //         daysBetweenDates = this.timeComparator(dateToday, monthToday, eventDay, eventMonth);
-    //
-    //         if((daysBetweenDates <= this.state.timeRange)){
-    //             tempArr.push(this.state.events[i]);
-    //         }
-    //     }
-    //
-    //     this.setState({
-    //         events: tempArr
-    //     });
-    // }
-    //
-    // static timeComparator(dateToday, monthToday, eventDay, eventMonth){
-    //     return (monthToday * 30 + dateToday) - (eventMonth * 30 + eventDay);
-    // }
+        this.state.buttonRight.onPress();
+        this.props.navigation.navigate('Map');
+    }
 
-
+    // Renders a row in the ListView for each events in the events state.
   _renderRow(rowData) {
     return(
         <View>
@@ -147,6 +138,7 @@ export default class List_View_Screen extends React.Component {
                 />
                 <FilterModel
                     filterModalVisible={this.state.filterModalVisible}
+                    reset = {this.resetFilter.bind(this)}
                     onPress={this.state.buttonRight.onPress}
                     changeEvents={this.changeEvents.bind(this)}
                 />

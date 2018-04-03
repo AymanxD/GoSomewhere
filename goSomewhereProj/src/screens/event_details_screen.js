@@ -23,7 +23,9 @@ import axios from 'axios';
 
 const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
 const customBlue = 'rgb(72, 133, 237)';
-
+const customGreen = 'rgb(25,220,40)';
+pressedLike='black';
+pressedGoing='black';
 var date;
 var message;
 var time;
@@ -35,32 +37,39 @@ const extractKey = ({id}) => id  //for the flatlist
 
 export default class Event_Details_Screen extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            colorLike: 'black',
-            colorGoing: 'black',
-            message: 'No one was petting me',
-            checkIcon: "star-outlined",
-            event: props.navigation.state.params.event,
-            result: ' ',
-        };
-
-        //  this.changeIconName = this.changeIconName.bind(this);
-        date = this.state.event['start_at'];
-        date = date.substring(0, 10);
-        time = this.state.event['start_at'];
-        time = time.substring(11, 16);
-        description = this.state.event['description'];
-        eventName = this.state.event['title'];
-        address = this.state.event['address'];
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      colorLike:'black',
+      colorGoing:'black',
+      message:'No one was petting me',
+      checkIcon:"star-outlined",
+      event: props.navigation.state.params.event,
+        result: ' ',
+        details: [],
+    };
 
     _showResult(result) {
         this.setState({result})
     }
 
-    //Get comments from the backend
+//change going status on backend
+    updateGoing = () => {
+      //send to server
+      axios.post('/events/'+this.state.event['id']+'/change_attending', {
+
+      })
+      .then(async (response) => {
+        this.setState({details: response.data});
+      }).catch((error) => {
+        if (error.response && error.response.data.errors) {
+          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        }
+      }).done();
+    }
+
+
+  //to get comments from the backend
     componentDidMount() {
         axios.get('/events/' + this.state.event['id'] + '/comments')
             .then(async (response) => {
@@ -85,8 +94,40 @@ export default class Event_Details_Screen extends React.Component {
                 checkIcon: "star-outlined"
             })
         }
+      });
+
+        axios.get('/events/'+this.state.event['id']+'/')
+        .then(async (response) => {
+          this.setState({details: response.data});
+          if (this.state.details['is_attending']==true) {
+            this.setState( {
+              checkIcon: "star"
+            })
+          };
+        })
+        .catch((error) => {
+          if(error.response && error.response.data) {
+            Alert.alert(JSON.stringify(error.response.data));
+          } else {
+            Alert.alert("catching exception", JSON.stringify(error));
+          }
+        });
+
+
     }
 
+  changeIconName() {
+    if (this.state.checkIcon === "star-outlined") {
+      this.setState({
+        checkIcon: "star"
+      })
+      } else {
+        this.setState({
+          checkIcon: "star-outlined"
+        })
+      }
+      this.updateGoing();
+  }
 
     handleGetDirections = () => {
         const data = {
@@ -120,7 +161,10 @@ export default class Event_Details_Screen extends React.Component {
                     centerElement="Event Details"
                 />
 
-                <ScrollView>
+        <View style={{backgroundColor:customBlue}}>
+        <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
+        <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
+        </View>
 
                     <Image source={{uri: this.state.event.image}}
                            style={{flex: 1, height: 200}}/>
@@ -170,12 +214,17 @@ export default class Event_Details_Screen extends React.Component {
                     <View style={{padding: 10}}>
                         <View style={styles.lineStyle}></View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <MaterialIcons.Button name='date-range' backgroundColor='transparent' color={customBlue}
-                                                  color={customBlue} size={24} paddingRight={15}/>
-                            <Text style={styles.details}>Date: {date}</Text>
-                        </View>
-                        <View style={styles.lineStyle}></View>
+       <View style={{flexDirection: 'row'}}>
+       <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
+       <Text style ={styles.details}>Attendees: {this.state.details['attendees']+0}</Text>
+       </View>
+        <View style = {styles.lineStyle}></View>
+
+      <View style={{flexDirection: 'row'}}>
+      <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Time: {time}</Text>
+      </View>
+       <View style = {styles.lineStyle}></View>
 
                         <View style={{flexDirection: 'row'}}>
                             <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color={customBlue}
@@ -184,16 +233,25 @@ export default class Event_Details_Screen extends React.Component {
                         </View>
                         <View style={styles.lineStyle}></View>
 
-                        <TouchableOpacity onPress={this.handleGetDirections}>
-                            <View style={{flexDirection: 'row'}}>
-                                <MaterialIcons.Button name='location-on' backgroundColor='transparent'
-                                                      color={customBlue} size={24} paddingRight={15}/>
-                                <Text style={[styles.details, {
-                                    flex: 1,
-                                    flexWrap: 'wrap'
-                                }]}>Address: {this.state.event['address']}</Text>
-                            </View>
-                        </TouchableOpacity>
+       <View style = {styles.lineStyle}></View>
+       </View>
+
+
+
+{/*
+       <View style={[styles.padding, {flex:1}]}>
+       <Text style={{fontSize:13, fontWeight:'bold'}}> Reviews</Text>
+     <SectionList
+          sections={[
+          {title: <Text>{user[0]['name'] + ': ' + user[0]['date']}</Text>, data: [<Text>{user[0]['message']}</Text>]},
+          {title: <Text>{user[1]['name'] + ': ' + user[1]['date']}</Text>, data: [<Text>{user[1]['message']}</Text>]},
+          {title: <Text>{user[2]['name'] + ': ' + user[2]['date']}</Text>, data: [<Text>{user[2]['message']}</Text>]},]}
+          renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item, index) => index}
+        />
+        </View>
+*/}
 
                         <View style={styles.lineStyle}></View>
                     </View>
@@ -233,6 +291,8 @@ export default class Event_Details_Screen extends React.Component {
         );
     };
 };
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
