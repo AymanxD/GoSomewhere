@@ -5,7 +5,6 @@ import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
 import axios from 'axios';
-//import searchFilter from "../components/map_listview_comps/textSearchUtil";
 import MenuBar from "../components/map_listview_comps/Menubar";
 import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
