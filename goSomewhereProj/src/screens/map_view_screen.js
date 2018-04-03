@@ -90,29 +90,32 @@ export default class Map_View_Screen extends React.Component {
             this.setState({curr_city_long: long});
         }
     }
-
+    //Creates a filter to search events
     async searchFilter() {
-
-        let events = await AsyncStorage.getItem('originalEvents');
+        console.log("in search Filter");
+        let events = await AsyncStorage.getItem('events');
+        
+        if(events == null){
+            events = await AsyncStorage.getItem('originalEvents')
+        }
 
         let search = await AsyncStorage.getItem('search');
-
+        if (search != null) {
+        search = search.toLowerCase();
+    }
         events = JSON.parse(events);
-
         let searchArr = [];
 
         for (let i = 0; i < events.length; i++) {
             let title = events[i].title;
-            if (title.contains(search)) {
+            if (title.toLowerCase().contains(search)) {
                 searchArr.push(events[i]);
             }
         }
-        console.log(searchArr);
 
         AsyncStorage.setItem('events', JSON.stringify(searchArr));
 
-              this.props.changeEvents();
-        //    this.forceUpdate;
+              this.changeEvents();
     }
 
     componentDidMount() {
@@ -159,11 +162,11 @@ export default class Map_View_Screen extends React.Component {
         this.state.buttonRight.onPress();
         this.props.navigation.navigate('Map');
     }
-
+    //Gets text from search and passes it the searchFilter function
     onSearchPressed(fieldText){
         console.log(fieldText + 'in on search Pressed');
        AsyncStorage.setItem('search', fieldText);
-    this.searchFilter;
+        this.searchFilter();
     };
 
 

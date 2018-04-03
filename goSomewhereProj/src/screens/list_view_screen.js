@@ -100,6 +100,42 @@ export default class List_View_Screen extends React.Component {
         this.props.navigation.navigate('Map');
     }
 
+    //Creates a filter to search events
+    async searchFilter() {
+        console.log("in search Filter");
+        let events = await AsyncStorage.getItem('events');
+        
+        if(events == null){
+            events = await AsyncStorage.getItem('originalEvents')
+        }
+
+        let search = await AsyncStorage.getItem('search');
+        if (search != null) {
+        search = search.toLowerCase();
+        }
+        
+        events = JSON.parse(events);
+        let searchArr = [];
+
+        for (let i = 0; i < events.length; i++) {
+            let title = events[i].title;
+            if (title.toLowerCase().contains(search)) {
+                searchArr.push(events[i]);
+            }
+        }
+
+        AsyncStorage.setItem('events', JSON.stringify(searchArr));
+
+              this.changeEvents();
+    };
+
+        //Gets text from search and passes it the searchFilter function
+        onSearchPressed(fieldText){
+            console.log(fieldText + 'in on search Pressed');
+           AsyncStorage.setItem('search', fieldText);
+            this.searchFilter();
+        };
+
     // Renders a row in the ListView for each events in the events state.
   _renderRow(rowData) {
     return(
@@ -128,6 +164,8 @@ export default class List_View_Screen extends React.Component {
                     searchable={{
                         autoFocus: true,
                         placeholder: 'Search',
+                         onChangeText: (fieldText) =>
+                         {this.onSearchPressed(fieldText)},
                     }}
                 />
                 <ListView
