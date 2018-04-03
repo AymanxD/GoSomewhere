@@ -153,6 +153,24 @@ export default class List_View_Screen extends React.Component {
     )
   }
 
+     //gets the events prior to search 
+     async getEvents() {
+        console.log("in get events");
+        let prevEvents = await AsyncStorage.getItem('events');       
+        if(prevEvents == null){
+            prevEvents = await AsyncStorage.getItem('originalEvents')
+        } 
+        AsyncStorage.setItem('prevEvents', prevEvents);
+       }
+       
+     //reverts back to prior filter after search
+       async setEvents() {
+           console.log("in set events");
+        let prevEvents = await AsyncStorage.getItem('prevEvents'); 
+        AsyncStorage.setItem('events', prevEvents);
+        this.changeEvents(); 
+       }
+
   render() {
     return (
         <SideBarContainer navigation={this.props.navigation}>
@@ -162,11 +180,12 @@ export default class List_View_Screen extends React.Component {
                     onLeftElementPress={() => EventRegister.emit('menuToggle') }
                     centerElement="Events List"
                     searchable={{
-                        autoFocus: true,
-                        placeholder: 'Search',
+                        onSearchPressed: () => 
+                        {this.getEvents()},
                          onChangeText: (fieldText) =>
                          {this.onSearchPressed(fieldText)},
-                    }}
+                        onSearchClosed: () => {this.setEvents()},
+                        }}
                 />
                 <ListView
                     dataSource={this.ds.cloneWithRows(this.state.events)}

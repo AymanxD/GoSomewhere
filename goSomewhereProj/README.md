@@ -27,11 +27,11 @@ Planning a night out? See all the events in select canadian cities. View the eve
 
 **react-native-flexi-radio-button(^0.2.2):** React native default does not contain any radio buttons. Thus this package was used to implement radio buttons in the filter modal. Source [here](https://github.com/thegamenicorus/react-native-flexi-radio-button)
 
-**react-native-google-maps-directions(^1.1.2):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-google-maps-directions(^1.1.2):** Used to create the navigation portion of the application from the event detail screen so that users can navigate to the event using google maps. Source [here](https://github.com/tiaanduplessis/react-native-google-maps-directions)
 
 **react-native-is-iphonex(^1.0.1):** This plugin was used for the camera screen to provide specific padding if the device is an IPhoneX. This was recommended in the original expo’s camera documentation. Source [here](https://www.npmjs.com/package/react-native-is-iphonex)
 
-**react-native-material-textfield(^0.12.0):** In order to conform with Google’s aesthetic material design standards, this component was added. The React-Native Material UI doesn’t style the text input fields. Source [here](https://github.com/n4kz/react-native-material-textfield)
+**react-native-material-textfield(^0.12.0):** In order to conform with Google's aesthetic material design standards, this component was added. The React-Native Material UI doesn’t style the text input fields. Source [here](https://github.com/n4kz/react-native-material-textfield)
 
 **react-native-material-ui(^1.20.0):** The material UI was used to style the application according to Google’s aesthetic material design standard. This plugin helps to design components easily and thus avoiding manually adding style for every single element we create in the components. Source [here](https://github.com/xotahal/react-native-material-ui)
 
@@ -39,7 +39,7 @@ Planning a night out? See all the events in select canadian cities. View the eve
 
 **react-native-side-menu(^1.1.3):** This component was used to keep the links of our main components in the left drawer. Source [here](https://github.com/react-native-community/react-native-side-menu)
 
-**react-native-vector-icons(^4.5.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-vector-icons(^4.5.0):** Used for the range of icons that were available and customizable in the Event Details Screen. It has a series of sub-libraries and specifically Entypo, Material Community Icons and Material Icons were the ones that were used in this application. Additionally, the React Native Material UI works well with Vector Icons-so this was an added benefit. Source [here](https://github.com/oblador/react-native-vector-icons)
 
 **react-navigation(^1.0.3):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -86,7 +86,7 @@ Since these filtered events were also stored in AsyncStorage, they could also be
                 }
             });
 
-```
+**Problem 2:
 
 ## Feature Section
 #### Features
@@ -149,4 +149,8 @@ What to include in your project sources:
 
 [1] "Java (programming language)", En.wikipedia.org, 2018. [Online]. Available: https://en.wikipedia.org/wiki/Java_(programming_language).
 
+[2]"Draw horizontal rule in React Native", Stackoverflow.com, 2018. [Online]. Available: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native. [Accessed: 02- Apr- 2018].
+
 [1]“Facebook,” Facebook - Expo Documentation. [Online]. Available: https://docs.expo.io/versions/latest/sdk/facebook.html. [Accessed: 02-Apr-2018].
+
+[4]"TouchableOpacity onPress only fires when clicking on content inside � Issue #1516 � Microsoft/react-native-windows", GitHub, 2018. [Online]. Available: https://github.com/Microsoft/react-native-windows/issues/1516. [Accessed: 02- Apr- 2018].
