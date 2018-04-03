@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Text, View, Slider, AsyncStorage,} from 'react-native';
+import {Text, View, Slider, AsyncStorage} from 'react-native';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import { Button } from 'react-native-material-ui';
 

@@ -25,7 +25,7 @@ Planning a night out? See all the events in select canadian cities. View the eve
 
 **react-native-event-listeners(^1.0.3):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
-**react-native-flexi-radio-button(^0.2.2):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-flexi-radio-button(^0.2.2):** React native default does not contain any radio buttons. Thus this package was used to implement radio buttons in the filter modal. Source [here](https://github.com/thegamenicorus/react-native-flexi-radio-button)
 
 **react-native-google-maps-directions(^1.1.2):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -35,7 +35,7 @@ Planning a night out? See all the events in select canadian cities. View the eve
 
 **react-native-material-ui(^1.20.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
-**react-native-modal(^5.4.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-modal(^5.4.0):** Used to create the filter modal. Source [here](https://github.com/react-native-community/react-native-modal)
 
 **react-native-side-menu(^1.1.3):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -64,22 +64,28 @@ Planning a night out? See all the events in select canadian cities. View the eve
 ## Code Examples
 You will encounter roadblocks and problems while developing your project. Share 2-3 'problems' that your team solved while developing your project. Write a few sentences that describe your solution and provide a code snippet/block that shows your solution. Example:
 
-**Problem 1: We need a peristent state so that both the list view and map view can access common events.**
+**Problem 1: The list view and map view could not access and manipualte the same set of filtered and unfiltered events.**
 
-A short description.
+We retrieved our events from our backend through an axios API call. We then saved the events retrieved from the backend in AsyncStorage. AsyncStorage allows any elements stored in it to persist throughout the whole application,
+thus both the list view and map view could access and filter the same set of events. We again used AsyncStorage to store all of the user filtered events.
+Since these filtered events were also stored in AsyncStorage, they could also be manipulated by both the list view and map view.
 ```
-// The method we implemented that solved our problem
-public static int fibonacci(int fibIndex) {
-    if (memoized.containsKey(fibIndex)) {
-        return memoized.get(fibIndex);
-    } else {
-        int answer = fibonacci(fibIndex - 1) + fibonacci(fibIndex - 2);
-        memoized.put(fibIndex, answer);
-        return answer;
-    }
-}
+        axios.get('/events')
+            .then(async (response) => {
 
-// Source: Wikipedia Java [1]
+                // Saves events from the API in the events state and AsyncStorage
+                this.setState({events: response.data}, () => {
+                    AsyncStorage.setItem('originalEvents', JSON.stringify(this.state.events));
+                });
+            })
+            .catch((error) => {
+                if (error.response && error.response.data) {
+                    Alert.alert(JSON.stringify(error.response.data));
+                } else {
+                    Alert.alert("catching exception", JSON.stringify(error));
+                }
+            });
+
 ```
 
 ## Feature Section
