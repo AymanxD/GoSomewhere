@@ -13,7 +13,7 @@ Planning a night out? See all the events in select canadian cities. View the eve
 ## Libraries
 
 
-**axios(^3.2.1):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**axios(^0.18.0):** This component was used to call the REST API endpoints. The plugin sends the headers with a request that authorizes users in the backend. It is more convenient and clean when compared to the regular ‘fetch’ function of the react/react-native package. Source [here](https://github.com/axios/axios)
 
 **eslint-plugin-react-native(^25.0.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -23,21 +23,21 @@ Planning a night out? See all the events in select canadian cities. View the eve
 
 **react-native(0.52.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
-**react-native-event-listeners(^1.0.3):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-event-listeners(^1.0.3):** Triggers events from one component and responds in other components to complete a specified task. In this case, we are listening to a toggleMenu event in the Sidebar which is triggered from several other components. Source [here](https://github.com/meinto/react-native-event-listeners)
 
 **react-native-flexi-radio-button(^0.2.2):** React native default does not contain any radio buttons. Thus this package was used to implement radio buttons in the filter modal. Source [here](https://github.com/thegamenicorus/react-native-flexi-radio-button)
 
 **react-native-google-maps-directions(^1.1.2):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
-**react-native-is-iphonex(^1.0.1):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-is-iphonex(^1.0.1):** This plugin was used for the camera screen to provide specific padding if the device is an IPhoneX. This was recommended in the original expo’s camera documentation. Source [here](https://www.npmjs.com/package/react-native-is-iphonex)
 
-**react-native-material-textfield(^0.12.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-material-textfield(^0.12.0):** In order to conform with Google’s aesthetic material design standards, this component was added. The React-Native Material UI doesn’t style the text input fields. Source [here](https://github.com/n4kz/react-native-material-textfield)
 
-**react-native-material-ui(^1.20.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-material-ui(^1.20.0):** The material UI was used to style the application according to Google’s aesthetic material design standard. This plugin helps to design components easily and thus avoiding manually adding style for every single element we create in the components. Source [here](https://github.com/xotahal/react-native-material-ui)
 
 **react-native-modal(^5.4.0):** Used to create the filter modal. Source [here](https://github.com/react-native-community/react-native-modal)
 
-**react-native-side-menu(^1.1.3):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
+**react-native-side-menu(^1.1.3):** This component was used to keep the links of our main components in the left drawer. Source [here](https://github.com/react-native-community/react-native-side-menu)
 
 **react-native-vector-icons(^4.5.0):** Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -131,6 +131,10 @@ Our project has been a success and we also have a working backend. Push notifica
 - Event details screen automates its data collection of the venue photos, category, and details from an API. [Completed]
 - Within the menu bar, the ‘categories’ feature has the ability to filter based on the category data fetched from an API.  [Completed]
 
+## Backend
+- The backend for this app is done in Ruby On Rails which serves REST api's. The application is deployed on Heroku platform which provides easy deployment on free instance. The project is on github Souece [here](https://github.com/siddhantbhardwaj/gosomewhere_backend) and the web services are deploued on the URL [https://gosomewhere-backend.herokuapp.com](https://gosomewhere-backend.herokuapp.com).
+- Example Endpoint: https://gosomewhere-backend.herokuapp.com/events. The endpoints require the user to be authenticated first and then use the token which is recieved after signin or signup process.
+- In addition to Ruby on Rails application, we also had to use an opensource Express.js based web [application](https://github.com/tobilg/facebook-events-by-location) to fetch the facebook events based on the user's location. This Express.js based app is forked [https://github.com/siddhantbhardwaj/go-somewhere-fb](https://github.com/siddhantbhardwaj/go-somewhere-fb) and deployed as a web service on Heroku [https://go-somewhere-fb.herokuapp.com](https://go-somewhere-fb.herokuapp.com)
 
 ## Sources
 Use IEEE citation style.
