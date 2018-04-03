@@ -16,14 +16,8 @@ export default class FilterModel extends Component {
         this.state = {
             distance: 25,
             tempDistance: 25,
-<<<<<<< HEAD
-            time: 30,
-            tempTime: 30,
-            search:''
-=======
             time: "all",
             tempTime: "all"
->>>>>>> develop
         }
     }
 
@@ -50,11 +44,6 @@ export default class FilterModel extends Component {
         this.props.onPress();
     }
 
-<<<<<<< HEAD
-
-
-    filterChange(){
-=======
     // Filters time by users choice.
     async updateTimeFilter(){
 
@@ -112,7 +101,6 @@ export default class FilterModel extends Component {
 
 
         // Update the distance filter.
->>>>>>> develop
         this.updateDistanceFilter();
     }
 

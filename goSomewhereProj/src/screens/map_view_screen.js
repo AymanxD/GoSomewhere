@@ -90,7 +90,7 @@ export default class Map_View_Screen extends React.Component {
             this.setState({curr_city_long: long});
         }
     }
-// export function searchFilter(events, props) {
+
     async searchFilter() {
 
         let events = await AsyncStorage.getItem('originalEvents');
@@ -163,7 +163,7 @@ export default class Map_View_Screen extends React.Component {
     onSearchPressed(fieldText){
         console.log(fieldText + 'in on search Pressed');
        AsyncStorage.setItem('search', fieldText);
-    searchFilter();
+    this.searchFilter;
     };
 
 

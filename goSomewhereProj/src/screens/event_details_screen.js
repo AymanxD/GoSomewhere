@@ -1,27 +1,18 @@
 import React from 'react';
-import {
-    Text,
-    Alert,
-    View,
-    Image,
-    ScrollView,
-    StyleSheet,
-    SectionList,
-    Dimensions,
-    Linking,
-    Share,
-    TouchableOpacity,
-    TouchableHighlight,
-    FlatList
-} from 'react-native';
-import {Toolbar, Button, Icon} from 'react-native-material-ui';
+import {Text} from 'react-native';
+import {Alert, View, Image, ScrollView, StyleSheet, SectionList, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
+import { Toolbar, Button, Icon } from 'react-native-material-ui';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import getDirections from 'react-native-google-maps-directions';
+
 import axios from 'axios';
 
+const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
 const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
+//const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const customBlue = 'rgb(72, 133, 237)';
 const customGreen = 'rgb(25,220,40)';
 pressedLike='black';
@@ -32,8 +23,11 @@ var time;
 var description;
 var eventName;
 var address;
+//https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
+images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
 
-const extractKey = ({id}) => id  //for the flatlist
+
+const extractKey = ({id}) => id //for the flatlist
 
 export default class Event_Details_Screen extends React.Component {
 
@@ -49,7 +43,16 @@ export default class Event_Details_Screen extends React.Component {
         details: [],
     };
 
-    _showResult(result) {
+  //  this.changeIconName = this.changeIconName.bind(this);
+    date = this.state.event['start_at'];
+    date = date.substring(0,10);
+    time = this.state.event['start_at'];
+    time = time.substring(11,16);
+    description = this.state.event['description'];
+    eventName = this.state.event['title'];
+    address = this.state.event['address'];
+  }
+    _showResult(result){
         this.setState({result})
     }
 
@@ -71,28 +74,15 @@ export default class Event_Details_Screen extends React.Component {
 
   //to get comments from the backend
     componentDidMount() {
-        axios.get('/events/' + this.state.event['id'] + '/comments')
-            .then(async (response) => {
-                this.setState({comment: response.data});
-            })
-            .catch((error) => {
-                if (error.response && error.response.data) {
-                    Alert.alert(JSON.stringify(error.response.data));
-                } else {
-                    Alert.alert("catching exception", JSON.stringify(error));
-                }
-            });
-    }
-
-    changeIconName() {
-        if (this.state.checkIcon === "star-outlined") {
-            this.setState({
-                checkIcon: "star"
-            })
+      axios.get('/events/'+this.state.event['id']+'/comments')
+      .then(async (response) => {
+        this.setState({comment: response.data});
+      })
+      .catch((error) => {
+        if(error.response && error.response.data) {
+          Alert.alert(JSON.stringify(error.response.data));
         } else {
-            this.setState({
-                checkIcon: "star-outlined"
-            })
+          Alert.alert("catching exception", JSON.stringify(error));
         }
       });
 
@@ -129,90 +119,84 @@ export default class Event_Details_Screen extends React.Component {
       this.updateGoing();
   }
 
-    handleGetDirections = () => {
-        const data = {
-            source: {},
-            destination: {
-                latitude: this.state.event['latitude'],
-                longitude: this.state.event['longitude'],
-            },
-            params: [{
-                key: "dirflg",
-                value: "w"
-            }
-            ]
-        }
-        getDirections(data)
+
+  handleGetDirections = () => {
+    const data = {
+      source: {},
+      destination: {
+        latitude: this.state.event['latitude'],
+        longitude: this.state.event['longitude'],
+      },
+      params: [ {
+        key: "dirflg",
+        value: "w"
+       }
+      ]
     }
+    getDirections(data)
+  }
 
     render() {
-        const id = this.props.navigation.state.params.id;
+      const id=this.props.navigation.state.params.id;
 
-        return (
+      return (
 
-            <View style={{
-                flex: 3,
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-            }}>
-                <Toolbar
-                    leftElement="arrow-back"
-                    onLeftElementPress={() => this.props.navigation.goBack()}
-                    centerElement="Event Details"
-                />
+    <View style={{
+       flex:3,
+       flexDirection: 'column',
+       justifyContent: 'space-around',
+     }}>
+       <Toolbar
+           leftElement="arrow-back"
+           onLeftElementPress={() => this.props.navigation.goBack() }
+           centerElement="Event Details"
+       />
+    <ScrollView>
+    <Image source={{uri: this.state.event.image}}
+      style={{ flex:1, height:200 }} />
 
         <View style={{backgroundColor:customBlue}}>
         <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
         <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
         </View>
 
-                    <Image source={{uri: this.state.event.image}}
-                           style={{flex: 1, height: 200}}/>
+     <View
+     style={{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingBottom: 10,
+      }}>
 
-                    <View style={{height: 75, backgroundColor: customBlue}}>
-                        <Text style={[styles.padding, {
-                            fontWeight: 'bold',
-                            color: 'white',
-                            paddingBottom: 10
-                        }]}> {this.state.event['title']} </Text>
-                        <Text style={[styles.padding, {color: 'white'}]}> Date: {date} </Text>
-                    </View>
+       <TouchableOpacity onPress={this.changeIconName.bind(this)}>
+           <View style={styles.button}>
+           <Entypo name={this.state.checkIcon} backgroundColor='transparent' color={customBlue} size={40}/>
+               <Text style={{textAlign:'center', color:customBlue}}>GOING</Text>
+           </View>
+      </TouchableOpacity>
 
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            paddingBottom: 10,
-                        }}>
-                        {/* Having two children in touchable opacity */}
-                        {/*src: https://github.com/Microsoft/react-native-windows/issues/1516*/}
-                        <TouchableOpacity onPress={this.changeIconName.bind(this)}>
-                            <View style={styles.button}>
-                                <Entypo name={this.state.checkIcon} backgroundColor='transparent' color={customBlue}
-                                        size={40}/>
-                                <Text style={{textAlign: 'center', color: customBlue}}>GOING</Text>
-                            </View>
-                        </TouchableOpacity>
+      <TouchableOpacity onPress={() => Share.share({
+          title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
+          message: description,
+    }) .then(this._showResult) .catch(err => console.log(err))} >
+          <View style={styles.button}>
+        <Entypo name='share' backgroundColor='transparent' color = {customBlue} size = {40} />
+        <Text style={{textAlign:'center', color:customBlue}}>SHARE</Text>
+          </View>
+      </TouchableOpacity>
+     </View>
 
-                        <TouchableOpacity onPress={() => Share.share({
-                            title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
-                            message: description,
-                        }).then(this._showResult).catch(err => console.log(err))}>
-                            <View style={styles.button}>
-                                <Entypo name='share' backgroundColor='transparent' color={customBlue} size={40}/>
-                                <Text style={{textAlign: 'center', color: customBlue}}>SHARE</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+     <View style = {styles.lineStyle}></View>
+     <View style={styles.padding}>
+     <Text>{this.state.event['description']} </Text>
+      </View>
+     <View style={{ padding: 10}}>
+     <View style = {styles.lineStyle}></View>
 
-                    {/*Create a line*/}
-                    {/*src: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native*/}
-                    <View style={styles.lineStyle}></View>
-                    <View style={styles.padding}>
-                        <Text>{this.state.event['description']} </Text>
-                    </View>
-                    <View style={{padding: 10}}>
-                        <View style={styles.lineStyle}></View>
+      <View style={{flexDirection: 'row'}}>
+      <MaterialIcons.Button name='date-range' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
+      <Text style ={styles.details}>Date: {date}</Text>
+      </View>
+       <View style = {styles.lineStyle}></View>
 
        <View style={{flexDirection: 'row'}}>
        <MaterialIcons.Button name='group' backgroundColor='transparent' color = {customBlue} color = {customBlue} size = {24} paddingRight={15}/>
@@ -226,12 +210,12 @@ export default class Event_Details_Screen extends React.Component {
       </View>
        <View style = {styles.lineStyle}></View>
 
-                        <View style={{flexDirection: 'row'}}>
-                            <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color={customBlue}
-                                                           size={24} paddingRight={15}/>
-                            <Text style={styles.details}>Time: {time}</Text>
-                        </View>
-                        <View style={styles.lineStyle}></View>
+       <TouchableOpacity onPress={this.handleGetDirections}>
+      <View style={{flexDirection: 'row'}}>
+      <MaterialIcons.Button name='location-on' backgroundColor='transparent' color = {customBlue} size = {24} paddingRight={15}/>
+      <Text style ={[styles.details, {flex:1, flexWrap:'wrap'}]}>Address: {this.state.event['address']}</Text>
+      </View>
+      </TouchableOpacity>
 
        <View style = {styles.lineStyle}></View>
        </View>
@@ -253,87 +237,78 @@ export default class Event_Details_Screen extends React.Component {
         </View>
 */}
 
-                        <View style={styles.lineStyle}></View>
-                    </View>
+<View>
+<Text style={{fontSize:13, fontWeight:'bold'}}>Reviews</Text>
 
+<FlatList
+data={this.state.comment}
+renderItem={({item}) => <View><Text style={styles.sectionHeader}>{item['author'] + ': ' + item['time_in_words']}</Text>
+<Text style={styles.item}>{item['content']}</Text></View>
+}
+keyExtractor={extractKey}
+/>
+</View>
 
-                    <View>
-                        <Text style={{fontSize: 13, fontWeight: 'bold'}}>Reviews</Text>
+       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event })} />
+     </ScrollView>
+            <View style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+             }}>
 
-                        <FlatList
-                            data={this.state.comment}
-                            renderItem={({item}) => <View><Text
-                                style={styles.sectionHeader}>{item['author'] + ': ' + item['time_in_words']}</Text>
-                                <Text style={styles.item}>{item['content']}</Text></View>
-                            }
-                            keyExtractor={extractKey}
-                        />
-                    </View>
-
-                    <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {
-                        id: this.state.event['id'],
-                        event: this.state.event
-                    })}/>
-                </ScrollView>
-                <View style={{
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}>
-
-                    <TouchableOpacity onPress={this.handleGetDirections}>
-                        <MaterialCommunityIcons name='navigation' style={{alignSelf: 'center'}}
-                                                backgroundColor='transparent' color='black'
-                                                size={40}/>
-                        <Text>DIRECTIONS</Text>
-                    </TouchableOpacity>
-                </View>
+             <TouchableOpacity onPress={this.handleGetDirections}>
+              <MaterialCommunityIcons name='navigation' style={{alignSelf: 'center'}} backgroundColor='transparent' color = 'black'
+                                      size = {40} />
+              <Text>DIRECTIONS</Text>
+             </TouchableOpacity>
             </View>
-        );
-    };
+     </View>
+      );
+  };
 };
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
     button: {
         width: 50,
         height: 60,
         alignItems: 'center',
     },
-    sectionHeader: {
-        paddingTop: 2,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 2,
-        fontSize: 11,
-        fontWeight: 'bold',
-    },
-    lineStyle: {
-        borderWidth: 0.5,
-        borderColor: 'lightgrey',
-    },
-    item: {
-        padding: 10,
-        fontSize: 13,
-        height: 44,
-    },
-    details: {
-        paddingBottom: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        fontSize: 13,
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    padding: {
-        paddingBottom: 10,
-        paddingTop: 10,
-        paddingRight: 10,
-        paddingLeft: 15,
-    }
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  lineStyle:{
+    borderWidth: 0.5,
+    borderColor:'lightgrey',
+  },
+  item: {
+    padding: 10,
+    fontSize: 13,
+    height: 44,
+  },
+  details: {
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingRight: 10,
+    fontSize: 13,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  padding: {
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingLeft:15,
+  }
 });
