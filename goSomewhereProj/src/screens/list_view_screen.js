@@ -15,14 +15,21 @@ export default class List_View_Screen extends React.Component {
 
     constructor(props) {
         super(props);
+
+        // Used to assess whether a row in the ListView is different from another.
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
-            latitude: null,
-            longitude: null,
+
+            // Saves all of the current events used in the application
             events: [],
             error: null,
             filterModalVisible: false,
+
+            // Menu bar button, icons, labels, and functions
+            // buttonLeft and buttonCenter are used to navigate to different
+            // application screens. buttonRight is used to switch between
+            // the filter modal being visible and invisible.
             buttonLeft: {
                 key: "Switch City",
                 icon: "location-city",
@@ -48,26 +55,28 @@ export default class List_View_Screen extends React.Component {
         }
     }
 
-  async componentWillMount(){
+    // If filtered events exist, display them. Else display
+    // the unfiltered events.
+      async componentWillMount(){
 
-      let events = await AsyncStorage.getItem('events');
-
-      if(events == null) {
-          let events = await AsyncStorage.getItem('originalEvents');
-
-          this.setState({
-              events: JSON.parse(events),
-          });
-
-      }else{
           let events = await AsyncStorage.getItem('events');
 
-          this.setState({
-              events: JSON.parse(events),
-          });
-      }
-  }
+          if(events == null) {
+              events = await AsyncStorage.getItem('originalEvents');
 
+              this.setState({
+                  events: JSON.parse(events),
+              });
+
+          }else{
+              this.setState({
+                  events: JSON.parse(events),
+              });
+          }
+      }
+
+    // Sets the displayed events to filtered events if they exist, otherwise
+    // the displayed events are set to all of the events.
     async changeEvents() {
 
         let events = JSON.parse(await AsyncStorage.getItem('events'));
@@ -81,6 +90,8 @@ export default class List_View_Screen extends React.Component {
         });
     }
 
+    // Resets all filters, by removing all events from AsyncStorage and
+    // calling for new events.
     resetFilter(){
         AsyncStorage.removeItem('originalEvents');
         AsyncStorage.removeItem('events');
@@ -89,6 +100,7 @@ export default class List_View_Screen extends React.Component {
         this.props.navigation.navigate('Map');
     }
 
+    // Renders a row in the ListView for each events in the events state.
   _renderRow(rowData) {
     return(
         <View>

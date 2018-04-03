@@ -5,6 +5,8 @@ import { BottomNavigation } from 'react-native-material-ui';
 
 export default class MenuBar extends React.Component {
 
+    // Menubar used in both the ListView and MapView screens.
+
   render() {
     return (
         <BottomNavigation hidden={false} >
