@@ -34,11 +34,8 @@ export default class List_View_Screen extends React.Component {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: async () => {
-                    let latitude = await AsyncStorage.getItem('lat');
-                    let longitude = await AsyncStorage.getItem('lon');
-                    this.props.navigation.navigate('Map', {lat: parseFloat(latitude), long: parseFloat(longitude)});
-                }            },
+                onPress: () => this.props.navigation.navigate('PickCity')
+            },
             buttonCenter: {
                 key: "Map",
                 icon: "map",

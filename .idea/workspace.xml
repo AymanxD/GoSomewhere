@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="95f09a87-f26c-4e1e-811a-f2907873243a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js" afterDir="false" />
-    </list>
+    <list default="true" id="95f09a87-f26c-4e1e-811a-f2907873243a" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,8 +38,8 @@
       <file leaf-file-name="list_view_screen.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+            <state relative-caret-position="62">
+              <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -249,12 +244,12 @@
       <workItem from="1522575760962" duration="23028000" />
       <workItem from="1522603723938" duration="19588000" />
       <workItem from="1522676056311" duration="14942000" />
-      <workItem from="1522808881544" duration="9109000" />
+      <workItem from="1522808881544" duration="10052000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149566000" />
+    <option name="totallyTimeSpent" value="150509000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -655,8 +650,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+        <state relative-caret-position="62">
+          <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
