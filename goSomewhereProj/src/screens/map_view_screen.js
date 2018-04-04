@@ -16,8 +16,8 @@ export default class Map_View_Screen extends React.Component {
 
             // Saves all of the current events used in the application
             events: [],
-            curr_city_lat:43.761539,
-            curr_city_long:-79.411079,
+            curr_city_lat:44.651070,
+            curr_city_long:-63.5826879,
             users_lat:0,
             users_long:0,
 
@@ -96,7 +96,7 @@ export default class Map_View_Screen extends React.Component {
     //Creates a filter to search events
     async searchFilter() {
         let events = await AsyncStorage.getItem('events');
-        
+
         if(events == null){
             events = await AsyncStorage.getItem('originalEvents')
         }
@@ -169,13 +169,13 @@ export default class Map_View_Screen extends React.Component {
        AsyncStorage.setItem('search', fieldText);
         this.searchFilter();
     };
-    
-   //gets the events prior to search 
+
+   //gets the events prior to search
    async getEvents() {
     let prevEvents = await AsyncStorage.getItem('events');       
     if(prevEvents == null){
         prevEvents = await AsyncStorage.getItem('originalEvents')
-    } 
+    }
     AsyncStorage.setItem('prevEvents', prevEvents);
    }
 
@@ -183,7 +183,7 @@ export default class Map_View_Screen extends React.Component {
    async setEvents() {
     let prevEvents = await AsyncStorage.getItem('prevEvents'); 
     AsyncStorage.setItem('events', prevEvents);
-    this.changeEvents(); 
+    this.changeEvents();
    }
 
     render() {
@@ -197,7 +197,7 @@ export default class Map_View_Screen extends React.Component {
                         searchable={{
                             autoFocus: true,
                             placeholder: 'Search',
-                            onSearchPressed: () => 
+                            onSearchPressed: () =>
                             {this.getEvents()},
                              onChangeText: (fieldText) =>
                              {this.onSearchPressed(fieldText)},
