@@ -36,11 +36,11 @@ export default class Pick_City_Screen extends React.Component {
               },
               {
               name: 'Toronto',
-              lat: 43.761539,
-              long:-79.411079,
+              lat: 43.653226,
+              long:-79.383184,
               image: require('../assets/city-images/toronto.jpg'),
               onPress: () => {
-                  this.props.navigation.navigate('Map',{lat:43.761539,long:-79.411079});
+                  this.props.navigation.navigate('Map',{lat:43.653226,long:-79.383184});
                   AsyncStorage.setItem('lat', this.state.cities[1].lat.toString());
                   AsyncStorage.setItem('lon', this.state.cities[1].long.toString());
                   AsyncStorage.setItem('city', this.state.cities[1].name);

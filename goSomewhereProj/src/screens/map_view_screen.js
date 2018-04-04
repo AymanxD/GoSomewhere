@@ -166,14 +166,12 @@ export default class Map_View_Screen extends React.Component {
     }
     //Gets text from search and passes it the searchFilter function
     onSearchPressed(fieldText){
-        console.log(fieldText + 'in on search Pressed');
        AsyncStorage.setItem('search', fieldText);
         this.searchFilter();
     };
     
    //gets the events prior to search 
    async getEvents() {
-    console.log("in get events");
     let prevEvents = await AsyncStorage.getItem('events');       
     if(prevEvents == null){
         prevEvents = await AsyncStorage.getItem('originalEvents')
@@ -183,15 +181,12 @@ export default class Map_View_Screen extends React.Component {
 
    //posts reverts to prior filter after search
    async setEvents() {
-       console.log("in set events");
     let prevEvents = await AsyncStorage.getItem('prevEvents'); 
     AsyncStorage.setItem('events', prevEvents);
     this.changeEvents(); 
    }
 
     render() {
-        console.log(this.state.curr_city_long);
-
         return (
             <SideBarContainer navigation={this.props.navigation}>
                 <View style={styles.container}>

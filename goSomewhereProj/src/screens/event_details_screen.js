@@ -155,14 +155,16 @@ export default class Event_Details_Screen extends React.Component {
            leftElement="arrow-back"
            onLeftElementPress={() => this.props.navigation.goBack() }
            centerElement="Event Details"
+           rightElement="directions"
+           onRightElementPress={this.handleGetDirections}
        />
     <ScrollView>
     <Image source={{uri: this.state.event.image}}
       style={{ flex:1, height:200 }} />
 
         <View style={{backgroundColor:customBlue}}>
-        <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
-        <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
+          <Text style={[styles.padding, {fontWeight:'bold', color:'white', paddingBottom: 10}]}> {this.state.event['title']} </Text>
+          <Text style ={[styles.padding, {color:'white'}]}> Date: {date} </Text>
         </View>
 
      <View
@@ -258,17 +260,6 @@ keyExtractor={extractKey}
   and call that function in child screen before calling go back function*/}
        <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event, onGoBack:this.getComments, })} />
      </ScrollView>
-            <View style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-             }}>
-
-             <TouchableOpacity onPress={this.handleGetDirections}>
-              <MaterialCommunityIcons name='navigation' style={{alignSelf: 'center'}} backgroundColor='transparent' color = 'black'
-                                      size = {40} />
-              <Text>DIRECTIONS</Text>
-             </TouchableOpacity>
-            </View>
      </View>
       );
   };
