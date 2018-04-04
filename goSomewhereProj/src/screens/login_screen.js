@@ -154,15 +154,29 @@ export default class Login_Screen extends React.Component {
   async fbLogIn() {
 
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
-      permissions: ['public_profile'],
+      permissions: ['public_profile', 'email'],
     });
+    
+    
 
     if (type === 'success') {
+      Alert.alert('', token);
       // Get the user's name using Facebook's Graph API
       const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-
-      this.props.navigation.navigate('Map');
+        `https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
+      axios.post('/users/oauth', {
+        user: await response.json()
+      })
+      .then(async (response) => {
+        // if email and pass combination is valid, then log the user in
+        if(response.data.auth_token) {
+          this.setUserLocally(response.data);
+        }
+      }).catch((error) => {
+        if (error.response && error.response.data.errors) {
+          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        }
+      }).done();
     }
   }
 }
