@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Alert, AsyncStorage, TouchableOpacity } from 'react-native';
 import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
@@ -7,13 +7,16 @@ import axios from 'axios';
 import MenuBar from "../components/map_listview_comps/Menubar";
 import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default class Map_View_Screen extends React.Component {
+    map = null;
 
     constructor(props){
         super(props);
         this.state = {
-
+            //Button for showing location
+            col: 'black',
             // Saves all of the current events used in the application
             events: [],
             curr_city_lat:44.651070,
@@ -123,6 +126,7 @@ export default class Map_View_Screen extends React.Component {
     }
 
     componentDidMount() {
+
         //location services
         // Saves latitude and longitude to state and AsyncStorage.
         this.watchId = navigator.geolocation.watchPosition(
@@ -186,6 +190,29 @@ export default class Map_View_Screen extends React.Component {
     this.changeEvents();
    }
 
+   //resets user position
+    resetRegion() {
+        try {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const region = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    };
+                    this.map.animateToRegion(region)
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        } catch(e) {
+            alert(e.message || "");
+        }
+
+    }
+
     render() {
         return (
             <SideBarContainer navigation={this.props.navigation}>
@@ -205,6 +232,7 @@ export default class Map_View_Screen extends React.Component {
                             }}
                     />
                     <MapView
+                        ref={map => { this.map = map}}
                         style={{ flex: 1 }}
                         region={{
                             latitude: this.state.curr_city_lat,
@@ -212,6 +240,8 @@ export default class Map_View_Screen extends React.Component {
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421
                         }}
+                        showsUserLocation= {true}
+                        showsMyLocationButton={true}
                     >
                         {this.state.events.map((event) => {
                             return (
@@ -229,7 +259,10 @@ export default class Map_View_Screen extends React.Component {
                             )
                         })}
                     </MapView>
-                    <MenuBar
+                    <TouchableOpacity>
+                    <MaterialIcons name="my-location" onPress={() => {this.resetRegion()}} backgroundColor='transparent' color = 'black' size={30} style ={{position:'absolute'}} />
+                    </TouchableOpacity>
+                        <MenuBar
                         buttonLeft={this.state.buttonLeft}
                         buttonCenter={this.state.buttonCenter}
                         buttonRight={this.state.buttonRight}
