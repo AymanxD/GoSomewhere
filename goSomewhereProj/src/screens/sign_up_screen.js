@@ -25,7 +25,8 @@ export default class Signup_Screen extends React.Component {
       name: '',
       email: '',
       password: '',
-      errors: {}
+      errors: {},
+      isLoading: false
     }
   }
 
@@ -135,7 +136,10 @@ export default class Signup_Screen extends React.Component {
             </Text>
           }
 
-          <Button primary raised text="Sign up" onPress={this.signup} style={{ container: { marginTop: 30 } }}/>
+          <Button primary raised
+            text={this.state.isLoading ? 'Signing up...' : 'Sign up'}
+            disabled={this.state.isLoading}
+            onPress={this.signup} style={{ container: { marginTop: 30 } }}/>
 
           <View style={styles.signinBtnContainer}>
             <Text>Already have an account?</Text>
@@ -171,7 +175,7 @@ export default class Signup_Screen extends React.Component {
   }
 
   signup = () => {
-    this.setState({errors: {}})
+    this.setState({ errors: {}, isLoading: true });
     //send to server
     axios.post('/users', {
       user: {
@@ -181,11 +185,13 @@ export default class Signup_Screen extends React.Component {
       }
     })
     .then(async (response) => {
+      this.setState({ isLoading: false });
       // if email and pass combination is valid, then log the user in
       if(response.data.auth_token) {
         this.setUserLocally(response.data);
       }
     }).catch((error) => {
+      this.setState({ isLoading: false });
       if (error.response && error.response.data.errors) {
         this.setState({ errors: error.response.data.errors });
       }
