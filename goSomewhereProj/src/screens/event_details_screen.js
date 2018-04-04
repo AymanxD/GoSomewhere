@@ -168,7 +168,8 @@ export default class Event_Details_Screen extends React.Component {
                             justifyContent: 'space-around',
                             paddingBottom: 10,
                         }}>
-
+                        {/*Src: https://github.com/Microsoft/react-native-windows/issues/1516.
+                        Using touchable opacity with two children (i.e. text and an icon)*/}
                         <TouchableOpacity onPress={this.changeIconName.bind(this)}>
                             <View style={styles.button}>
                                 <Entypo name={this.state.checkIcon} backgroundColor='transparent' color={customBlue}
@@ -188,7 +189,8 @@ export default class Event_Details_Screen extends React.Component {
                         </TouchableOpacity>
 
                     </View>
-
+                    {/*src: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native
+                    How to make a simple line across the screen*/}
                         <View style={styles.lineStyle}></View>
                         <View style={styles.padding}>
                         <Text>{this.state.event['description']} </Text>
@@ -243,7 +245,7 @@ export default class Event_Details_Screen extends React.Component {
                         />
                     </View>
 
-                    {/* https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835
+                    {/* src: https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835
                      When you want navigate using goBack function you can't pass parameters to the parent screen.
                      Therefore you need to pass function to the child screen,
                      and call that function in child screen before calling go back function*/}
