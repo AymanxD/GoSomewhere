@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11f44546-84e8-41c9-b1c7-b915081aa67d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/screens/event_details_screen.js" afterPath="$PROJECT_DIR$/src/screens/event_details_screen.js" />
-      <change beforePath="$PROJECT_DIR$/src/screens/map_view_screen.js" afterPath="$PROJECT_DIR$/src/screens/map_view_screen.js" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="map_view_screen.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/screens/map_view_screen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="232" column="24" lean-forward="false" selection-start-line="232" selection-start-column="24" selection-end-line="232" selection-end-column="53" />
+            <state relative-caret-position="840">
+              <caret line="231" column="0" lean-forward="false" selection-start-line="231" selection-start-column="0" selection-end-line="258" selection-end-column="30" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -319,7 +318,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79717000" />
+    <option name="totallyTimeSpent" value="80368000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3232" height="1732" extended-state="6" />
@@ -800,8 +799,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/screens/map_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="232" column="24" lean-forward="false" selection-start-line="232" selection-start-column="24" selection-end-line="232" selection-end-column="53" />
+        <state relative-caret-position="840">
+          <caret line="231" column="0" lean-forward="false" selection-start-line="231" selection-start-column="0" selection-end-line="258" selection-end-column="30" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
