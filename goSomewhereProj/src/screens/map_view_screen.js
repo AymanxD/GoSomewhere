@@ -15,8 +15,6 @@ export default class Map_View_Screen extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            //Button for showing location
-            col: 'black',
             // Saves all of the current events used in the application
             events: [],
             curr_city_lat:44.651070,
