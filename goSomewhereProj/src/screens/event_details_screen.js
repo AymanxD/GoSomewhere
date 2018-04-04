@@ -41,6 +41,7 @@ export default class Event_Details_Screen extends React.Component {
       event: props.navigation.state.params.event,
         result: ' ',
         details: [],
+        comment_array: [],
     };
 
   //  this.changeIconName = this.changeIconName.bind(this);
@@ -56,6 +57,19 @@ export default class Event_Details_Screen extends React.Component {
         this.setState({result})
     }
 
+    getComments = () => {
+      axios.get('/events/'+this.state.event['id']+'/comments')
+      .then(async (response) => {
+        this.setState({comment: response.data});
+      })
+      .catch((error) => {
+        if(error.response && error.response.data) {
+          Alert.alert(JSON.stringify(error.response.data));
+        } else {
+          Alert.alert("catching exception", JSON.stringify(error));
+        }
+      });
+    }
 //change going status on backend
     updateGoing = () => {
       //send to server
@@ -72,19 +86,10 @@ export default class Event_Details_Screen extends React.Component {
     }
 
 
+
   //to get comments from the backend
     componentDidMount() {
-      axios.get('/events/'+this.state.event['id']+'/comments')
-      .then(async (response) => {
-        this.setState({comment: response.data});
-      })
-      .catch((error) => {
-        if(error.response && error.response.data) {
-          Alert.alert(JSON.stringify(error.response.data));
-        } else {
-          Alert.alert("catching exception", JSON.stringify(error));
-        }
-      });
+      this.getComments();
 
         axios.get('/events/'+this.state.event['id']+'/')
         .then(async (response) => {
@@ -248,8 +253,10 @@ renderItem={({item}) => <View><Text style={styles.sectionHeader}>{item['author']
 keyExtractor={extractKey}
 />
 </View>
-
-       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event })} />
+{/* https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835
+  When you want navigate using goBack function you can't pass parameters to the parent screen. Therefore you need to pass function to the child screen,
+  and call that function in child screen before calling go back function*/}
+       <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {id:this.state.event['id'], event: this.state.event, onGoBack:this.getComments, })} />
      </ScrollView>
             <View style={{
                 flexDirection: 'column',
