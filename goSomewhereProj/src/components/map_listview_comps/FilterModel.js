@@ -97,11 +97,10 @@ export default class FilterModel extends Component {
         // Create new key in AsyncStorage to store the filtered events.
         // Filtered events are originally stored in a temporary array which
         // is then stored in AsyncStorage
-        AsyncStorage.setItem('events', JSON.stringify(tempArr));
-
-
-        // Update the distance filter.
-        this.updateDistanceFilter();
+        AsyncStorage.setItem('events', JSON.stringify(tempArr), () => {
+          // Update the distance filter.
+          this.updateDistanceFilter();
+        });
     }
 
     // Helper function used to find how far away an event is from the current date.
@@ -145,10 +144,10 @@ export default class FilterModel extends Component {
         }
 
         // Store the filtered events in AsyncStorage.
-        AsyncStorage.setItem('events', JSON.stringify(tempArr));
-
-        // Update the displayed events.
-        this.props.changeEvents();
+        AsyncStorage.setItem('events', JSON.stringify(tempArr), () => {
+          // Update the displayed events.
+          this.props.changeEvents();
+        });
     }
 
     // Helps function used to determine the distance between two latitudes and longitudes.

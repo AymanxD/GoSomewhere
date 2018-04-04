@@ -146,7 +146,6 @@ export default class Map_View_Screen extends React.Component {
     async changeEvents() {
 
         let events = JSON.parse(await AsyncStorage.getItem('events'));
-
         if(events == null){
             events = JSON.parse(await AsyncStorage.getItem('originalEvents'));
         }
