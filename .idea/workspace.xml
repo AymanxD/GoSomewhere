@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="95f09a87-f26c-4e1e-811a-f2907873243a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/goSomewhereProj/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js" beforeDir="false" afterPath="$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="list_view_screen.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
+      <file leaf-file-name="map_view_screen.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+            <state relative-caret-position="270">
+              <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -28,13 +28,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FilterModel.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js">
+      <file leaf-file-name="pick_city_screen.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1275">
-              <caret line="85" column="49" lean-forward="true" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+            <state relative-caret-position="305">
+              <caret line="36" column="15" lean-forward="true" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_view_screen.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="317">
+              <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,7 +59,6 @@
       <find>authtoken</find>
       <find>check</find>
       <find>auth_token</find>
-      <find>value</find>
       <find>mod</find>
       <find>token</find>
       <find>this.state.value</find>
@@ -56,8 +67,17 @@
       <find>props</find>
       <find>this.state.events</find>
       <find>ds</find>
-      <find>time</find>
       <find>distance</find>
+      <find>time</find>
+      <find>tempValue</find>
+      <find>value</find>
+      <find>console.log</find>
+      <find>onpress</find>
+      <find>filtermodal</find>
+      <find>update</find>
+      <find>var</find>
+      <find>unmount</find>
+      <find>long</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -74,9 +94,12 @@
         <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/splash_screen.js" />
         <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/login_screen.js" />
         <option value="$PROJECT_DIR$/goSomewhereProj/package.json" />
-        <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" />
+        <option value="$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/Menubar.js" />
         <option value="$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js" />
+        <option value="$PROJECT_DIR$/goSomewhereProj/README.md" />
+        <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js" />
         <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js" />
+        <option value="$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js" />
       </list>
     </option>
   </component>
@@ -88,7 +111,6 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/goSomewhereProj/node_modules" />
-    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="260" />
@@ -126,7 +148,38 @@
               <item name="GoSomewhere" type="462c0819:PsiDirectoryNode" />
               <item name="goSomewhereProj" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoSomewhere" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoSomewhere" type="462c0819:PsiDirectoryNode" />
+              <item name="goSomewhereProj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="choose_city_screen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoSomewhere" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoSomewhere" type="462c0819:PsiDirectoryNode" />
+              <item name="goSomewhereProj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="map_listview_comps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoSomewhere" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoSomewhere" type="462c0819:PsiDirectoryNode" />
+              <item name="goSomewhereProj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="shared_comps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoSomewhere" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoSomewhere" type="462c0819:PsiDirectoryNode" />
+              <item name="goSomewhereProj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="instructions_and_text_files" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GoSomewhere" type="b2602c69:ProjectViewProjectNode" />
@@ -150,6 +203,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Ayman Mohatarem/Desktop/GitHub/GoSomewhere/goSomewhereProj/src/screens/list_view_screen.js" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.prettier" value="true" />
@@ -190,11 +244,17 @@
       <workItem from="1522279428012" duration="13929000" />
       <workItem from="1522341867116" duration="20574000" />
       <workItem from="1522430418571" duration="616000" />
+      <workItem from="1522497327592" duration="3000" />
+      <workItem from="1522505380819" duration="5000" />
+      <workItem from="1522575760962" duration="23028000" />
+      <workItem from="1522603723938" duration="19588000" />
+      <workItem from="1522676056311" duration="14942000" />
+      <workItem from="1522808881544" duration="9109000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82084000" />
+    <option name="totallyTimeSpent" value="149566000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -225,14 +285,58 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/utils/StackNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="18" lean-forward="true" selection-start-column="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/event_details_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="85" column="31" selection-start-line="85" selection-start-column="31" selection-end-line="85" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="85" column="49" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="190" column="28" selection-start-line="190" selection-start-column="28" selection-end-line="190" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1710">
           <caret line="114" column="5" lean-forward="true" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -240,9 +344,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1125">
           <caret line="75" column="28" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -250,9 +351,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -260,9 +358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="42" column="21" lean-forward="true" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -270,9 +365,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
           <caret line="85" column="31" lean-forward="true" selection-start-line="85" selection-start-column="31" selection-end-line="85" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -280,9 +372,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2070">
           <caret line="138" column="3" lean-forward="true" selection-start-line="138" selection-start-column="3" selection-end-line="138" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -290,9 +379,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1725">
           <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -300,9 +386,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
           <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -310,9 +393,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2130">
           <caret line="142" column="12" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -341,9 +421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
           <caret line="80" column="23" lean-forward="true" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -358,9 +435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1368">
           <caret line="80" column="23" lean-forward="true" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -382,9 +456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2090">
           <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -420,9 +491,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2090">
           <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -444,9 +512,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2223">
           <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -478,15 +543,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/Menubar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/splash_screen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -508,20 +564,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/goSomewhereProj/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="4" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/sign_up_screen.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -539,43 +585,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/comment_screen.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js">
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/event_details_screen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+        <state relative-caret-position="15">
+          <caret line="85" column="31" selection-start-line="85" selection-start-column="31" selection-end-line="85" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1234">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/Menubar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="49" lean-forward="true" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/event_details_screen.js">
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/choose_city_screen/CityCard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="85" column="31" selection-start-line="85" selection-start-column="31" selection-end-line="85" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="17" lean-forward="true" selection-start-column="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/components/map_listview_comps/FilterModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="85" column="49" lean-forward="true" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+        <state relative-caret-position="495">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/map_view_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/pick_city_screen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="36" column="15" lean-forward="true" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/goSomewhereProj/src/screens/list_view_screen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="164" column="18" lean-forward="true" selection-start-line="164" selection-start-column="18" selection-end-line="164" selection-end-column="18" />
+        <state relative-caret-position="317">
+          <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
