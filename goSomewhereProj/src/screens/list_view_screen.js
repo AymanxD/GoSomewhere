@@ -143,7 +143,7 @@ export default class List_View_Screen extends React.Component {
 
         //Gets text from search and passes it the searchFilter function
         onSearchPressed(fieldText){
-            syncStorage.setItem('search', fieldText);
+            AsyncStorage.setItem('search', fieldText);
             this.searchFilter();
         };
 
