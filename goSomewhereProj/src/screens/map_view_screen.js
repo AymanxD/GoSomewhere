@@ -60,7 +60,8 @@ export default class Map_View_Screen extends React.Component {
                 .then(async (response) => {
 
                     // Saves events from the API in the events state and AsyncStorage
-                    this.setState({events: response.data}, () => {
+                    this.setState({events: response.data}, async () => {
+
                         AsyncStorage.setItem('originalEvents', JSON.stringify(this.state.events));
                     });
                 })
@@ -109,7 +110,6 @@ export default class Map_View_Screen extends React.Component {
             (error) => this.setState({ error: error.message }),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
         );
-
     }
 
     // Sets the displayed events to filtered events if they exist, otherwise

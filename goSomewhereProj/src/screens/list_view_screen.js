@@ -25,7 +25,7 @@ export default class List_View_Screen extends React.Component {
             events: [],
             error: null,
             filterModalVisible: false,
-
+            city: "Halifax",
             // Menu bar button, icons, labels, and functions
             // buttonLeft and buttonCenter are used to navigate to different
             // application screens. buttonRight is used to switch between
@@ -34,14 +34,20 @@ export default class List_View_Screen extends React.Component {
                 key: "Switch City",
                 icon: "location-city",
                 label: "Switch City",
-                onPress: () => this.props.navigation.navigate('PickCity')
-            },
+                onPress: async () => {
+                    let latitude = await AsyncStorage.getItem('lat');
+                    let longitude = await AsyncStorage.getItem('lon');
+                    this.props.navigation.navigate('Map', {lat: parseFloat(latitude), long: parseFloat(longitude)});
+                }            },
             buttonCenter: {
                 key: "Map",
                 icon: "map",
                 label: "Map",
-                onPress: () => this.props.navigation.navigate('Map')
-
+                onPress: async () => {
+                    let latitude = await AsyncStorage.getItem('lat');
+                    let longitude = await AsyncStorage.getItem('lon');
+                    this.props.navigation.navigate('Map', {lat: parseFloat(latitude), long: parseFloat(longitude)});
+                }
             },
             buttonRight: {
                 key: "filter",
@@ -71,6 +77,14 @@ export default class List_View_Screen extends React.Component {
           }else{
               this.setState({
                   events: JSON.parse(events),
+              });
+          }
+
+          let city = await AsyncStorage.getItem('city');
+
+          if(city != null){
+              this.setState({
+                  city: city
               });
           }
       }
@@ -131,7 +145,7 @@ export default class List_View_Screen extends React.Component {
                     }}
                 />
                 <ListView
-                    dataSource={this.ds.cloneWithRows(this.state.events)}
+                    dataSource={this.ds.cloneWithRows(this.state.events.filter(event => event.address.includes(this.state.city)))}
                     enableEmptySections={true}
                     renderRow={this._renderRow.bind(this)}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={{height: 2}} />}

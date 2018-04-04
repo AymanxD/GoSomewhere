@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert, TouchableOpacity
+import {
+    StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert, TouchableOpacity, AsyncStorage
 } from 'react-native';
 
 import { ListItem } from 'react-native-material-ui';
@@ -25,14 +26,26 @@ export default class Pick_City_Screen extends React.Component {
               lat:44.651070,
               long:-63.582687,
               image: require('../assets/city-images/halifax.jpg'),
-              onPress: () => this.props.navigation.navigate('Map',{lat:44.651070,long:-63.582687}),
+              onPress: () => {
+                  this.props.navigation.navigate('Map',{lat:44.651070,long:-63.582687});
+                  AsyncStorage.setItem('lat', JSON.stringify(this.state.cities[0].lat));
+                  AsyncStorage.setItem('lon', JSON.stringify(this.state.cities[0].long));
+                  AsyncStorage.setItem('city', this.state.cities[0].name);
+                  AsyncStorage.removeItem('events');
+                  }
               },
               {
               name: 'Toronto',
               lat: 43.761539,
               long:-79.411079,
               image: require('../assets/city-images/toronto.jpg'),
-              onPress: () => this.props.navigation.navigate('Map',{lat:43.761539,long:-79.411079}),
+              onPress: () => {
+                  this.props.navigation.navigate('Map',{lat:43.761539,long:-79.411079});
+                  AsyncStorage.setItem('lat', this.state.cities[1].lat.toString());
+                  AsyncStorage.setItem('lon', this.state.cities[1].long.toString());
+                  AsyncStorage.setItem('city', this.state.cities[1].name);
+                  AsyncStorage.removeItem('events');
+                 }
               }
         ],
           longitude: null,
