@@ -53,7 +53,7 @@ export default class Sidebar extends React.Component {
                 </View>
               )
           }
-          <Button icon="edit" text="Edit Picture" onPress={() => this.props.navigation.navigate('Camera')}/>
+          <Button raised primary style={{ container: { marginTop: 10 } }} icon="edit" text="Edit Picture" onPress={() => this.props.navigation.navigate('Camera')}/>
         </View>
         
         <ListItem
@@ -84,14 +84,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   picture: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center'
   },
   pictureWrapper: {
-    flex: 0.3,
+    flex: 0.4,
     padding: 30,
     justifyContent: 'center',
     alignItems: 'center'
