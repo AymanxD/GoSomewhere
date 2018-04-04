@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Slider, Vibration, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Slider, Vibration, StatusBar, AsyncStorage } from 'react-native';
 import { Constants, Camera, FileSystem, Permissions } from 'expo';
 import ConfirmProfilePic from './confirm_profile_pic';
 import isIPhoneX from 'react-native-is-iphonex';
@@ -8,6 +8,7 @@ import { Button, Icon } from 'react-native-material-ui';
 // This component is referred from the doumentation of Expo https://github.com/expo/camerja/blob/master/App.js
 export default class CameraScreen extends React.Component {
   state = {
+    user: {},
     type: 'front',
     ratio: '16:9',
     showConfirmation: false,
@@ -19,10 +20,15 @@ export default class CameraScreen extends React.Component {
     this.setState({ permissionsGranted: status === 'granted' });
   }
 
-  componentDidMount() {
-    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
-      // console.log(e, 'Directory exists');
+  async componentDidMount() {
+    await AsyncStorage.getItem('user', (err, result) => {
+      const user = JSON.parse(result);
+      this.setState({ user: user });
+      FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos' + user.id).catch(e => {
+        // console.log(e, 'Directory exists');
+      });
     });
+    
   }
 
   toggleView() {
@@ -49,15 +55,15 @@ export default class CameraScreen extends React.Component {
 
   takePicture = async function() {
     if (this.camera) {
-      FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos').then(photos => {
+      FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos' + this.state.user.id).then(photos => {
         photos.map((photoUri) => {
-          FileSystem.deleteAsync(`${FileSystem.documentDirectory}photos/${photoUri}`).done();
+          FileSystem.deleteAsync(`${FileSystem.documentDirectory}photos${this.state.user.id}/${photoUri}`).done();
         });
       });
       this.camera.takePictureAsync().then(data => {
         FileSystem.moveAsync({
           from: data.uri,
-          to: `${FileSystem.documentDirectory}photos/Photo_${this.generateRandom()}.jpg`,
+          to: `${FileSystem.documentDirectory}photos${this.state.user.id}/Photo_${this.generateRandom()}.jpg`,
         }).then(() => {
           Vibration.vibrate();
           this.toggleView();

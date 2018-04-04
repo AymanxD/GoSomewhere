@@ -7,24 +7,32 @@ import { FileSystem } from 'expo';
 
 export default class Sidebar extends React.Component {
   state={
+    user: {},
     profileImg: ""
-  }
+  };
+  _mounted = false;
   
-  componentDidMount() {
+  async componentDidMount() {
     this._mounted = true;
-    FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos').then(photos => {
-      if (this._mounted) {
-        this.setState({ profileImg: photos[photos.length - 1] });
-      }
-    }).catch(e => {
-      // console.log(e, 'Directory not found');
-      FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos');
-    });
-  }
-  
-  componentWillMount() {
+    
     DeviceEventEmitter.addListener('profilePicChanged', (pic)=>{
-      this.setState({ profileImg: pic })
+      if (this._mounted) {
+        this.setState({ profileImg: pic })
+      }
+    });
+    
+    this._mounted = true;
+    await AsyncStorage.getItem('user', (err, result) => {
+      const user = JSON.parse(result);
+      this.setState({user: user});
+      FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos' + user.id).then(photos => {
+        if (this._mounted) {
+          this.setState({ profileImg: photos[photos.length - 1] });
+        }
+      }).catch(e => {
+        // console.log(e, 'Directory not found');
+        FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos' + user.id);
+      });
     });
   }
 
@@ -43,7 +51,7 @@ export default class Sidebar extends React.Component {
                   key={this.state.profileImg}
                   style={styles.picture}
                   source={{
-                    uri: `${FileSystem.documentDirectory}photos/${this.state.profileImg}`,
+                    uri: `${FileSystem.documentDirectory}photos${this.state.user.id}/${this.state.profileImg}`,
                   }}
                 />
               )
@@ -59,13 +67,6 @@ export default class Sidebar extends React.Component {
           <Button raised primary style={{ container: { marginTop: 10 } }} icon="edit" text="Edit Picture" onPress={() => this.props.navigation.navigate('Camera')}/>
         </View>
         
-        <ListItem
-          divider
-          centerElement={{
-            primaryText: 'Random Link',
-          }}
-          onPress={ () => Alert.alert("Clicked Random Link") }
-        />
         <ListItem
           divider
           centerElement={{

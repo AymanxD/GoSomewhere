@@ -1,20 +1,25 @@
 import React from 'react';
-import { Image, StyleSheet, View, TouchableOpacity, Text, ScrollView, StatusBar, DeviceEventEmitter } from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, Text, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import { FileSystem } from 'expo';
 
 export default class ConfirmProfilePic extends React.Component {
   state = {
+    user: {},
     photo: null,
   };
   _mounted = false;
-
-  componentDidMount() {
+  
+  async componentDidMount() {
     this._mounted = true;
-    FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos').then(photos => {
-      if (this._mounted) {
-        this.setState({ photo: photos[photos.length - 1] });
-      }
+    await AsyncStorage.getItem('user', (err, result) => {
+      const user = JSON.parse(result);
+      this.setState({user: user});
+      FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'photos' + user.id).then(photos => {
+        if (this._mounted) {
+          this.setState({ photo: photos[photos.length - 1] });
+        }
+      });
     });
   }
 
@@ -30,7 +35,7 @@ export default class ConfirmProfilePic extends React.Component {
             key={this.state.photo}
             style={styles.picture}
             source={{
-              uri: `${FileSystem.documentDirectory}photos/${this.state.photo}`,
+              uri: `${FileSystem.documentDirectory}photos${this.state.user.id}/${this.state.photo}`,
             }}
           />
         </View>
