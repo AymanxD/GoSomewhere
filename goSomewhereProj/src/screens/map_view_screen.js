@@ -192,10 +192,7 @@ export default class Map_View_Screen extends React.Component {
     this.changeEvents(); 
    }
 
-   // getUserLocation(){
-   //     this.setState({curr_city_lat: 44.6374247});
-   //     this.setState({curr_city_long: -63.5872094});
-   // }
+   //resets user position
     resetRegion() {
         try {
             navigator.geolocation.getCurrentPosition(
@@ -248,9 +245,8 @@ export default class Map_View_Screen extends React.Component {
                             longitudeDelta: 0.0421
                         }}
                         showsUserLocation= {true}
-                    showsMyLocationButton={true}
+                        showsMyLocationButton={true}
                     >
-
                         {this.state.events.map((event) => {
                             return (
                                 <MapView.Marker
