@@ -16,6 +16,9 @@ export default class Sidebar extends React.Component {
       if (this._mounted) {
         this.setState({ profileImg: photos[photos.length - 1] });
       }
+    }).catch(e => {
+      // console.log(e, 'Directory not found');
+      FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos');
     });
   }
   
