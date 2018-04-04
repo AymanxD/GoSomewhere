@@ -24,7 +24,9 @@ export default class Signup_Screen extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      errors: {},
+      isLoading: false
     }
   }
 
@@ -76,6 +78,21 @@ export default class Signup_Screen extends React.Component {
     this.props.navigation.dispatch(actionToDispatch)
   }
 
+  toSentence(array) {
+    const wordsConnector = ', ';
+    const twoWordsConnector = ' and ';
+    switch (array.length) {
+      case 0:
+        return '';
+      case 1:
+        return String(array[0]);
+      case 2:
+        return array[0] + twoWordsConnector + array[1];
+      default:
+        return _(array).slice(0, -1).join(wordsConnector) + twoWordsConnector + _(array).last();
+    }
+  }
+
   render() {
     return (
       <ScrollView contentContainerStyle={{flex:1}}>
@@ -90,22 +107,39 @@ export default class Signup_Screen extends React.Component {
             value={this.state.name}
             onChangeText={(name) => this.setState({ name })}
           />
-            
+          {this.state.errors.name &&
+            <Text style={styles.error}>
+              Name {this.toSentence(this.state.errors.name)}
+            </Text>
+          }
+
           <TextField
             label='Email'
             value={this.state.email}
             onChangeText={(email) => this.setState({ email })}
           />
+          {this.state.errors.email &&
+            <Text style={styles.error}>
+              Email {this.toSentence(this.state.errors.email)}
+            </Text>
+          }
 
           <TextField
             label='Password'
             secureTextEntry={true}
             value={this.state.password}
-            containerStyle={{ marginBottom: 30 }}
             onChangeText={(password) => this.setState({ password })}
           />
+          {this.state.errors.password &&
+            <Text style={styles.error}>
+              Password {this.toSentence(this.state.errors.password)}
+            </Text>
+          }
 
-          <Button primary raised text="Sign up" onPress={this.signup} />
+          <Button primary raised
+            text={this.state.isLoading ? 'Signing up...' : 'Sign up'}
+            disabled={this.state.isLoading}
+            onPress={this.signup} style={{ container: { marginTop: 30 } }}/>
 
           <View style={styles.signinBtnContainer}>
             <Text>Already have an account?</Text>
@@ -141,6 +175,7 @@ export default class Signup_Screen extends React.Component {
   }
 
   signup = () => {
+    this.setState({ errors: {}, isLoading: true });
     //send to server
     axios.post('/users', {
       user: {
@@ -150,13 +185,15 @@ export default class Signup_Screen extends React.Component {
       }
     })
     .then(async (response) => {
+      this.setState({ isLoading: false });
       // if email and pass combination is valid, then log the user in
       if(response.data.auth_token) {
         this.setUserLocally(response.data);
       }
     }).catch((error) => {
+      this.setState({ isLoading: false });
       if (error.response && error.response.data.errors) {
-        Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        this.setState({ errors: error.response.data.errors });
       }
     }).done();
   }
@@ -184,5 +221,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  error: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: -5
   }
 });

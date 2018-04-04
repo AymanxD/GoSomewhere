@@ -24,7 +24,8 @@ export default class Login_Screen extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isLoading: false
     }
   }
 
@@ -93,20 +94,23 @@ export default class Login_Screen extends React.Component {
   }
 
   signin = () => {
+    this.setState({ isLoading: true })
     //send to server
     axios.post('/signin', {
       email: this.state.email,
       password: this.state.password
     })
     .then(async (response) => {
+      this.setState({ isLoading: false });
       // if email and pass combination is valid, then log the user in
       if(response.data.auth_token) {
         this.setUserLocally(response.data);
       }
     })
     .catch((error) => {
+      this.setState({ isLoading: false });
       if(error.response && error.response.data) {
-        Alert.alert(JSON.stringify(error.response.data.errors));
+        Alert.alert(error.response.data.errors);
       } else {
         Alert.alert("catching exception 2", JSON.stringify(error));
       }
@@ -135,12 +139,11 @@ export default class Login_Screen extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
 
-          <Button primary raised text="Sign in" onPress={this.signin} style={{container: { marginBottom: 20 }}}/>
+          <Button primary raised
+            text={this.state.isLoading ? 'Signing in....' : 'Sign in'}
+            disabled={this.state.isLoading}
+            onPress={this.signin} style={{container: { marginBottom: 20 }}}/>
           <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn.bind(this)} />
-
-          <View style={styles.forgotBtnContainer}>
-            <Button text="Forgot password?" containerStyle={{ marginTop: 20 }} upperCase={false} onPress={this.toSignin} />
-          </View>
 
           <View style={styles.signupBtnContainer}>
             <Text>Dont have an account?</Text>
@@ -152,15 +155,11 @@ export default class Login_Screen extends React.Component {
   }
 
   async fbLogIn() {
-
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
       permissions: ['public_profile', 'email'],
     });
     
-    
-
     if (type === 'success') {
-      Alert.alert('', token);
       // Get the user's name using Facebook's Graph API
       const response = await fetch(
         `https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
@@ -194,9 +193,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 40,
     alignSelf: 'center'
-  },
-  forgotBtnContainer: {
-    marginTop: 30
   },
   signupBtnContainer: {
     marginTop: 30,
