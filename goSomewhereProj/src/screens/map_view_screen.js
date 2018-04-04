@@ -92,7 +92,6 @@ export default class Map_View_Screen extends React.Component {
     }
     //Creates a filter to search events
     async searchFilter() {
-        console.log("in search Filter");
         let events = await AsyncStorage.getItem('events');
         
         if(events == null){
@@ -102,6 +101,8 @@ export default class Map_View_Screen extends React.Component {
         let search = await AsyncStorage.getItem('search');
         if (search != null) {
         search = search.toLowerCase();
+        } else {
+            this.setEvents();
         }
         events = JSON.parse(events);
         let searchArr = [];

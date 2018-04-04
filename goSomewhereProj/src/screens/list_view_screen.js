@@ -112,6 +112,8 @@ export default class List_View_Screen extends React.Component {
         let search = await AsyncStorage.getItem('search');
         if (search != null) {
         search = search.toLowerCase();
+        }else {
+            this.setEvents();
         }
         
         events = JSON.parse(events);
