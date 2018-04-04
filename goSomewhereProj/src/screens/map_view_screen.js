@@ -16,8 +16,10 @@ export default class Map_View_Screen extends React.Component {
 
             // Saves all of the current events used in the application
             events: [],
-            curr_city_lat:44.6374247,
-            curr_city_long:-63.5872094,
+            curr_city_lat:43.761539,
+            curr_city_long:-79.411079,
+            users_lat:0,
+            users_long:0,
 
             // Menu bar button, icons, labels, and functions
             // buttonLeft and buttonCenter are used to navigate to different
@@ -126,12 +128,12 @@ export default class Map_View_Screen extends React.Component {
         this.watchId = navigator.geolocation.watchPosition(
             (position) => {
                 this.setState({
-                    curr_city_lat: position.coords.latitude,
-                    curr_city_long: position.coords.longitude,
+                    users_lat: position.coords.latitude,
+                    users_long: position.coords.longitude,
                     error: null,
                 }, () =>{
-                    AsyncStorage.setItem('lat', JSON.stringify(this.state.curr_city_lat));
-                    AsyncStorage.setItem('lon', JSON.stringify(this.state.curr_city_long));
+                    AsyncStorage.setItem('lat', JSON.stringify(this.state.users_lat));
+                    AsyncStorage.setItem('lon', JSON.stringify(this.state.users_long));
                 });
             },
             (error) => this.setState({ error: error.message }),
@@ -189,7 +191,7 @@ export default class Map_View_Screen extends React.Component {
    }
 
     render() {
-
+        console.log(this.state.curr_city_long);
 
         return (
             <SideBarContainer navigation={this.props.navigation}>
@@ -210,7 +212,7 @@ export default class Map_View_Screen extends React.Component {
                     />
                     <MapView
                         style={{ flex: 1 }}
-                        initialRegion={{
+                        region={{
                             latitude: this.state.curr_city_lat,
                             longitude: this.state.curr_city_long,
                             latitudeDelta: 0.0922,
