@@ -4,7 +4,6 @@ import { MapView } from 'expo';
 import { Toolbar } from 'react-native-material-ui';
 import { EventRegister } from 'react-native-event-listeners';
 import axios from 'axios';
-
 import MenuBar from "../components/map_listview_comps/Menubar";
 import FilterModel from "../components/map_listview_comps/FilterModel";
 import SideBarContainer from '../components/shared_comps/SideBarContainer';
@@ -92,6 +91,34 @@ export default class Map_View_Screen extends React.Component {
             this.setState({curr_city_long: long});
         }
     }
+    //Creates a filter to search events
+    async searchFilter() {
+        let events = await AsyncStorage.getItem('events');
+        
+        if(events == null){
+            events = await AsyncStorage.getItem('originalEvents')
+        }
+
+        let search = await AsyncStorage.getItem('search');
+        if (search != null) {
+        search = search.toLowerCase();
+        } else {
+            this.setEvents();
+        }
+        events = JSON.parse(events);
+        let searchArr = [];
+
+        for (let i = 0; i < events.length; i++) {
+            let title = events[i].title;
+            if (title.toLowerCase().contains(search)) {
+                searchArr.push(events[i]);
+            }
+        }
+
+        AsyncStorage.setItem('events', JSON.stringify(searchArr));
+
+              this.changeEvents();
+    }
 
     componentDidMount() {
         //location services
@@ -136,6 +163,30 @@ export default class Map_View_Screen extends React.Component {
         this.state.buttonRight.onPress();
         this.props.navigation.navigate('Map');
     }
+    //Gets text from search and passes it the searchFilter function
+    onSearchPressed(fieldText){
+        console.log(fieldText + 'in on search Pressed');
+       AsyncStorage.setItem('search', fieldText);
+        this.searchFilter();
+    };
+    
+   //gets the events prior to search 
+   async getEvents() {
+    console.log("in get events");
+    let prevEvents = await AsyncStorage.getItem('events');       
+    if(prevEvents == null){
+        prevEvents = await AsyncStorage.getItem('originalEvents')
+    } 
+    AsyncStorage.setItem('prevEvents', prevEvents);
+   }
+
+   //posts reverts to prior filter after search
+   async setEvents() {
+       console.log("in set events");
+    let prevEvents = await AsyncStorage.getItem('prevEvents'); 
+    AsyncStorage.setItem('events', prevEvents);
+    this.changeEvents(); 
+   }
 
     render() {
 
@@ -150,7 +201,12 @@ export default class Map_View_Screen extends React.Component {
                         searchable={{
                             autoFocus: true,
                             placeholder: 'Search',
-                        }}
+                            onSearchPressed: () => 
+                            {this.getEvents()},
+                             onChangeText: (fieldText) =>
+                             {this.onSearchPressed(fieldText)},
+                            onSearchClosed: () => {this.setEvents()},
+                            }}
                     />
                     <MapView
                         style={{ flex: 1 }}

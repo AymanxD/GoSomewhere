@@ -114,6 +114,44 @@ export default class List_View_Screen extends React.Component {
         this.props.navigation.navigate('Map');
     }
 
+    //Creates a filter to search events
+    async searchFilter() {
+        console.log("in search Filter");
+        let events = await AsyncStorage.getItem('events');
+        
+        if(events == null){
+            events = await AsyncStorage.getItem('originalEvents')
+        }
+
+        let search = await AsyncStorage.getItem('search');
+        if (search != null) {
+        search = search.toLowerCase();
+        }else {
+            this.setEvents();
+        }
+        
+        events = JSON.parse(events);
+        let searchArr = [];
+
+        for (let i = 0; i < events.length; i++) {
+            let title = events[i].title;
+            if (title.toLowerCase().contains(search)) {
+                searchArr.push(events[i]);
+            }
+        }
+
+        AsyncStorage.setItem('events', JSON.stringify(searchArr));
+
+              this.changeEvents();
+    };
+
+        //Gets text from search and passes it the searchFilter function
+        onSearchPressed(fieldText){
+            console.log(fieldText + 'in on search Pressed');
+           AsyncStorage.setItem('search', fieldText);
+            this.searchFilter();
+        };
+
     // Renders a row in the ListView for each events in the events state.
   _renderRow(rowData) {
     return(
@@ -131,6 +169,24 @@ export default class List_View_Screen extends React.Component {
     )
   }
 
+     //gets the events prior to search 
+     async getEvents() {
+        console.log("in get events");
+        let prevEvents = await AsyncStorage.getItem('events');       
+        if(prevEvents == null){
+            prevEvents = await AsyncStorage.getItem('originalEvents')
+        } 
+        AsyncStorage.setItem('prevEvents', prevEvents);
+       }
+       
+     //reverts back to prior filter after search
+       async setEvents() {
+           console.log("in set events");
+        let prevEvents = await AsyncStorage.getItem('prevEvents'); 
+        AsyncStorage.setItem('events', prevEvents);
+        this.changeEvents(); 
+       }
+
   render() {
     return (
         <SideBarContainer navigation={this.props.navigation}>
@@ -140,9 +196,12 @@ export default class List_View_Screen extends React.Component {
                     onLeftElementPress={() => EventRegister.emit('menuToggle') }
                     centerElement="Events List"
                     searchable={{
-                        autoFocus: true,
-                        placeholder: 'Search',
-                    }}
+                        onSearchPressed: () => 
+                        {this.getEvents()},
+                         onChangeText: (fieldText) =>
+                         {this.onSearchPressed(fieldText)},
+                        onSearchClosed: () => {this.setEvents()},
+                        }}
                 />
                 <ListView
                     dataSource={this.ds.cloneWithRows(this.state.events.filter(event => event.address.includes(this.state.city)))}
