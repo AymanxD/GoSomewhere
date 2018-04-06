@@ -6,7 +6,7 @@ Planning a night out? See all the events in select Canadian cities. View the eve
 - Matthew Hemming
 - Ayman Mohatarem
 - Siddhant Bhardwaj
-- Andrey Almabeko
+- Andrey Almabekov
 
 
 
