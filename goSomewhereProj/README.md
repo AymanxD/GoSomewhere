@@ -184,7 +184,7 @@ Our project has been successful. We have a working backend. Push notifications i
 
 - [11] oblador/react-native-vector-icons, GitHub. [Online]. Available: https://github.com/oblador/react-native-vector-icons. [Accessed: 02-Apr-2018].
 
-- [12] Question: Implementing a splash screen with React Navigation · Issue #156 · react-navigation/react-navigation, GitHub. [Online]. Available: https://github.com/react-navigation/react-navigation/issues/156. [Accessed: 02-Apr-2018].
+- [12] Question: Implementing a splash screen with React Navigation · Issue #156 · react-navigation/react-navigation, GitHub. [Online]. Available: https://github.com/react-navigation/react-navigation/issues/156. [Accessed: 02-Apr-2018].
 
 - [13] react-native-community/react-native-side-menu, GitHub, 28-Feb-2018. [Online]. Available: https://github.com/react-native-community/react-native-side-menu. [Accessed: 02-Apr-2018].
 
