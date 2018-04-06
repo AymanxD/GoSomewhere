@@ -162,44 +162,44 @@ Our project has been successful. We have a working backend. Push notifications i
 
 ## Sources
 
-- [1] A. Siromoney, Disabling Buttons in React Native Arpith Siromoney Medium, Medium, 15-Dec-2015. [Online]. Available: https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634. [Accessed: 04-Apr-2018].
+- [1] A. Siromoney, Disabling Buttons in React Native Arpith Siromoney Medium, Medium, 15-Dec-2015. [Online]. Available: https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634. [Accessed: 04-Apr-2018].
 
-- [2] axios/axios, GitHub, 10-Mar-2018. [Online]. Available: https://github.com/axios/axios. [Accessed: 02-Apr-2018].
+- [2] axios/axios, GitHub, 10-Mar-2018. [Online]. Available: https://github.com/axios/axios. [Accessed: 02-Apr-2018].
 
-[3] "Draw horizontal rule in React Native", Stackoverflow.com, 2018. [Online]. Available: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native. [Accessed: 02- Apr- 2018].
+- [3] "Draw horizontal rule in React Native", Stackoverflow.com, 2018. [Online]. Available: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native. [Accessed: 02- Apr- 2018].
 
-[4] expo/camera, GitHub. [Online]. Available: https://github.com/expo/camerja/blob/master/App.js. [Accessed: 02-Apr-2018].
+- [4] expo/camera, GitHub. [Online]. Available: https://github.com/expo/camerja/blob/master/App.js. [Accessed: 02-Apr-2018].
 
-[5] Facebook, Facebook - Expo Documentation. [Online]. Available: https://docs.expo.io/versions/latest/sdk/facebook.html. [Accessed: 02-Apr-2018].
+- [5] Facebook, Facebook - Expo Documentation. [Online]. Available: https://docs.expo.io/versions/latest/sdk/facebook.html. [Accessed: 02-Apr-2018].
 
-[6] Handle response and callback function · Issue #1027 · axios/axios, GitHub. [Online]. Available: https://github.com/axios/axios/issues/1027. [Accessed: 04-Apr-2018]
+- [6] Handle response and callback function · Issue #1027 · axios/axios, GitHub. [Online]. Available: https://github.com/axios/axios/issues/1027. [Accessed: 04-Apr-2018]
 
-[7] Intellicode, Intellicode/eslint-plugin-react-native, GitHub, 11-Jan-2018. [Online]. Available: https://github.com/Intellicode/eslint-plugin-react-native. [Accessed: 02-Apr-2018].
+- [7] Intellicode, Intellicode/eslint-plugin-react-native, GitHub, 11-Jan-2018. [Online]. Available: https://github.com/Intellicode/eslint-plugin-react-native. [Accessed: 02-Apr-2018].
 
-[8] meinto/react-native-event-listeners, GitHub. [Online]. Available: https://github.com/meinto/react-native-event-listeners. [Accessed: 02-Apr-2018].
+- [8] meinto/react-native-event-listeners, GitHub. [Online]. Available: https://github.com/meinto/react-native-event-listeners. [Accessed: 02-Apr-2018].
 
-[9] Modal · React Native, React Native Blog ATOM. [Online]. Available: https://facebook.github.io/react-native/docs/modal.html. [Accessed: 02-Apr-2018].
+- [9] Modal · React Native, React Native Blog ATOM. [Online]. Available: https://facebook.github.io/react-native/docs/modal.html. [Accessed: 02-Apr-2018].
 
-[10] n4kz/react-native-material-textfield, GitHub, 18-Jan-2018. [Online]. Available: https://github.com/n4kz/react-native-material-textfield. [Accessed: 02-Apr-2018].
+- [10] n4kz/react-native-material-textfield, GitHub, 18-Jan-2018. [Online]. Available: https://github.com/n4kz/react-native-material-textfield. [Accessed: 02-Apr-2018].
 
-[11] oblador/react-native-vector-icons, GitHub. [Online]. Available: https://github.com/oblador/react-native-vector-icons. [Accessed: 02-Apr-2018].
+- [11] oblador/react-native-vector-icons, GitHub. [Online]. Available: https://github.com/oblador/react-native-vector-icons. [Accessed: 02-Apr-2018].
 
-[12] Question: Implementing a splash screen with React Navigation · Issue #156 · react-navigation/react-navigation, GitHub. [Online]. Available: https://github.com/react-navigation/react-navigation/issues/156. [Accessed: 02-Apr-2018].
+- [12] Question: Implementing a splash screen with React Navigation · Issue #156 · react-navigation/react-navigation, GitHub. [Online]. Available: https://github.com/react-navigation/react-navigation/issues/156. [Accessed: 02-Apr-2018].
 
-[13] react-native-community/react-native-side-menu, GitHub, 28-Feb-2018. [Online]. Available: https://github.com/react-native-community/react-native-side-menu. [Accessed: 02-Apr-2018].
+- [13] react-native-community/react-native-side-menu, GitHub, 28-Feb-2018. [Online]. Available: https://github.com/react-native-community/react-native-side-menu. [Accessed: 02-Apr-2018].
 
-[14] React navigation goback() and update parent state, Stack Overflow. [Online]. Available: https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835. [Accessed: 04-Apr-2018].
+- [14] React navigation goback() and update parent state, Stack Overflow. [Online]. Available: https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835. [Accessed: 04-Apr-2018].
 
-[15] react-native-is-iphonex, npm. [Online]. Available: https://www.npmjs.com/package/react-native-is-iphonex. [Accessed: 02-Apr-2018].
+- [15] react-native-is-iphonex, npm. [Online]. Available: https://www.npmjs.com/package/react-native-is-iphonex. [Accessed: 02-Apr-2018].
 
-[16] Sample Codes (JavaScript), Distance. [Online]. Available: https://www.geodatasource.com/developers/javascript.[Accessed: 04-Apr-2018].
+- [16] Sample Codes (JavaScript), Distance. [Online]. Available: https://www.geodatasource.com/developers/javascript.[Accessed: 04-Apr-2018].
 
-[17]  thegamenicorus/react-native-flexi-radio-button, GitHub, 25-Oct-2017. [Online]. Available: https://github.com/thegamenicorus/react-native-flexi-radio-button. [Accessed: 02-Apr-2018].
+- [17]  thegamenicorus/react-native-flexi-radio-button, GitHub, 25-Oct-2017. [Online]. Available: https://github.com/thegamenicorus/react-native-flexi-radio-button. [Accessed: 02-Apr-2018].
 
-[18] tiaanduplessis/react-native-google-maps-directions, GitHub. [Online]. Available: https://github.com/tiaanduplessis/react-native-google-maps-directions. [Accessed: 02-Apr-2018].
+- [18] tiaanduplessis/react-native-google-maps-directions, GitHub. [Online]. Available: https://github.com/tiaanduplessis/react-native-google-maps-directions. [Accessed: 02-Apr-2018].
 
-[19] tobilg/facebook-events-by-location, GitHub, 19-Feb-2018. [Online]. Available: https://github.com/tobilg/facebook-events-by-location. [Accessed: 03-Apr-2018].
+- [19] tobilg/facebook-events-by-location, GitHub, 19-Feb-2018. [Online]. Available: https://github.com/tobilg/facebook-events-by-location. [Accessed: 03-Apr-2018].
 
-[20] "TouchableOpacity onPress only fires when clicking on content inside · Issue #1516 · Microsoft/react-native-windows", GitHub, 2018. [Online]. Available: https://github.com/Microsoft/react-native-windows/issues/1516. [Accessed: 02- Apr- 2018].
+- [20] "TouchableOpacity onPress only fires when clicking on content inside · Issue #1516 · Microsoft/react-native-windows", GitHub, 2018. [Online]. Available: https://github.com/Microsoft/react-native-windows/issues/1516. [Accessed: 02- Apr- 2018].
 
-[21] xotahal/react-native-material-ui, GitHub. [Online]. Available: https://github.com/xotahal/react-native-material-ui. [Accessed: 02-Apr-2018].
+- [21] xotahal/react-native-material-ui, GitHub. [Online]. Available: https://github.com/xotahal/react-native-material-ui. [Accessed: 02-Apr-2018].
