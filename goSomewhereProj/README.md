@@ -162,9 +162,9 @@ Our project has been successful. We have a working backend. Push notifications i
 
 ## Sources
 
-[1] A. Siromoney, Disabling Buttons in React Native  Arpith Siromoney  Medium, Medium, 15-Dec-2015. [Online]. Available: https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634. [Accessed: 04-Apr-2018].
+- [1] A. Siromoney, Disabling Buttons in React Native  Arpith Siromoney  Medium, Medium, 15-Dec-2015. [Online]. Available: https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634. [Accessed: 04-Apr-2018].
 
-[2] axios/axios, GitHub, 10-Mar-2018. [Online]. Available: https://github.com/axios/axios. [Accessed: 02-Apr-2018].
+- [2] axios/axios, GitHub, 10-Mar-2018. [Online]. Available: https://github.com/axios/axios. [Accessed: 02-Apr-2018].
 
 [3] "Draw horizontal rule in React Native", Stackoverflow.com, 2018. [Online]. Available: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native. [Accessed: 02- Apr- 2018].
 
