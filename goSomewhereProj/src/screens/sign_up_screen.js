@@ -1,212 +1,230 @@
 import React from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
-    Navigator,
-    TextInput,
-    KeyboardAvoidingView,
-    TouchableOpacity,
-    Dimensions,
-AsyncStorage,
- } from 'react-native';
+  StyleSheet,
+  Text,
+  View,
+  Navigator,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Dimensions,
+  AsyncStorage,
+  ScrollView,
+  Image,
+  Alert
+} from 'react-native';
+import axios from 'axios';
 
- import globalContainerStyle  from '../styles/Global_Container_Style'
+import { Button } from 'react-native-material-ui';
+import { StackNavigator, NavigationActions } from 'react-navigation';
+import { TextField } from 'react-native-material-textfield';
 
+export default class Signup_Screen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      errors: {},
+      isLoading: false
+    }
+  }
 
-
-import {
-  StackNavigator,
-} from 'react-navigation';
-
-const dimensions = Dimensions.get('window');
-//const imageHeight = Math.round(dimensions.width * 16 / 9);
-const getWidth = dimensions.width;
-
-export default class Sign_Up_Screen extends React.Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            list: [],  //starting with empty array so its allocated before the fetch method works
+  //check to see if user has logged in already
+  componentDidMount() {
+    const user = this.getCurrentUser();
+  }
+  
+  async getCurrentUser() {
+    try {
+      // for logout : await AsyncStorage.removeItem('user'); 
+      await AsyncStorage.getItem('user', (err, result) => {
+        const user = JSON.parse(result);
+        if (user && user.auth_token) {
+          this.checkAuthTokenValidity(user.auth_token);
         }
+      });
+    } catch (error) {
+      Alert.alert("caught exception", JSON.stringify(error));
     }
+  }
 
+  // Check if the saved auth_token is still valid and stored in backend
+  checkAuthTokenValidity(authToken) {
+    fetch('https://gosomewhere-backend.herokuapp.com/users/current', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Go-Auth': authToken
+      }
+    })
+    .then((response) => response.json())
+    .then(async (res) => {
+      if (res.errors === 'Unauthorized') {
+        await AsyncStorage.removeItem('user');
+      } else if (res.email) {
+        // User already logged in
+        this._navigateTo('Map');
+      }
+    }).done();
+  }
+  
+  _navigateTo(routeName) {
+    const actionToDispatch = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName })]
+    })
+    this.props.navigation.dispatch(actionToDispatch)
+  }
 
-    //check to see if user has logged in already
-    componentDidMount(){
-        this._loadInitialState().done();
+  toSentence(array) {
+    const wordsConnector = ', ';
+    const twoWordsConnector = ' and ';
+    switch (array.length) {
+      case 0:
+        return '';
+      case 1:
+        return String(array[0]);
+      case 2:
+        return array[0] + twoWordsConnector + array[1];
+      default:
+        return _(array).slice(0, -1).join(wordsConnector) + twoWordsConnector + _(array).last();
     }
+  }
 
-    //get info from async storage
-    _loadInitialState = async () => {
-        var value = await  AsyncStorage.getItem('user');
+  render() {
+    return (
+      <ScrollView contentContainerStyle={{flex:1}}>
+        <View style={styles.container}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/logo.png')}
+          />
+          
+          <TextField
+            label='Name'
+            value={this.state.name}
+            onChangeText={(name) => this.setState({ name })}
+          />
+          {this.state.errors.name &&
+            <Text style={styles.error}>
+              Name {this.toSentence(this.state.errors.name)}
+            </Text>
+          }
 
-        if(value != null){   //if the user is already logged in
-            this.props.navigation.navigate('Profile');      //**profile page that we will create later
-        }
-    }
+          <TextField
+            label='Email'
+            value={this.state.email}
+            onChangeText={(email) => this.setState({ email })}
+          />
+          {this.state.errors.email &&
+            <Text style={styles.error}>
+              Email {this.toSentence(this.state.errors.email)}
+            </Text>
+          }
 
-    componentWillMount(){
+          <TextField
+            label='Password'
+            secureTextEntry={true}
+            value={this.state.password}
+            onChangeText={(password) => this.setState({ password })}
+          />
+          {this.state.errors.password &&
+            <Text style={styles.error}>
+              Password {this.toSentence(this.state.errors.password)}
+            </Text>
+          }
 
-    }
+          <Button primary raised
+            text={this.state.isLoading ? 'Signing up...' : 'Sign up'}
+            disabled={this.state.isLoading}
+            onPress={this.signup} style={{ container: { marginTop: 30 } }}/>
 
-    render() {
+          <View style={styles.signinBtnContainer}>
+            <Text>Already have an account?</Text>
+            <Button text="Sign in" upperCase={false} primary onPress={this.toSignIn} />
+          </View>
+          
+        </View>
+      </ScrollView>
+    );
+  }
 
-      return (
-        //<View>
+  toMapView = () => {
+    this.props.navigation.navigate('Map');
+  }
 
-          <KeyboardAvoidingView behavior = 'padding' style = {globalContainerStyle.globalContainerStyle}>
-              <View style = {globalContainerStyle.globalContainerStyle}>
-                  <Text style={styles.header}> --- Create Account --- </Text>
+  toSignIn = () => {
+    this.props.navigation.navigate('Signin');
+  }
 
-                  <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
-                  <TextInput
-
-                      style={styles.textInput} placeholder='Username'
-                      onChangeText={(username) => this.setState({username})}
-                  />
-                  </View>
-
-
-                  <TextInput
-                      secureTextEntry={true}
-                      style={styles.textInput} placeholder='Password'
-                      onChangeText={(password) => this.setState({password})}
-                  />
-
-                  <TouchableOpacity
-                      style={styles.btn}
-                      onPress = {this.login}>
-                      <Text>Log in</Text>
-                  </TouchableOpacity>
-
-
-              </View>
-
-
-
-
-          </KeyboardAvoidingView>
-
-        //</View>
-      );
-    }
-
-    toMapView = () => {
-        this.props.navigation.navigate('Map');
-    }
-
-    toEventDetails = () => {
-        this.props.navigation.navigate('Event');
-    }
-
-
-    login = () => {
-
-
-        //send to server
-        fetch('http://127.0.0.1:3000/v1/users.json', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-
-            })
+  async setUserLocally(user) {
+    axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user), () => {
+        const actionToDispatch = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Map' })]
         })
-
-        //handle response
-        .then((response) => response.json())
-        .then((res) => {
-            //alert('hello');
-            console.log('response happened1');
-            console.log(res);
-
-              //if user and pass exists, then log them in
-              if(res.success === true){
-                  console.log('user exists in DB');
-                  //AysncStorage.setItem('user',res.user);   may need this later
-                  this.props.navigation.navigate('Profile'); //navigate user to profile page
-              }
-              //else, tell the user they dont exist in the database
-              else{
-                  console.log('user was not in the database' + res.message);
-              }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        .done();
-
-
-        //
-
+        this.props.navigation.dispatch(actionToDispatch)
+      });
+    } catch (error) {
+      Alert.alert("catching exception 1", JSON.stringify(error));
     }
+  }
 
-    componentWillMount(){
-
+  signup = () => {
+    this.setState({ errors: {}, isLoading: true });
+    //send to server
+    axios.post('/users', {
+      user: {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }
+    })
+    .then(async (response) => {
+      this.setState({ isLoading: false });
+      // if email and pass combination is valid, then log the user in
+      if(response.data.auth_token) {
+        this.setUserLocally(response.data);
+      }
+    }).catch((error) => {
+      this.setState({ isLoading: false });
+      if (error.response && error.response.data.errors) {
+        this.setState({ errors: error.response.data.errors });
+      }
+    }).done();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-}
-
 
 const styles = StyleSheet.create({
-
-    wrapper: {
-      flex: 1,
-      backgroundColor: 'green',
-    },
-
   container: {
     flex: 1,
-    backgroundColor: 'green',
+    justifyContent: 'center',
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
+  logo: {
+    width: 200,
+    height: 42,
+    marginTop: 30,
+    marginBottom: 40,
+    alignSelf: 'center'
+  },
+  forgotBtnContainer: {
+    marginTop: 30
+  },
+  signinBtnContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 40,
-    paddingRight: 40,
+    justifyContent: 'center'
   },
-
-  header: {
-    fontSize: 24,
-    marginBottom: 60,
-    color: '#fff',
-    justifyContent: 'center',
-    paddingLeft: 40,
-    paddingRight: 40,
-  },
-
-  textInput: {
-    alignSelf: 'stretch',
-    paddingLeft: 16,
-    marginBottom: 20,
-    backgroundColor: '#fff',
-
-
-  },
-
-  btn: {
-      alignSelf: 'center',
-      padding: 20,
-      marginBottom: 20,
-      backgroundColor: '#01c853',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: getWidth/2.5,
-
-  },
+  error: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: -5
+  }
 });

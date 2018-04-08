@@ -1,5 +1,9 @@
+
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "sdkVersion": "25.0.0",
+    "facebookScheme": "fb234734697091929",
+    "facebookAppId": "234734697091929",
+    "facebookDisplayName": "GoSomewhere",
   }
 }

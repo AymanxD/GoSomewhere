@@ -1,117 +1,307 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {View, Image, ScrollView, Alert, Dimensions, Linking, Share, TouchableOpacity, TouchableHighlight} from 'react-native';
-import {Button} from 'react-native';
-import globalContainerStyle  from '../styles/Global_Container_Style'
+import {Alert, View, Image, ScrollView, StyleSheet, SectionList, Dimensions, Linking, Share, TouchableOpacity,
+    TouchableHighlight, FlatList} from 'react-native';
+import {Toolbar, Button, Icon} from 'react-native-material-ui';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import getDirections from 'react-native-google-maps-directions';
+import axios from 'axios';
 
-const events = [{"id":1,"title":"Android Hackathon","category":"study","description":null,"start_at":"2018-02-23T14:10:52.773Z","end_at":"2018-02-23T20:12:37.044Z","attendees":null,"created_at":"2018-02-10T18:12:44.050Z","updated_at":"2018-02-10T18:12:44.050Z","latitude":44.6374257,"longitude":-63.5872094,"address":"Goldberg Computer Science Building, 6050 University Ave, Halifax, NS B3H 1W5"},{"id":2,"title":"Party after winning Hackathon","category":"party","description":"Please bring your own drink","start_at":"2018-02-11T22:19:45.595Z","end_at":null,"attendees":null,"created_at":"2018-02-10T18:21:52.274Z","updated_at":"2018-02-10T18:21:52.274Z","latitude":44.6386448,"longitude":-63.5919118,"address":"H-1422B, 6230 Coburg Road, Halifax, NS, B3h4R2"}];
+const image_categories = [{"party": "party_category_image.jpg", "study": "Computer-Cat.jpg"}];
+const GoogleMapsKey = 'AIzaSyAvE1bTrQkk9zjFSVNNxN32XDt2ltzOpnA';
+const customBlue = 'rgb(72, 133, 237)';
+const customGreen = 'rgb(25,220,40)';
+const extractKey = ({id}) => id
 
-const image_categories = [{"party":"party_category_image.jpg","study":"Computer-Cat.jpg"}];
-
-pressedLike='black';
-pressedGoing='black';
-
-//https://stackoverflow.com/questions/37841236/render-images-sources-from-parsed-array-of-objects-in-react-native
-images = [{"party":require("../components/event_details_comps/party_category_image.jpeg"),"study" : require("../components/event_details_comps/Computer-Cat.jpg")}];
-
-
-
+var date;
+var message;
+var time;
+var description;
+var eventName;
+var address;
 
 export default class Event_Details_Screen extends React.Component {
-constructor(props) {
-  super(props);
-  this.state = {colorLike:'black', colorGoing:'black'};
-  id=this.props.navigation.state.params.id;
-  category=events[id]['category'];
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            checkIcon: "star-outlined",
+            event: props.navigation.state.params.event,
+            result: ' ',
+            details: [],
+            comment_array: [],
+        };
 
-}
+        // Separate time and date from event[start_at]
+        date = this.state.event['start_at'];
+        date = date.substring(0, 10);
+        time = this.state.event['start_at'];
+        time = time.substring(11, 16);
 
+        // Make variables for descriptions, title and address for the share button
+        description = this.state.event['description'];
+        eventName = this.state.event['title'];
+        address = this.state.event['address'];
+    }
+
+    //Display the result of the share button
+    _showResult(result) {
+        this.setState({result})
+    }
+
+    //Get comments from the backend
+    getComments = () => {
+        axios.get('/events/' + this.state.event['id'] + '/comments')
+            .then(async (response) => {
+                this.setState({comment: response.data});
+            })
+            .catch((error) => {
+                if (error.response && error.response.data) {
+                    Alert.alert(JSON.stringify(error.response.data));
+                } else {
+                    Alert.alert("catching exception", JSON.stringify(error));
+                }
+            });
+    }
+
+    // Update 'Going' status on backend
+    updateGoing = () => {
+        //send to server
+        axios.post('/events/' + this.state.event['id'] + '/change_attending', {})
+            .then(async (response) => {
+                this.setState({details: response.data});
+            }).catch((error) => {
+            if (error.response && error.response.data.errors) {
+                Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+            }
+        }).done();
+    }
+
+    //Get comments from backend
+    componentDidMount() {
+        this.getComments();
+        axios.get('/events/' + this.state.event['id'] + '/')
+            .then(async (response) => {
+                this.setState({details: response.data});
+                if (this.state.details['is_attending'] == true) {
+                    this.setState({
+                        checkIcon: "star"
+                    })
+                }
+                ;
+            })
+            .catch((error) => {
+                if (error.response && error.response.data) {
+                    Alert.alert(JSON.stringify(error.response.data));
+                } else {
+                    Alert.alert("catching exception", JSON.stringify(error));
+                }
+            });
+    }
+
+    // Toggles the star button to change from onPress
+    changeIconName() {
+        if (this.state.checkIcon === "star-outlined") {
+            this.setState({
+                checkIcon: "star"
+            })
+        } else {
+            this.setState({
+                checkIcon: "star-outlined"
+            })
+        }
+        this.updateGoing();
+    }
+
+    // Gets navigation information for Google Navigation
+    handleGetDirections = () => {
+        const data = {
+            source: {},
+            destination: {
+                latitude: this.state.event['latitude'],
+                longitude: this.state.event['longitude'],
+            },
+            params: [{
+                key: "dirflg",
+                value: "w"
+            }
+            ]
+        }
+        getDirections(data)
+    }
 
     render() {
 
-      return (
+        const id = this.props.navigation.state.params.id;
+
+        return (
+
+            <View style={{
+                flex: 3,
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+            }}>
+                <Toolbar
+                    leftElement="arrow-back"
+                    onLeftElementPress={() => this.props.navigation.goBack()}
+                    centerElement="Event Details"
+                    rightElement="directions"
+                    onRightElementPress={this.handleGetDirections}/>
+
+                <ScrollView>
+                    <Image source={{uri: this.state.event.image}}
+                           style={{flex: 1, height: 200}}/>
+
+                    <View style={{backgroundColor: customBlue}}>
+                        <Text style={[styles.padding, {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            paddingBottom: 10
+                        }]}> {this.state.event['title']} </Text>
+                        <Text style={[styles.padding, {color: 'white'}]}> Date: {date} </Text>
+                    </View>
+
+                    <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            paddingBottom: 10,
+                        }}>
+                        {/*Src: https://github.com/Microsoft/react-native-windows/issues/1516.
+                        Using touchable opacity with two children (i.e. text and an icon)*/}
+                        <TouchableOpacity onPress={this.changeIconName.bind(this)}>
+                            <View style={styles.button}>
+                                <Entypo name={this.state.checkIcon} backgroundColor='transparent' color={customBlue}
+                                        size={40}/>
+                                <Text style={{textAlign: 'center', color: customBlue}}>GOING</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => Share.share({
+                            title: 'Check out the ' + eventName + ' @ ' + address + '\nDate: ' + date + '\nTime: ' + time + '\n',
+                            message: description,
+                        }).then(this._showResult).catch(err => console.log(err))}>
+                            <View style={styles.button}>
+                                <Entypo name='share' backgroundColor='transparent' color={customBlue} size={40}/>
+                                <Text style={{textAlign: 'center', color: customBlue}}>SHARE</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                    </View>
+                    {/*src: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native
+                    How to make a simple line across the screen*/}
+                        <View style={styles.lineStyle}></View>
+                        <View style={styles.padding}>
+                        <Text>{this.state.event['description']} </Text>
+                        </View>
+
+                        <View style={{padding: 10}}>
+                        <View style={styles.lineStyle}></View>
+
+                        <View style={{flexDirection: 'row'}}>
+                            <MaterialIcons.Button name='date-range' backgroundColor='transparent' color={customBlue}
+                                                  color={customBlue} size={24} paddingRight={15}/>
+                            <Text style={styles.details}>Date: {date}</Text>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+
+                        <View style={{flexDirection: 'row'}}>
+                            <MaterialIcons.Button name='group' backgroundColor='transparent' color={customBlue}
+                                                  color={customBlue} size={24} paddingRight={15}/>
+                            <Text style={styles.details}>Attendees: {this.state.details['attendees'] + 0}</Text>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+
+                        <View style={{flexDirection: 'row'}}>
+                            <MaterialCommunityIcons.Button name='clock' backgroundColor='transparent' color={customBlue}
+                                                           size={24} paddingRight={15}/>
+                            <Text style={styles.details}>Time: {time}</Text>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+
+                        <TouchableOpacity onPress={this.handleGetDirections}>
+                            <View style={{flexDirection: 'row'}}>
+                                <MaterialIcons.Button name='location-on' backgroundColor='transparent'
+                                                      color={customBlue} size={24} paddingRight={15}/>
+                                <Text style={[styles.details, {
+                                    flex: 1,
+                                    flexWrap: 'wrap'
+                                }]}>Address: {this.state.event['address']}</Text>
+                            </View>
+                        </TouchableOpacity>
+                            <View style={styles.lineStyle}></View>
+                    </View>
+
+                    <View>
+                        <Text style={{fontSize: 13, fontWeight: 'bold'}}>Reviews</Text>
+                        <FlatList
+                            data={this.state.comment}
+                            renderItem={({item}) => <View><Text
+                                style={styles.sectionHeader}>{item['author'] + ': ' + item['time_in_words']}</Text>
+                                <Text style={styles.item}>{item['content']}</Text></View>
+                            }
+                            keyExtractor={extractKey}
+                        />
+                    </View>
+
+                    {/* src: https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835
+                     When you want navigate using goBack function you can't pass parameters to the parent screen.
+                     Therefore you need to pass function to the child screen,
+                     and call that function in child screen before calling go back function*/}
+                    <Button primary text="Add a Comment" onPress={() => this.props.navigation.navigate('Comments', {
+                        id: this.state.event['id'],
+                        event: this.state.event,
+                        onGoBack: this.getComments,
+                    })}/>
+                </ScrollView>
+            </View>
+        );
+    };
+};
 
 
-    <View style={{
-       flex:3,
-       flexDirection: 'column',
-       justifyContent: 'space-around',
-     }}>
-    <ScrollView>
-    <Image source={images[0][category]}
-      style={{flex:1, height:200, width: 380, marginBottom: 20}} />
-
-     <View
-     style={{
-//       height:50,
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 22
+    },
+    button: {
+        width: 50,
+        height: 60,
+        alignItems: 'center',
+    },
+    sectionHeader: {
+        paddingTop: 2,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 2,
+        fontSize: 11,
+        fontWeight: 'bold',
+    },
+    lineStyle: {
+        borderWidth: 0.5,
+        borderColor: 'lightgrey',
+    },
+    item: {
+        padding: 10,
+        fontSize: 13,
+        height: 44,
+    },
+    details: {
+        paddingBottom: 10,
+        paddingTop: 10,
+        paddingRight: 10,
+        fontSize: 13,
+    },
+    row: {
         flexDirection: 'row',
         justifyContent: 'space-around'
-      }}
-      >
-
-      <TouchableHighlight onPress={() => {
-      this.setState(previousState => {return {colorLike: this.state.colorLike=='black' ? 'red':'black'};});
-
-      }}>
-      <Text style={{fontSize:30, color:this.state.colorLike}}>Like</Text>
-      </TouchableHighlight>
-
-
-      <TouchableHighlight onPress={() => {
-      this.setState(previousState => {return {colorGoing: this.state.colorGoing=='black' ? 'green':'black'};});
-      }}>
-      <Text style={{fontSize:30, color:this.state.colorGoing}}>Going</Text>
-      </TouchableHighlight>
-
-
-       <TouchableHighlight onPress={() => {
-         Share.share({
-            message: 'ShiftKey Labs hackaton',
-            url: 'shiftkeylabs.ca/calendar/android-hackathon/',
-            title: 'Wow, did you see that?'
-          }, {
-            dialogTitle: 'Share info',
-          })
-        }}>
-        <Text style={{fontSize:30}}>Share</Text>
-       </TouchableHighlight>
-     </View>
-
-
-     <View style={{ padding: 10 }}>
-       <Text>Event name: {events[id]['title']}</Text>
-       <Text>Date: {events[id]['start_at']}</Text>
-       <Text>Category: {category}</Text>
-       <Text>Address: {events[id]['address']}</Text>
-       <Text></Text>
-       <Text>{events[id]['description']}</Text>
-       </View>
-     </ScrollView>
-            <View style={{
-              height:50,
-               flexDirection: 'row',
-               justifyContent: 'space-around'
-             }}>
-             <TouchableHighlight onPress={() => {
-              Linking.openURL('tel:1234567890');
-             }}>
-               <Text style={{fontSize:30}}>Call</Text>
-             </TouchableHighlight>
-
-             <TouchableHighlight onPress={() => {
-             Linking.openURL("https://www.google.ca/maps/dir/44.6370632,-63.588217/ShiftKey+Labs,+University+Avenue,+Halifax,+Nova+Scotia/@44.6373505,-63.590179,17z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x4b5a223ad04ecb89:0x3e27d1ed7170b86b!2m2!1d-63.5871719!2d44.6374024!3e3?hl=ru");
-             }}>
-               <Text style={{fontSize:30}}>Route</Text>
-             </TouchableHighlight>
-
-             <TouchableHighlight onPress={() => {
-              Linking.openURL("https://shiftkeylabs.ca/calendar/android-hackathon/");
-             }}>
-            <Text style={{fontSize:30}}>WWW</Text>
-             </TouchableHighlight>
-            </View>
-     </View>
-      );
-  };
-};
+    },
+    padding: {
+        paddingBottom: 10,
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingLeft: 15,
+    }
+});

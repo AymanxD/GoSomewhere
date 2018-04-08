@@ -4,237 +4,200 @@ import {
   Text,
   View,
   Navigator,
-  TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
   Dimensions,
   AsyncStorage,
   ScrollView,
-  Image
+  Image,
+  Alert
 } from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import axios from 'axios';
 
-
-
-//importing components
-import ButtonContainerComp from '../components/login_screen_comps/ButtonContainerComp';
-import LogoContainer from '../components/login_screen_comps/LogoContainer';
-import LoginSignupContainer from '../components/login_screen_comps/LoginSignupContainer';
-import TextFieldContainer from '../components/login_screen_comps/TextFieldContainer';
-
-
-import globalStyle from '../styles/Global_Container_Style';
-
-
-const dimensions = Dimensions.get('window');
-//const imageHeight = Math.round(dimensions.width * 16 / 9);
-const getWidth = dimensions.width;
+import { Button } from 'react-native-material-ui';
+import { StackNavigator, NavigationActions } from 'react-navigation';
+import { TextField } from 'react-native-material-textfield';
 
 export default class Login_Screen extends React.Component {
 
-   constructor(props) {
-      super(props);
-      this.state = {
-         username: '',
-         password: '',
-         list: [], //starting with empty array so its allocated before the fetch method works
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      isLoading: false
+    }
+  }
+
+  //check to see if user has logged in already
+  componentDidMount() {
+    const user = this.getCurrentUser();
+  }
+
+  async getCurrentUser() {
+    try {
+      // for logout : await AsyncStorage.removeItem('user');
+      await AsyncStorage.getItem('user', (err, result) => {
+        const user = JSON.parse(result);
+        if (user && user.auth_token) {
+          axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
+          this.checkAuthTokenValidity(user.auth_token);
+        }
+      });
+    } catch (error) {
+      Alert.alert("caught exception", JSON.stringify(error));
+    }
+  }
+
+  // Check if the saved auth_token is still valid and stored in backend
+  checkAuthTokenValidity(authToken) {
+    axios.get('/users/current')
+    .then(async (res) => {
+      if (res.errors === 'Unauthorized') {
+        await AsyncStorage.removeItem('user');
+      } else if (res.email) {
+        // User already logged in
+        this._navigateTo('Map');
       }
-   }
+    }).done();
+  }
 
-   //check to see if user has logged in already
-   componentDidMount() {
-      this._loadInitialState().done();
-   }
+  _navigateTo(routeName) {
+    const actionToDispatch = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName })]
+    })
+    this.props.navigation.dispatch(actionToDispatch);
+  }
 
-   //get info from async storage
-   _loadInitialState = async () => {
-      var value = await AsyncStorage.getItem('user');
+  toMapView = () => {
+    this.props.navigation.navigate('Map');
+  }
 
-      if (value != null) { //if the user is already logged in
-         this.props.navigation.navigate('Profile'); //**profile page that we will create later
+  toSignUp = () => {
+    this.props.navigation.navigate('SignUp');
+  }
+
+  async setUserLocally(user) {
+    axios.defaults.headers.common['X-Go-Auth'] = user.auth_token;
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user), () => {
+        const actionToDispatch = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Map' })]
+        })
+        this.props.navigation.dispatch(actionToDispatch)
+      });
+    } catch (error) {
+      Alert.alert("catching exception 1", JSON.stringify(error));
+    }
+  }
+
+  signin = () => {
+    this.setState({ isLoading: true })
+    //send to server
+    axios.post('/signin', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then(async (response) => {
+      this.setState({ isLoading: false });
+      // if email and pass combination is valid, then log the user in
+      if(response.data.auth_token) {
+        this.setUserLocally(response.data);
       }
-   }
+    })
+    .catch((error) => {
+      this.setState({ isLoading: false });
+      if(error.response && error.response.data) {
+        Alert.alert(error.response.data.errors);
+      } else {
+        Alert.alert("catching exception 2", JSON.stringify(error));
+      }
+    });
+  }
 
-   componentWillMount() {}
+  render() {
+    return (
+      <ScrollView contentContainerStyle={{flex:1}}>
+        <View style={styles.container}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/logo.png')}
+          />
 
-   render() {
+          <TextField
+            label='Email'
+            value={this.state.email}
+            onChangeText={(email) => this.setState({email})}
+          />
 
-     return (
+          <TextField
+            label='Password'
+            secureTextEntry={true}
+            containerStyle={{ marginBottom: 30 }}
+            onChangeText={(password) => this.setState({password})}
+          />
 
-         <ScrollView >
-            <LoginSignupContainer>
+          <Button primary raised
+            text={this.state.isLoading ? 'Signing in....' : 'Sign in'}
+            disabled={this.state.isLoading}
+            onPress={this.signin} style={{container: { marginBottom: 20 }}}/>
+          <Button primary raised text="Sign in with Facebook" onPress={this.fbLogIn.bind(this)} />
 
-              <View>
+          <View style={styles.signupBtnContainer}>
+            <Text>Dont have an account?</Text>
+            <Button text="Sign up" upperCase={false} primary onPress={this.toSignUp} />
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
 
-                  <LogoContainer>
-                      <Image
-                          style={{ width: 200, height: 42, marginTop: 30, marginBottom: 40, alignSelf: 'center' }}
-                          source={require('../assets/logo.png')}
-                      />
-                  </LogoContainer>
-                 <TextFieldContainer>
-                    <TextInput style={{
-                      height: 50,
-                      marginLeft: 0
-                       }} placeholder='Username' onChangeText={(username) => this.setState({username})}/>
-
-                    <TextInput style={{
-                      height: 50,
-                      marginLeft: 0
-                       }} secureTextEntry={true} placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-                 </TextFieldContainer>
-
-
-                 <ButtonContainerComp>
-                     <TouchableOpacity style={styles.btn} onPress={this.toMapView}>
-                        <Text style={{color: '#fff'}}>Log in</Text>
-                     </TouchableOpacity>
-
-                     <TouchableOpacity style={styles.clearBtn} onPress={this.login}>
-                        <Text>forgot password?</Text>
-                     </TouchableOpacity>
-
-                 </ButtonContainerComp>
-
-
-              </View>
-
-
-
-              <ButtonContainerComp>
-                  <TouchableOpacity style={styles.signupBtn} onPress={this.toSignUp}>
-                    <Text style={{color: '#fff'}}>Create Account</Text>
-                  </TouchableOpacity>
-              </ButtonContainerComp>
-
-
-
-          </LoginSignupContainer>
-         </ScrollView>
-      );
-   }
-
-   toMapView = () => {
-      this.props.navigation.navigate('Map');
-   }
-
-   toListView = () => {
-      this.props.navigation.navigate('ListView');
-   }
-
-   toEventDetails = () => {
-      this.props.navigation.navigate('Event');
-   }
-
-   toSignUp = () => {
-      this.props.navigation.navigate('SignUp');
-   }
-
-   login = () => {
-
-      //send to server
-      fetch('http://127.0.0.1:3000/v1/users.json', {
-         method: 'POST',
-         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({username: this.state.username, password: this.state.password})
+  async fbLogIn() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('234734697091929', {
+      permissions: ['public_profile', 'email'],
+    });
+    
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
+      axios.post('/users/oauth', {
+        user: await response.json()
       })
-
-      //handle response
-         .then((response) => response.json()).then((res) => {
-         //alert('hello');
-         console.log('response happened1');
-         console.log(res);
-
-         //if user and pass exists, then log them in
-         if (res.success === true) {
-            console.log('user exists in DB');
-            //AysncStorage.setItem('user',res.user);   may need this later
-            this.props.navigation.navigate('Profile') //else, tell the user they dont exist in the database; navigate user to profile page
-         } else {
-            console.log('user was not in the database' + res.message);
-         }
-      }).catch((err) => {
-         console.log(err);
+      .then(async (response) => {
+        // if email and pass combination is valid, then log the user in
+        if(response.data.auth_token) {
+          this.setUserLocally(response.data);
+        }
+      }).catch((error) => {
+        if (error.response && error.response.data.errors) {
+          Alert.alert("catching exception", JSON.stringify(error.response.data.errors));
+        }
       }).done();
-
-      //
-
-   }
-
-   componentWillMount() {}
-
+    }
+  }
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 40,
     paddingRight: 40,
-    width: getWidth
   },
-
-  header: {
-    fontSize: 24,
-    marginTop: 20,
-    marginBottom: 60,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    paddingLeft: 40,
-    paddingRight: 40
+  logo: {
+    width: 200,
+    height: 42,
+    marginTop: 30,
+    marginBottom: 40,
+    alignSelf: 'center'
   },
-
-  /*
-  textInput: {
-  alignSelf: 'stretch',
-  paddingLeft: 16,
-  marginBottom: 20,
-  backgroundColor: '#fff',
-  height: 50,
-
-  },
-  */
-  btn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    backgroundColor: '#e67e22',
+  signupBtnContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  clearBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  signupBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 80,
-    backgroundColor: '#2BB2D5',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
-  },
-  shortcutBtn: {
-    alignSelf: 'center',
-    padding: 20,
-    marginBottom: 20,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getWidth / 1.2
+    justifyContent: 'center'
   }
 });

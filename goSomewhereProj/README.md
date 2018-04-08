@@ -1,220 +1,207 @@
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
+# GoSomewhere
+Planning a night out? See all the events in select Canadian cities. View the events in a list view or map view. GoSomewhere!
 
-Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
+#### Authors and Contributors:
+- Andrea Christians
+- Matthew Hemming
+- Ayman Mohatarem
+- Siddhant Bhardwaj
+- Andrey Almabekov
 
-## Table of Contents
+##Privacy Policy:
+http://gosomewhere-backend.herokuapp.com/privacypolicy.htm
 
-* [Updating to New Releases](#updating-to-new-releases)
-* [Available Scripts](#available-scripts)
-  * [npm start](#npm-start)
-  * [npm test](#npm-test)
-  * [npm run ios](#npm-run-ios)
-  * [npm run android](#npm-run-android)
-  * [npm run eject](#npm-run-eject)
-* [Writing and Running Tests](#writing-and-running-tests)
-* [Environment Variables](#environment-variables)
-  * [Configuring Packager IP Address](#configuring-packager-ip-address)
-* [Adding Flow](#adding-flow)
-* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
-* [Sharing and Deployment](#sharing-and-deployment)
-  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
-  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
-  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
-    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
-    * [Should I Use ExpoKit?](#should-i-use-expokit)
-* [Troubleshooting](#troubleshooting)
-  * [Networking](#networking)
-  * [iOS Simulator won't open](#ios-simulator-wont-open)
-  * [QR Code does not scan](#qr-code-does-not-scan)
 
-## Updating to New Releases
+## Libraries
 
-You should only need to update the global installation of `create-react-native-app` very rarely, ideally never.
 
-Updating the `react-native-scripts` dependency of your app should be as simple as bumping the version number in `package.json` and reinstalling your project's dependencies.
+**axios(^0.18.0):** This component was used to call the REST API endpoints. The plugin sends the headers with a request that authorizes users in the backend. It is more convenient and clean when compared to the regular fetch function of the react/react-native package. Source [here](https://github.com/axios/axios).
 
-Upgrading to a new version of React Native requires updating the `react-native`, `react`, and `expo` package versions, and setting the correct `sdkVersion` in `app.json`. See the [versioning guide](https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md) for up-to-date information about package version compatibility.
+**eslint-plugin-react-native(^25.0.0):** Linter to help organize code according to convention. Source [here](https://www.npmjs.com/package/eslint-plugin-react-native).
 
-## Available Scripts
+**react-native(^0.52.0):** Framework to create native applications based on JavaScript for both iOS and Android. Source [here](https://github.com/google/gson).
 
-If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
+**react-native-event-listeners(^1.0.3):** The event-listener triggers events from one component to respond in other components to complete a specified task. In this case, we are listening to a toggleMenu event in the Sidebar which is triggered from several other components. Source [here](https://github.com/meinto/react-native-event-listeners).
 
-### `npm start`
+**react-native-flexi-radio-button(^0.2.2):** The React-Native default components do not contain any radio buttons. Thus, this package was used to implement radio buttons in the filter modal. Source [here](https://github.com/thegamenicorus/react-native-flexi-radio-button).
 
-Runs your app in development mode.
+**react-native-google-maps-directions(^1.1.2):** Used to create the navigation portion of the application from the event-details-screen so that users can navigate to the event using google maps. Source [here](https://github.com/tiaanduplessis/react-native-google-maps-directions).
 
-Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
+**react-native-is-iphonex(^1.0.1):** This plugin was used for the camera screen to provide specific padding if the device is an IPhoneX. This was recommended in the original Expo camera documentation. Source [here](https://www.npmjs.com/package/react-native-is-iphonex).
 
-Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
+**react-native-material-textfield(^0.12.0):** In order to conform with Google's aesthetic material design standards, this component was added. The React-Native Material UI doesn't style the text input fields. Source [here](https://github.com/n4kz/react-native-material-textfield).
 
-```
-npm start -- --reset-cache
-# or
-yarn start -- --reset-cache
-```
+**react-native-material-ui(^1.20.0):** The Material UI was used to style the application according to Google's aesthetic material design standard. This plugin helps to design components easily and thus avoid manually adding styles for the components that conform to convention. Source [here](https://github.com/xotahal/react-native-material-ui).
 
-#### `npm test`
+**react-native-modal(^5.4.0):** Used to create the Filter Modal. Source [here](https://github.com/react-native-community/react-native-modal).
 
-Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
+**react-native-side-menu(^1.1.3):** This component was used to keep the links of our main components in the left drawer. Source [here](https://github.com/react-native-community/react-native-side-menu).
 
-#### `npm run ios`
+**react-native-vector-icons(^4.5.0):** Used for the range of icons that were available and customizable in the Event-Details-Screen. It has a series of sub-libraries and specifically Entypo, Material Community Icons and Material Icons were the ones that were used in this application. Additionally, the React Native Material UI works well with Vector Icons-so this was an added benefit. Source [here](https://github.com/oblador/react-native-vector-icons).
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+**react-navigation(^1.0.3):** Allows to navigate and pass data between screens. Source [here](https://github.com/wix/react-native-navigation).
 
-#### `npm run android`
+## Installation Notes
+#### Requirements:
+- Mobile phone/application running Android 4.1 and up.
+
+#### Built with:
+- React Native
+- Expo 25.0.0- Android Emulator
+- Node 8.9.4 - Installer
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+#### Instructions:
+- Download the Expo app for either iOS or Android
+- Navigate to project directory in the terminal
+- Run 'npm install'
+- Run 'npm start'
+- Use Expo app to scan the QR code
+
 
-##### Using Android Studio's `adb`
 
-1. Make sure that you can run adb from your terminal.
-2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+## Code Examples
+
+**Problem 1: The list view and map view could not access and manipulate the same set of filtered and unfiltered events.**
 
-##### Using Genymotion's `adb`
+We retrieved our events from our backend through an axios API call. We then saved the events retrieved from the backend in AsyncStorage. AsyncStorage allows any elements stored in it to persist throughout the whole application,
+thus both the list-view and map-view could access and filter the same set of events. We again used AsyncStorage to store all of the user filtered events.
+Since these filtered events were also stored in AsyncStorage, they could also be manipulated by both the list view and map view.
 
-1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
-2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
-3. Make sure that you can run adb from your terminal.
+        axios.get('/events')
+            .then(async (response) => {
 
-#### `npm run eject`
+                // Saves events from the API in the events state and AsyncStorage
+                this.setState({events: response.data}, () => {
+                    AsyncStorage.setItem('originalEvents', JSON.stringify(this.state.events));
+                });
+            })
+            .catch((error) => {
+                if (error.response && error.response.data) {
+                    Alert.alert(JSON.stringify(error.response.data));
+                } else {
+                    Alert.alert("catching exception", JSON.stringify(error));
+                }
+            });
 
-This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
+**Problem 2: Switching from MapBox to Mapview.**
 
-**Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
+Initially, we decided to implement MaxBox, however this proved to be troublesome with Expo. To implement our application with MapBox, some configuration changes neeeded to done within the Android Java file. Instead, we used Expo's Mapview which uses React-Native-Maps which does not require any changes to native Java files.
 
-## Customizing App Display Name and Icon
+                    <MapView
+                        style={{ flex: 1 }}
+                        initialRegion={{
+                            latitude: this.state.curr_city_lat,
+                            longitude: this.state.curr_city_long,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421
+                        }}
+                    >
+                        {this.state.events.map((event) => {
+                            return (
+                                <MapView.Marker
+                                    coordinate={{latitude: event['latitude'], longitude: event['longitude']}}
+                                    key={event['id']}
+                                    onCalloutPress={()=>{
+                                        this.props.navigation.navigate('Event', { event: event });
+                                    }}>
+                                    <MapView.Callout style={{ width: 300 }}>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{event['title']}</Text>
+                                        <Text>{event['description'].substring(0,event['description'].indexOf(".",100)+1)}</Text>
+                                    </MapView.Callout>
+                                </MapView.Marker>
+                            )
+                        })}
+                    </MapView>
 
-You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
+## Feature Section
+#### Features
+- Sign up and login in with or without Facebook O-Auth
+- Displays events from Facebook API and Eventbrite API
+- View the event's in a list-view or map-view
+- Pick your city with support for Halifax and Toronto
+- Users can navigate to the event
+- Users can leave comments, share and signal whether they are attending or not
+- Camera support for profile picture
+- Ability to search events based on a text field, distance to event, and date
+- 'Hamburger Menu'
 
-To change your app's display name, set the `expo.name` key in `app.json` to an appropriate string.
+## Final Project Status
+Our project has been successful. We have a working backend. Push notifications is the only feature that is left to be added (Bonus feature). In the future, we would like to do Natural Langauge Processing from the Twitter API. The app will be tested with users to determine its market viability.
 
-To set an app icon, set the `expo.icon` key in `app.json` to be either a local path or a URL. It's recommended that you use a 512x512 png file with transparency.
+#### Minimum Functionality
+- Sign up screen for the user to create an account. The screen takes username, email address, and password. [Completed]
+- Login screen with two supported fields: username and password. [Completed]
+- 'Go Somewhere' will be active in Halifax. [Completed]
+- Events displayed with descriptions in list-view. [Completed]
+- A screen for each event (event-details-screen) which contains the date of event, a generic photo for each of the event categories, and details about the venue. Businesses will be separated by category and will have category picture and description associated with them. [Completed]
 
-## Writing and Running Tests
 
-This project is set up to use [jest](https://facebook.github.io/jest/) for tests. You can configure whatever testing strategy you like, but jest works out of the box. Create test files in directories called `__tests__` or with the `.test` extension to have the files loaded by jest. See the [the template project](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/App.test.js) for an example test. The [jest documentation](https://facebook.github.io/jest/docs/en/getting-started.html) is also a wonderful resource, as is the [React Native testing tutorial](https://facebook.github.io/jest/docs/en/tutorial-react-native.html).
+#### Expected Functionality
+- Events displayed with descriptions in map-view and list-view. The user can switch between map and list-view. [Completed]
+- Search bar at the top of the map-view and list-view screen to search for events. [Completed]
+- A menu bar at the bottom of the map-view and list-view screen. There will be three icons on the menu bar: switch city, categories (filter for types of events), and a toggle from list-view to map-view (vice-versa). [Completed]
+- Find your current location button for map-view using location services. [Completed]
+- Users have access to GPS directions to an event. [Completed]
+- The map-view has event bubbles that show the number of people showing interest about an event. [Completed]
+- Event-details-screen will have a list of all the Tweets which mention the event. (Comments instead of Tweets) [Completed]
+- The event-details-screen has an option to say the user is attending the event. [Completed]
 
-## Environment Variables
 
-You can configure some of Create React Native App's behavior using environment variables.
 
-### Configuring Packager IP Address
+#### Bonus Functionality
+- Login screen that supports Open Authorization from Google, Facebook, and Twitter. [Completed]
+- User profile screen will be added which includes a personal photo, and other text based information. [Completed]
+- 'Go Somewhere' will be active in Halifax and Toronto. [Completed]
+- A 'Pick your City' screen. This screen will let you choose Halifax or Toronto. If the user has location services, then this screen will be bypassed and the correct city will be chosen. [Completed]
+- Push notifications to inform the user of events in their area. [To do]
+- Event-details-screen automates its data collection of the venue photos, category, and details from an API. [Completed]
+- Within the menu bar, the categories feature has the ability to filter based on the category data fetched from an API.  [Completed]
 
-When starting your project, you'll see something like this for your project URL:
+## Backend
+- The backend for this app was done in Ruby On Rails which serves the REST API's. The application is deployed on the Heroku Platform which provides easy deployment on free instance. The project is on github [here](https://github.com/siddhantbhardwaj/gosomewhere_backend). Additionally, the web services are deployed in this [URL](https://gosomewhere-backend.herokuapp.com).
+- Example endpoint: https://gosomewhere-backend.herokuapp.com/events. The endpoints require the user to be authenticated first and then use the token which is recieved after the Sign-In or Sign-Up process.
+- In addition to the Ruby on Rails application, an open source Express.js based web [application](https://github.com/tobilg/facebook-events-by-location) was used to fetch the Facebook events based on the user's location. This Express.js-based app is forked [here](https://github.com/siddhantbhardwaj/go-somewhere-fb) and deployed as a web service on Heroku [here](https://go-somewhere-fb.herokuapp.com).
 
-```
-exp://192.168.0.2:19000
-```
+## Sources
 
-The "manifest" at that URL tells the Expo app how to retrieve and load your app's JavaScript bundle, so even if you load it in the app via a URL like `exp://localhost:19000`, the Expo client app will still try to retrieve your app at the IP address that the start script provides.
+- [1] A. Siromoney, Disabling Buttons in React Native Arpith Siromoney Medium, Medium, 15-Dec-2015. [Online]. Available: https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634. [Accessed: 04-Apr-2018].
 
-In some cases, this is less than ideal. This might be the case if you need to run your project inside of a virtual machine and you have to access the packager via a different IP address than the one which prints by default. In order to override the IP address or hostname that is detected by Create React Native App, you can specify your own hostname via the `REACT_NATIVE_PACKAGER_HOSTNAME` environment variable:
+- [2] axios/axios, GitHub, 10-Mar-2018. [Online]. Available: https://github.com/axios/axios. [Accessed: 02-Apr-2018].
 
-Mac and Linux:
+- [3] "Draw horizontal rule in React Native", Stackoverflow.com, 2018. [Online]. Available: https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native. [Accessed: 02- Apr- 2018].
 
-```
-REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
-```
+- [4] expo/camera, GitHub. [Online]. Available: https://github.com/expo/camerja/blob/master/App.js. [Accessed: 02-Apr-2018].
 
-Windows:
-```
-set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
-npm start
-```
+- [5] Facebook, Facebook - Expo Documentation. [Online]. Available: https://docs.expo.io/versions/latest/sdk/facebook.html. [Accessed: 02-Apr-2018].
 
-The above example would cause the development server to listen on `exp://my-custom-ip-address-or-hostname:19000`.
+- [6] Handle response and callback function · Issue #1027 · axios/axios, GitHub. [Online]. Available: https://github.com/axios/axios/issues/1027. [Accessed: 04-Apr-2018]
 
-## Adding Flow
+- [7] Intellicode, Intellicode/eslint-plugin-react-native, GitHub, 11-Jan-2018. [Online]. Available: https://github.com/Intellicode/eslint-plugin-react-native. [Accessed: 02-Apr-2018].
 
-Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
+- [8] meinto/react-native-event-listeners, GitHub. [Online]. Available: https://github.com/meinto/react-native-event-listeners. [Accessed: 02-Apr-2018].
 
-React Native works with [Flow](http://flowtype.org/) out of the box, as long as your Flow version matches the one used in the version of React Native.
+- [9] Modal · React Native, React Native Blog ATOM. [Online]. Available: https://facebook.github.io/react-native/docs/modal.html. [Accessed: 02-Apr-2018].
 
-To add a local dependency to the correct Flow version to a Create React Native App project, follow these steps:
+- [10] n4kz/react-native-material-textfield, GitHub, 18-Jan-2018. [Online]. Available: https://github.com/n4kz/react-native-material-textfield. [Accessed: 02-Apr-2018].
 
-1. Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
-2. Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
-3. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-4. Add `// @flow` to any files you want to type check (for example, to `App.js`).
+- [11] oblador/react-native-vector-icons, GitHub. [Online]. Available: https://github.com/oblador/react-native-vector-icons. [Accessed: 02-Apr-2018].
 
-Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
-You can optionally use a [plugin for your IDE or editor](https://flow.org/en/docs/editors/) for a better integrated experience.
+- [12] Question: Implementing a splash screen with React Navigation · Issue #156 · react-navigation/react-navigation, GitHub. [Online]. Available: https://github.com/react-navigation/react-navigation/issues/156. [Accessed: 02-Apr-2018].
 
-To learn more about Flow, check out [its documentation](https://flow.org/).
+- [13] react-native-community/react-native-side-menu, GitHub, 28-Feb-2018. [Online]. Available: https://github.com/react-native-community/react-native-side-menu. [Accessed: 02-Apr-2018].
 
-## Sharing and Deployment
+- [14] React navigation goback() and update parent state, Stack Overflow. [Online]. Available: https://stackoverflow.com/questions/44223727/react-navigation-goback-and-update-parent-state/44227835. [Accessed: 04-Apr-2018].
 
-Create React Native App does a lot of work to make app setup and development simple and straightforward, but it's very difficult to do the same for deploying to Apple's App Store or Google's Play Store without relying on a hosted service.
+- [15] react-native-is-iphonex, npm. [Online]. Available: https://www.npmjs.com/package/react-native-is-iphonex. [Accessed: 02-Apr-2018].
 
-### Publishing to Expo's React Native Community
+- [16] Sample Codes (JavaScript), Distance. [Online]. Available: https://www.geodatasource.com/developers/javascript.[Accessed: 04-Apr-2018].
 
-Expo provides free hosting for the JS-only apps created by CRNA, allowing you to share your app through the Expo client app. This requires registration for an Expo account.
+- [17]  thegamenicorus/react-native-flexi-radio-button, GitHub, 25-Oct-2017. [Online]. Available: https://github.com/thegamenicorus/react-native-flexi-radio-button. [Accessed: 02-Apr-2018].
 
-Install the `exp` command-line tool, and run the publish command:
+- [18] tiaanduplessis/react-native-google-maps-directions, GitHub. [Online]. Available: https://github.com/tiaanduplessis/react-native-google-maps-directions. [Accessed: 02-Apr-2018].
 
-```
-$ npm i -g exp
-$ exp publish
-```
+- [19] tobilg/facebook-events-by-location, GitHub, 19-Feb-2018. [Online]. Available: https://github.com/tobilg/facebook-events-by-location. [Accessed: 03-Apr-2018].
 
-### Building an Expo "standalone" app
+- [20] "TouchableOpacity onPress only fires when clicking on content inside · Issue #1516 · Microsoft/react-native-windows", GitHub, 2018. [Online]. Available: https://github.com/Microsoft/react-native-windows/issues/1516. [Accessed: 02- Apr- 2018].
 
-You can also use a service like [Expo's standalone builds](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html) if you want to get an IPA/APK for distribution without having to build the native code yourself.
-
-### Ejecting from Create React Native App
-
-If you want to build and deploy your app yourself, you'll need to eject from CRNA and use Xcode and Android Studio.
-
-This is usually as simple as running `npm run eject` in your project, which will walk you through the process. Make sure to install `react-native-cli` and follow the [native code getting started guide for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
-
-#### Should I Use ExpoKit?
-
-If you have made use of Expo APIs while working on your project, then those API calls will stop working if you eject to a regular React Native project. If you want to continue using those APIs, you can eject to "React Native + ExpoKit" which will still allow you to build your own native code and continue using the Expo APIs. See the [ejecting guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) for more details about this option.
-
-## Troubleshooting
-
-### Networking
-
-If you're unable to load your app on your phone due to a network timeout or a refused connection, a good first step is to verify that your phone and computer are on the same network and that they can reach each other. Create React Native App needs access to ports 19000 and 19001 so ensure that your network and firewall settings allow access from your device to your computer on both of these ports.
-
-Try opening a web browser on your phone and opening the URL that the packager script prints, replacing `exp://` with `http://`. So, for example, if underneath the QR code in your terminal you see:
-
-```
-exp://192.168.0.1:19000
-```
-
-Try opening Safari or Chrome on your phone and loading
-
-```
-http://192.168.0.1:19000
-```
-
-and
-
-```
-http://192.168.0.1:19001
-```
-
-If this works, but you're still unable to load your app by scanning the QR code, please open an issue on the [Create React Native App repository](https://github.com/react-community/create-react-native-app) with details about these steps and any other error messages you may have received.
-
-If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager.
-
-### iOS Simulator won't open
-
-If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
-
-* "non-zero exit code: 107"
-* "You may need to install Xcode" but it is already installed
-* and others
-
-There are a few steps you may want to take to troubleshoot these kinds of errors:
-
-1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
-
-### QR Code does not scan
-
-If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
-
-If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
+- [21] xotahal/react-native-material-ui, GitHub. [Online]. Available: https://github.com/xotahal/react-native-material-ui. [Accessed: 02-Apr-2018].

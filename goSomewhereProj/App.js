@@ -1,66 +1,58 @@
 import React from 'react';
-import { StyleSheet, Text, View,Navigator } from 'react-native';
+import { StyleSheet, Text, View, Navigator, Alert, AsyncStorage, Platform, StatusBar } from 'react-native';
+import { ThemeProvider, COLOR, ListItem } from 'react-native-material-ui';
+import { NavigationActions } from 'react-navigation';
+import { Font, Constants } from 'expo';
+import axios from 'axios';
+
+import StackNavigator from './src/utils/StackNavigator';
 
 
-import {StackNavigator} from 'react-navigation';
+const uiTheme = {
+  toolbar: {
+    container: {
 
-import Login from './src/screens/login_screen';
-import Map from './src/screens/map_view_screen';
-import Event from './src/screens/event_details_screen';
-import SignUp from './src/screens/sign_up_screen';
-import ListView from './src/screens/list_view_screen';
-
-
-
-
-const Application = StackNavigator({
-
-    Home: {screen: Login,
-        navigationOptions: {
-            title: 'Login'
-        }
     },
-
-    SignUp: {screen: SignUp,
-        navigationOptions: {
-            title: 'Sign up'
-        }
-    },
-
-    Map: {screen: Map,
-        navigationOptions: {
-            title: 'Events List'
-        }
-    },
-
-    ListView: {screen: ListView,
-        navigationOptions: {
-            title: 'Event List'
-        }
-    },
-
-    Event: {screen: Event,
-        navigationOptions: {
-            title: 'Android Hackathon'
-        }
-    },
-
-
-});
+  },
+};
 
 export default class App extends React.Component {
+  navigator: StackNavigator;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontLoaded: false
+    }
+
+    axios.defaults.baseURL = 'https://gosomewhere-backend.herokuapp.com';
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Roboto': require('./src/assets/fonts/Roboto-Regular.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+  }
 
   render() {
     return (
-
-                <Application
-                    ref= "appNavigator"
-                    //some people have renderScene function
-                />
+      this.state.fontLoaded ? (
+        <View style={styles.container}>
+          <StatusBar barStyle="light-content" />
+          <ThemeProvider uiTheme={uiTheme}>
+            <StackNavigator />
+          </ThemeProvider>
+        </View>
+      ) : null
     );
   }
-
-
-
-
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight, // for statusbar
+    backgroundColor: COLOR.blue700 // for statusbar
+  }
+});
