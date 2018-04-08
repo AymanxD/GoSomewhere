@@ -1,3 +1,10 @@
+
+/*
+This screen allows the user to pick a city. The user will automatically
+navigate to the mapview. The navigator sends a payload that consists of
+hard-coded lat and long for the selected city. This allows the pick your
+city screen to render at those coordinates.
+*/
 import React from 'react';
 import {
     StyleSheet, Text, View, List, ListView, StatusBar, Image, Alert, TouchableOpacity, AsyncStorage
@@ -56,23 +63,10 @@ export default class Pick_City_Screen extends React.Component {
 
   componentWillMount(){
 
-      /*
-    fetch('https://gosomewhere-backend.herokuapp.com/events', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({events: responseJson});
-      });
 
-      navigator.geolocation.clearWatch(this.watchId);
-      */
   }
 
+  //user's lat and long are fetched but this infor is currently not used.
   componentDidMount() {
     //location services
     this.watchId = navigator.geolocation.watchPosition(

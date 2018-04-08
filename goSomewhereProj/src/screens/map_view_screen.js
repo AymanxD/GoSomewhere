@@ -87,7 +87,9 @@ export default class Map_View_Screen extends React.Component {
         // Geolocation to find user locations
         navigator.geolocation.clearWatch(this.watchId);
 
-        // Saves latitude and longitude to state.
+        // The navigator is checked to see if it recieved a payload from the
+        //pick_your_city screen. So if the user came from the pick_your_city
+        //screen then the map will render at this location. 
         if (this.props.navigation.state.params) {
             const {lat, long} = this.props.navigation.state.params;
             this.setState({curr_city_lat: lat});
@@ -174,7 +176,7 @@ export default class Map_View_Screen extends React.Component {
 
    //gets the events prior to search
    async getEvents() {
-    let prevEvents = await AsyncStorage.getItem('events');       
+    let prevEvents = await AsyncStorage.getItem('events');
     if(prevEvents == null){
         prevEvents = await AsyncStorage.getItem('originalEvents')
     }
@@ -183,7 +185,7 @@ export default class Map_View_Screen extends React.Component {
 
    //posts reverts to prior filter after search
    async setEvents() {
-    let prevEvents = await AsyncStorage.getItem('prevEvents'); 
+    let prevEvents = await AsyncStorage.getItem('prevEvents');
     AsyncStorage.setItem('events', prevEvents);
     this.changeEvents();
    }

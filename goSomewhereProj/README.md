@@ -8,6 +8,8 @@ Planning a night out? See all the events in select Canadian cities. View the eve
 - Siddhant Bhardwaj
 - Andrey Almabekov
 
+##Privacy Policy:
+http://gosomewhere-backend.herokuapp.com/privacypolicy.htm
 
 
 ## Libraries
